@@ -8,17 +8,22 @@
         :root { --accent: #3b82f6; --danger: #ef4444; --card-bg: #000000; --input-bg: #0a0a0a; --border: #1a1a1a; --text-dim: #888; }
         body { font-family: -apple-system, system-ui, sans-serif; background: #000000; color: #ffffff; padding: 10px; display: flex; justify-content: center; margin: 0; overflow-x: hidden; }
         .card { width: 100%; max-width: 400px; padding: 15px; box-sizing: border-box; }
+        
         input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
         input[type=number], input[type=text] { -moz-appearance: textfield; }
+
         h2 { text-align: left; margin: 0 0 15px 0; color: var(--accent); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; font-size: 1.1rem; }
         .section-label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: var(--text-dim); margin: 12px 0 8px 0; display: block; }
+        
         .dim-row { display: flex; gap: 8px; margin-bottom: 10px; align-items: center; }
         .input-wrapper { position: relative; flex: 1; display: flex; align-items: center; }
         .input-box { width: 100%; padding: 12px 30px 12px 10px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 1rem; background: var(--input-bg); color: white; outline: none; height: 48px; box-sizing: border-box; }
         .input-box:focus { border-color: var(--accent); }
+        
         .clear-x { position: absolute; right: 8px; color: #444; cursor: pointer; font-size: 18px; padding: 5px; }
         .toggle-btn { padding: 0 10px; border-radius: 8px; border: 1.5px solid var(--border); background: var(--input-bg); color: var(--text-dim); font-size: 0.65rem; font-weight: 800; cursor: pointer; height: 48px; white-space: nowrap; }
         .toggle-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+
         .result-panel { background: var(--card-bg); border-radius: 12px; padding: 15px; margin-top: 15px; border: 1.5px solid var(--border); position: relative; }
         .size-conversion { font-weight: 800; color: #fff; font-size: 1.1rem; margin-bottom: 5px; display: block; }
         .area-line { font-size: 0.85rem; color: #666; margin-bottom: 12px; }
@@ -26,18 +31,29 @@
         .mrp-label { font-size: 0.7rem; font-weight: bold; color: var(--text-dim); text-transform: uppercase; }
         .mrp-val { font-size: 1.8rem; font-weight: 900; color: var(--accent); margin-top: 4px; display: flex; align-items: baseline; gap: 6px; }
         .gst-small { font-size: 0.6rem; color: #444; font-weight: 600; text-transform: uppercase; }
+
+        /* Discount Section */
+        .disc-arrow { position: absolute; right: 10px; bottom: 15px; color: #444; cursor: pointer; font-size: 10px; font-weight: bold; }
+        #discInputArea { display: none; margin-top: 10px; border-top: 1px dashed var(--border); padding-top: 10px; }
+        .disc-res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; }
+        .disc-res-box { background: #080808; padding: 8px; border-radius: 5px; font-size: 0.7rem; color: #666; border: 1px solid #111; text-transform: uppercase; font-weight: bold; }
+        .disc-res-box b { color: #fff; display: block; font-size: 0.85rem; margin-top: 2px; }
+
+        /* Buttons */
         .btn-group { display: flex; gap: 8px; margin-top: 15px; }
         .btn { padding: 12px; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 0.75rem; height: 48px; box-sizing: border-box; text-transform: uppercase; }
         .btn-reset { flex: 0.8; background: #111; color: #555; }
         .btn-save { flex: 1.2; background: var(--accent); color: white; }
         .btn-copy-main { flex: 0.8; background: #1a1a1a; color: #888; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; gap: 5px; }
+
         #historyLog { margin-top: 25px; }
         .hist-item { background: var(--card-bg); padding: 12px; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 10px; position: relative; }
-        .hist-header-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
-        .hist-name { color: var(--accent); font-size: 0.75rem; text-transform: uppercase; font-weight: 800; cursor: pointer; letter-spacing: 0.5px; }
+        .hist-name { color: var(--accent); font-size: 0.75rem; text-transform: uppercase; font-weight: 800; margin-bottom: 5px; display: block; cursor: pointer; }
         .delete-item { position: absolute; top: 12px; right: 12px; color: var(--danger); font-size: 10px; font-weight: bold; cursor: pointer; opacity: 0.6; }
         .hist-main { display: flex; justify-content: space-between; align-items: baseline; }
         .hist-data { display: flex; flex-wrap: wrap; gap: 10px; font-size: 0.7rem; color: #444; margin-top: 8px; border-top: 1px solid #0a0a0a; padding-top: 8px; }
+        .hist-disc-tag { font-size: 0.7rem; color: #00ff00; margin-top: 5px; display: block; font-weight: bold; }
+
         .modal-overlay { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 1000; align-items: center; justify-content: center; }
         .modal-box { background: #0a0a0a; border: 1.5px solid var(--border); border-radius: 20px; padding: 25px; width: 80%; max-width: 300px; text-align: center; }
     </style>
@@ -47,7 +63,7 @@
 <div id="appModal" class="modal-overlay">
     <div class="modal-box">
         <span id="modalTitle" style="font-weight: 800; font-size: 0.85rem; text-transform: uppercase; color: #fff; display: block;">Rename</span>
-        <input type="text" id="modalInput" style="width: 100%; background: #000; border: 1px solid var(--border); color: white; padding: 12px; border-radius: 8px; margin: 15px 0; font-size: 1rem; text-align: center;" placeholder="...">
+        <input type="text" id="modalInput" style="width: 100%; background: #000; border: 1px solid var(--border); color: white; padding: 14px; border-radius: 10px; margin: 20px 0; font-size: 1rem; text-align: center;" placeholder="...">
         <div style="display:flex; gap:10px;">
             <button class="btn" style="flex:1; background:#1a1a1a; color:#888;" onclick="closeModal()">CANCEL</button>
             <button class="btn" style="flex:1; background:var(--accent); color:white;" id="modalSubmit">OK</button>
@@ -61,11 +77,11 @@
     <span class="section-label">Dimensions</span>
     <div class="dim-row">
         <div class="input-wrapper">
-            <input type="number" id="L" placeholder="Length" class="input-box" oninput="calculate()">
+            <input type="number" id="L" placeholder="Length" class="input-box" oninput="dimChanged()">
             <span class="clear-x" onclick="clearField('L')">×</span>
         </div>
         <div class="input-wrapper">
-            <input type="number" id="W" placeholder="Width" class="input-box" oninput="calculate()">
+            <input type="number" id="W" placeholder="Width" class="input-box" oninput="dimChanged()">
             <span class="clear-x" onclick="clearField('W')">×</span>
         </div>
         <button id="wToggle" class="toggle-btn" onclick="toggleInch()">INCH</button>
@@ -87,9 +103,22 @@
     <div class="result-panel">
         <span class="size-conversion" id="sizeConv">0 × 0</span>
         <div class="area-line">Area: <b><span id="dispArea">0.00</span> sq. ft</b></div>
+        
         <div class="mrp-box">
             <span class="mrp-label">Total MRP</span>
             <div class="mrp-val">₹ <span id="finalVal">0</span> <span id="gstDisplay" class="gst-small"></span></div>
+            <div class="disc-arrow" onclick="toggleDisc()">DISCOUNT ▼</div>
+        </div>
+
+        <div id="discInputArea">
+            <div class="input-wrapper">
+                <input type="number" id="discIn" placeholder="% or Price" class="input-box" style="height: 40px;" oninput="applyDiscount()">
+                <span class="clear-x" onclick="clearDisc()">×</span>
+            </div>
+            <div class="disc-res-grid">
+                <div class="disc-res-box">Less ₹<b><span id="dMoneyOff">0</span></b></div>
+                <div class="disc-res-box">Disc. Result<b>₹<span id="dTotal">0</span> <span style="color:#444; font-size:0.6rem;">(<span id="dRate">0</span>/ft²)</span></b></div>
+            </div>
         </div>
     </div>
 
@@ -111,14 +140,10 @@
 <script>
 let wInchMode = false;
 
-// 1. FORCE LOAD FROM DISK
 window.onload = function() {
     const savedHtml = localStorage.getItem('sizeCalcHistory');
-    if (savedHtml) {
-        document.getElementById('histItems').innerHTML = savedHtml;
-    }
+    if (savedHtml) document.getElementById('histItems').innerHTML = savedHtml;
     
-    // Load last inputs
     document.getElementById('L').value = localStorage.getItem('lastL') || '';
     document.getElementById('W').value = localStorage.getItem('lastW') || '';
     document.getElementById('rate').value = localStorage.getItem('lastRate') || '';
@@ -160,7 +185,32 @@ function calculate(trigger) {
     let final = parseFloat(document.getElementById('mrp').value) || 0;
     document.getElementById('finalVal').innerText = Math.round(final).toLocaleString('en-IN');
     document.getElementById('gstDisplay').innerText = final > 0 ? `(₹${Math.round(final * 18/118)} GST)` : "";
+    
+    applyDiscount();
     updateMemory();
+}
+
+function applyDiscount() {
+    const val = parseFloat(document.getElementById('discIn').value) || 0;
+    const currentMRP = parseFloat(document.getElementById('finalVal').innerText.replace(/,/g, '')) || 0;
+    const area = parseFloat(document.getElementById('dispArea').innerText) || 1;
+    let discMRP = 0, moneyOff = 0, percUsed = 0;
+
+    if (val > 0 && val < 100) {
+        moneyOff = currentMRP * (val / 100);
+        discMRP = currentMRP - moneyOff;
+        percUsed = val;
+    } else if (val >= 100) {
+        discMRP = val;
+        moneyOff = currentMRP - val;
+        percUsed = currentMRP > 0 ? ((moneyOff / currentMRP) * 100) : 0;
+    }
+
+    const discRate = area > 0 ? discMRP / area : 0;
+    document.getElementById('dMoneyOff').innerText = Math.round(moneyOff).toLocaleString('en-IN');
+    document.getElementById('dTotal').innerText = Math.round(discMRP).toLocaleString('en-IN');
+    document.getElementById('dRate').innerText = discRate.toFixed(2);
+    return { moneyOff, discMRP, discRate, percUsed };
 }
 
 function saveToHistory() {
@@ -168,8 +218,11 @@ function saveToHistory() {
     const mrp = document.getElementById('finalVal').innerText;
     const rate = document.getElementById('rate').value;
     const area = document.getElementById('dispArea').innerText;
+    const dRes = applyDiscount();
 
     if (mrp === "0") return;
+
+    let discTag = dRes.moneyOff > 0 ? `<span class="hist-disc-tag">FINAL: ₹${Math.round(dRes.discMRP).toLocaleString('en-IN')} (₹${dRes.discRate.toFixed(2)}/ft²) [${Math.round(dRes.percUsed)}%]</span>` : '';
 
     const item = `
         <div class="hist-item">
@@ -179,35 +232,38 @@ function saveToHistory() {
                 <b style="color:white;">${size}</b>
                 <b style="color:var(--accent);">₹${mrp}</b>
             </div>
+            ${discTag}
             <div class="hist-data">RATE: ₹${rate}/ft² | AREA: ${area}ft²</div>
         </div>`;
     document.getElementById('histItems').insertAdjacentHTML('afterbegin', item);
-    updateMemory(); // Force Save
+    updateMemory();
+}
+
+function dimChanged() {
+    document.getElementById('rate').value = '';
+    document.getElementById('mrp').value = '';
+    document.getElementById('discIn').value = '';
+    calculate();
 }
 
 function clearAll() {
-    ['L', 'W', 'rate', 'mrp'].forEach(id => document.getElementById(id).value = '');
+    ['L', 'W', 'rate', 'mrp', 'discIn'].forEach(id => document.getElementById(id).value = '');
     calculate();
     localStorage.clear();
 }
 
-function triggerClearHistory() {
-    openModal("CLEAR ALL?", "", () => {
-        document.getElementById('histItems').innerHTML = '';
-        updateMemory();
-    }, false);
+function toggleDisc() {
+    const area = document.getElementById('discInputArea');
+    area.style.display = area.style.display === 'block' ? 'none' : 'block';
 }
 
-function renameQuote(el) {
-    openModal("RENAME", el.innerText, (val) => {
-        if(val) { el.innerText = val.toUpperCase(); updateMemory(); }
-    });
-}
-
-// Helpers
+function clearDisc() { document.getElementById('discIn').value = ''; applyDiscount(); }
 function toggleInch() { wInchMode = !wInchMode; document.getElementById('wToggle').classList.toggle('active', wInchMode); calculate(); }
 function clearField(id) { document.getElementById(id).value = ''; calculate(); }
 function closeModal() { document.getElementById('appModal').style.display = 'none'; }
+function triggerClearHistory() { openModal("DELETE ALL?", "", () => { document.getElementById('histItems').innerHTML = ''; updateMemory(); }, false); }
+function renameQuote(el) { openModal("RENAME", el.innerText, (val) => { if(val) { el.innerText = val.toUpperCase(); updateMemory(); } }); }
+
 function openModal(title, placeholder, onConfirm, showInput=true) {
     document.getElementById('modalTitle').innerText = title;
     const input = document.getElementById('modalInput');
@@ -216,6 +272,7 @@ function openModal(title, placeholder, onConfirm, showInput=true) {
     document.getElementById('appModal').style.display = 'flex';
     document.getElementById('modalSubmit').onclick = () => { onConfirm(input.value); closeModal(); };
 }
+
 function copyCurrent() {
     const t = `Size: ${document.getElementById('sizeConv').innerText}\nMRP: ₹${document.getElementById('finalVal').innerText}`;
     navigator.clipboard.writeText(t);
