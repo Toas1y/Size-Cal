@@ -32,34 +32,24 @@
         .mrp-val { font-size: 1.8rem; font-weight: 900; color: var(--accent); margin-top: 4px; display: flex; align-items: baseline; gap: 6px; }
         .gst-small { font-size: 0.6rem; color: #444; font-weight: 600; text-transform: uppercase; }
 
-        .disc-arrow { position: absolute; right: 10px; bottom: 15px; color: #444; cursor: pointer; font-size: 10px; font-weight: bold; transition: 0.3s; }
-        #discInputArea { display: none; margin-top: 10px; border-top: 1px dashed var(--border); padding-top: 10px; }
-        .disc-res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; }
-        .disc-res-box { background: #080808; padding: 8px; border-radius: 5px; font-size: 0.7rem; color: #666; border: 1px solid #111; text-transform: uppercase; font-weight: bold; }
-        .disc-res-box b { color: #fff; display: block; font-size: 0.85rem; margin-top: 2px; }
-
         .btn-group { display: flex; gap: 8px; margin-top: 15px; }
-        .btn { padding: 12px; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 0.75rem; height: 48px; box-sizing: border-box; text-transform: uppercase; transition: 0.2s; }
+        .btn { padding: 12px; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 0.75rem; height: 48px; box-sizing: border-box; text-transform: uppercase; }
         .btn-reset { flex: 0.8; background: #111; color: #555; }
         .btn-save { flex: 1.2; background: var(--accent); color: white; }
         .btn-copy-main { flex: 0.8; background: #1a1a1a; color: #888; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; gap: 5px; }
-        .btn-copy-main.copied { color: #00ff00; border-color: #00ff00; }
 
         #historyLog { margin-top: 25px; }
         .hist-item { background: var(--card-bg); padding: 12px; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 10px; position: relative; }
         .hist-header-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
         .hist-name { color: var(--accent); font-size: 0.75rem; text-transform: uppercase; font-weight: 800; cursor: pointer; letter-spacing: 0.5px; }
-        .copy-icon-btn { font-size: 12px; cursor: pointer; opacity: 0.5; color: #fff; }
         .delete-item { position: absolute; top: 12px; right: 12px; color: var(--danger); font-size: 10px; font-weight: bold; cursor: pointer; opacity: 0.6; }
         .hist-main { display: flex; justify-content: space-between; align-items: baseline; }
         .hist-data { display: flex; flex-wrap: wrap; gap: 10px; font-size: 0.7rem; color: #444; margin-top: 8px; border-top: 1px solid #0a0a0a; padding-top: 8px; }
         .hist-disc-tag { font-size: 0.7rem; color: #00ff00; margin-top: 4px; display: block; font-weight: bold; }
 
+        /* Custom Modal styling */
         .modal-overlay { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 1000; align-items: center; justify-content: center; }
         .modal-box { background: #0a0a0a; border: 1.5px solid var(--border); border-radius: 20px; padding: 25px; width: 80%; max-width: 300px; text-align: center; }
-        .modal-title { font-weight: 800; font-size: 0.85rem; text-transform: uppercase; color: #fff; text-align: center; display: block; }
-        .modal-input { width: 100%; background: #000; border: 1px solid var(--border); color: white; padding: 14px; border-radius: 10px; margin: 20px 0; font-size: 1rem; outline: none; box-sizing: border-box; text-align: center; }
-        
         #toast { visibility: hidden; min-width: 150px; background-color: #333; color: #fff; text-align: center; border-radius: 20px; padding: 10px; position: fixed; z-index: 2000; bottom: 30px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; font-weight: bold; }
         #toast.show { visibility: visible; -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
         @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
@@ -68,12 +58,12 @@
 </head>
 <body>
 
-<div id="toast">COPIED!</div>
+<div id="toast">Copied!</div>
 
 <div id="appModal" class="modal-overlay">
     <div class="modal-box">
-        <span id="modalTitle" class="modal-title">RENAME QUOTE</span>
-        <input type="text" id="modalInput" class="modal-input" placeholder="...">
+        <span id="modalTitle" style="font-weight: 800; font-size: 0.85rem; text-transform: uppercase; color: #fff; display: block;">RENAME QUOTE</span>
+        <input type="text" id="modalInput" style="width: 100%; background: #000; border: 1px solid var(--border); color: white; padding: 14px; border-radius: 10px; margin: 20px 0; font-size: 1rem; outline: none; box-sizing: border-box; text-align: center;" placeholder="...">
         <div style="display:flex; gap:10px;">
             <button class="btn" style="flex:1; background:#1a1a1a; color:#888;" onclick="closeModal()">CANCEL</button>
             <button class="btn" style="flex:1; background:var(--accent); color:white;" id="modalSubmit">OK</button>
@@ -116,26 +106,147 @@
         
         <div class="mrp-box">
             <span class="mrp-label">Total MRP</span>
-            <div class="mrp-val">
-                ₹ <span id="finalVal">0</span>
-                <span id="gstDisplay" class="gst-small"></span>
-            </div>
-            <div class="disc-arrow" onclick="toggleDisc()">DISCOUNT ▼</div>
-        </div>
-
-        <div id="discInputArea">
-            <div class="input-wrapper">
-                <input type="number" id="discIn" placeholder="% or Price" class="input-box" style="height: 40px;" oninput="applyDiscount()">
-                <span class="clear-x" onclick="clearDisc()">×</span>
-            </div>
-            <div class="disc-res-grid">
-                <div class="disc-res-box">Less ₹<b><span id="dMoneyOff">0</span></b></div>
-                <div class="disc-res-box">Disc. Result<b>₹<span id="dTotal">0</span> <span style="color:#444; font-size:0.6rem;">(<span id="dRate">0</span>/ft²)</span></b></div>
-            </div>
+            <div class="mrp-val">₹ <span id="finalVal">0</span> <span id="gstDisplay" class="gst-small"></span></div>
         </div>
     </div>
 
     <div class="btn-group">
+        <button class="btn btn-reset" onclick="clearAll()">Reset</button>
+        <button class="btn btn-save" onclick="saveToHistory()">Save</button>
+        <button class="btn btn-copy-main" onclick="copyCurrent()">⎘ Copy</button>
+    </div>
+
+    <div id="historyLog">
+        <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <span class="section-label" style="margin:0">History Log</span>
+            <span onclick="triggerClearHistory()" style="font-size: 0.6rem; color: var(--danger); cursor: pointer; font-weight: 800;">CLEAR ALL</span>
+        </div>
+        <div id="histItems"></div>
+    </div>
+</div>
+
+<script>
+let wInchMode = false;
+
+// 1. AUTO-LOAD EVERYTHING ON STARTUP
+window.onload = function() {
+    // Load inputs
+    document.getElementById('L').value = localStorage.getItem('calcL') || '';
+    document.getElementById('W').value = localStorage.getItem('calcW') || '';
+    document.getElementById('rate').value = localStorage.getItem('calcRate') || '';
+    document.getElementById('mrp').value = localStorage.getItem('calcMRP') || '';
+    
+    // Load history
+    const savedHist = localStorage.getItem('sizeCalcHistory');
+    if (savedHist) document.getElementById('histItems').innerHTML = savedHist;
+    
+    calculate('rate'); 
+};
+
+// 2. AUTO-SAVE ALL INPUTS WHENEVER THEY CHANGE
+function updateInputStorage() {
+    localStorage.setItem('calcL', document.getElementById('L').value);
+    localStorage.setItem('calcW', document.getElementById('W').value);
+    localStorage.setItem('calcRate', document.getElementById('rate').value);
+    localStorage.setItem('calcMRP', document.getElementById('mrp').value);
+}
+
+function updateHistoryStorage() {
+    localStorage.setItem('sizeCalcHistory', document.getElementById('histItems').innerHTML);
+}
+
+function calculate(trigger) {
+    let L = parseFloat(document.getElementById('L').value) || 0;
+    let W = parseFloat(document.getElementById('W').value) || 0;
+    let rate = parseFloat(document.getElementById('rate').value) || 0;
+    let mrp = parseFloat(document.getElementById('mrp').value) || 0;
+
+    let lIn, wIn;
+    if (L > 200) { lIn = L / 25.4; } else { lIn = L * 12; }
+    if (wInchMode) { wIn = W; } else if (W > 200) { wIn = W / 25.4; } else { wIn = W * 12; }
+
+    let ftL = L > 200 ? (L/304.8).toFixed(1) : L;
+    let ftW = wInchMode ? (W/12).toFixed(2) : (W > 200 ? (W/304.8).toFixed(2) : W);
+    document.getElementById('sizeConv').innerText = (L && W) ? `${ftL}ft × ${ftW}ft` : "0 × 0";
+
+    let areaSqFt = (lIn * wIn) / 144;
+    document.getElementById('dispArea').innerText = areaSqFt.toFixed(2);
+
+    if (trigger === 'rate') {
+        let finalNum = areaSqFt * rate;
+        document.getElementById('mrp').value = finalNum > 0 ? finalNum.toFixed(0) : "";
+        document.getElementById('finalVal').innerText = Math.round(finalNum).toLocaleString('en-IN');
+        let gstAmt = Math.round(finalNum * (18/118));
+        document.getElementById('gstDisplay').innerText = finalNum > 0 ? `(₹${gstAmt} GST)` : "";
+    } else {
+        document.getElementById('rate').value = (areaSqFt > 0 ? mrp / areaSqFt : 0).toFixed(2);
+        document.getElementById('finalVal').innerText = Math.round(mrp).toLocaleString('en-IN');
+        let gstAmt = Math.round(mrp * (18/118));
+        document.getElementById('gstDisplay').innerText = mrp > 0 ? `(₹${gstAmt} GST)` : "";
+    }
+    
+    updateInputStorage(); // Save current work
+}
+
+// REST OF THE FUNCTIONS (Slightly modified to auto-save)
+function dimChanged() {
+    document.getElementById('rate').value = '';
+    document.getElementById('mrp').value = '';
+    calculate('rate');
+}
+
+function saveToHistory() {
+    const sizeFt = document.getElementById('sizeConv').innerText;
+    const mrpVal = document.getElementById('finalVal').innerText;
+    const area = document.getElementById('dispArea').innerText;
+    const rate = document.getElementById('rate').value;
+    if(mrpVal === "0") return;
+
+    const item = `
+        <div class="hist-item">
+            <span class="delete-item" onclick="this.parentElement.remove(); updateHistoryStorage();">DELETE</span>
+            <span class="hist-name" onclick="renameQuote(this)">UNNAMED</span>
+            <div class="hist-main">
+                <b style="color:white;">${sizeFt}</b>
+                <b style="color:var(--accent);">₹${mrpVal}</b>
+            </div>
+            <div class="hist-data">RATE: ₹${rate}/ft² | AREA: ${area}ft²</div>
+        </div>`;
+    document.getElementById('histItems').insertAdjacentHTML('afterbegin', item);
+    updateHistoryStorage();
+}
+
+function clearAll() {
+    ['L', 'W', 'rate', 'mrp'].forEach(id => document.getElementById(id).value = '');
+    calculate('rate');
+    localStorage.clear(); // Wipe everything on reset
+}
+
+function clearField(id) { document.getElementById(id).value = ''; calculate('rate'); }
+function toggleInch() { wInchMode = !wInchMode; document.getElementById('wToggle').classList.toggle('active', wInchMode); calculate('rate'); }
+function closeModal() { document.getElementById('appModal').style.display = 'none'; }
+function renameQuote(el) { 
+    openModal("RENAME", el.innerText, (val) => { if(val) { el.innerText = val.toUpperCase(); updateHistoryStorage(); } }); 
+}
+function triggerClearHistory() { openModal("DELETE ALL?", "", () => { document.getElementById('histItems').innerHTML = ''; localStorage.removeItem('sizeCalcHistory'); }, false); }
+function openModal(title, placeholder, onConfirm, showInput=true) {
+    document.getElementById('modalTitle').innerText = title;
+    const input = document.getElementById('modalInput');
+    input.style.display = showInput ? 'block' : 'none';
+    input.value = placeholder;
+    document.getElementById('appModal').style.display = 'flex';
+    document.getElementById('modalSubmit').onclick = () => { onConfirm(input.value); closeModal(); };
+}
+function copyCurrent() {
+    const text = `Quote: ${document.getElementById('sizeConv').innerText}\nArea: ${document.getElementById('dispArea').innerText} ft²\nTotal: ₹${document.getElementById('finalVal').innerText}`;
+    navigator.clipboard.writeText(text).then(() => {
+        const t = document.getElementById("toast"); t.className = "show";
+        setTimeout(() => { t.className = t.className.replace("show", ""); }, 2500);
+    });
+}
+</script>
+</body>
+</html>
         <button class="btn btn-reset" onclick="clearAll()">Reset</button>
         <button class="btn btn-save" onclick="saveToHistory()">Save</button>
         <button id="mainCopy" class="btn btn-copy-main" onclick="copyCurrent()">
