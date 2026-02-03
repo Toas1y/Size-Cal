@@ -8,22 +8,17 @@
         :root { --accent: #3b82f6; --danger: #ef4444; --card-bg: #000000; --input-bg: #0a0a0a; --border: #1a1a1a; --text-dim: #888; }
         body { font-family: -apple-system, system-ui, sans-serif; background: #000000; color: #ffffff; padding: 10px; display: flex; justify-content: center; margin: 0; overflow-x: hidden; }
         .card { width: 100%; max-width: 400px; padding: 15px; box-sizing: border-box; }
-        
         input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
         input[type=number], input[type=text] { -moz-appearance: textfield; }
-
         h2 { text-align: left; margin: 0 0 15px 0; color: var(--accent); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; font-size: 1.1rem; }
         .section-label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: var(--text-dim); margin: 12px 0 8px 0; display: block; }
-        
         .dim-row { display: flex; gap: 8px; margin-bottom: 10px; align-items: center; }
         .input-wrapper { position: relative; flex: 1; display: flex; align-items: center; }
         .input-box { width: 100%; padding: 12px 30px 12px 10px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 1rem; background: var(--input-bg); color: white; outline: none; height: 48px; box-sizing: border-box; }
         .input-box:focus { border-color: var(--accent); }
-        
         .clear-x { position: absolute; right: 8px; color: #444; cursor: pointer; font-size: 18px; padding: 5px; }
         .toggle-btn { padding: 0 10px; border-radius: 8px; border: 1.5px solid var(--border); background: var(--input-bg); color: var(--text-dim); font-size: 0.65rem; font-weight: 800; cursor: pointer; height: 48px; white-space: nowrap; }
         .toggle-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
-
         .result-panel { background: var(--card-bg); border-radius: 12px; padding: 15px; margin-top: 15px; border: 1.5px solid var(--border); position: relative; }
         .size-conversion { font-weight: 800; color: #fff; font-size: 1.1rem; margin-bottom: 5px; display: block; }
         .area-line { font-size: 0.85rem; color: #666; margin-bottom: 12px; }
@@ -31,13 +26,11 @@
         .mrp-label { font-size: 0.7rem; font-weight: bold; color: var(--text-dim); text-transform: uppercase; }
         .mrp-val { font-size: 1.8rem; font-weight: 900; color: var(--accent); margin-top: 4px; display: flex; align-items: baseline; gap: 6px; }
         .gst-small { font-size: 0.6rem; color: #444; font-weight: 600; text-transform: uppercase; }
-
         .btn-group { display: flex; gap: 8px; margin-top: 15px; }
         .btn { padding: 12px; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 0.75rem; height: 48px; box-sizing: border-box; text-transform: uppercase; }
         .btn-reset { flex: 0.8; background: #111; color: #555; }
         .btn-save { flex: 1.2; background: var(--accent); color: white; }
         .btn-copy-main { flex: 0.8; background: #1a1a1a; color: #888; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; gap: 5px; }
-
         #historyLog { margin-top: 25px; }
         .hist-item { background: var(--card-bg); padding: 12px; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 10px; position: relative; }
         .hist-header-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
@@ -45,25 +38,16 @@
         .delete-item { position: absolute; top: 12px; right: 12px; color: var(--danger); font-size: 10px; font-weight: bold; cursor: pointer; opacity: 0.6; }
         .hist-main { display: flex; justify-content: space-between; align-items: baseline; }
         .hist-data { display: flex; flex-wrap: wrap; gap: 10px; font-size: 0.7rem; color: #444; margin-top: 8px; border-top: 1px solid #0a0a0a; padding-top: 8px; }
-        .hist-disc-tag { font-size: 0.7rem; color: #00ff00; margin-top: 4px; display: block; font-weight: bold; }
-
-        /* Custom Modal styling */
         .modal-overlay { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 1000; align-items: center; justify-content: center; }
         .modal-box { background: #0a0a0a; border: 1.5px solid var(--border); border-radius: 20px; padding: 25px; width: 80%; max-width: 300px; text-align: center; }
-        #toast { visibility: hidden; min-width: 150px; background-color: #333; color: #fff; text-align: center; border-radius: 20px; padding: 10px; position: fixed; z-index: 2000; bottom: 30px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; font-weight: bold; }
-        #toast.show { visibility: visible; -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
-        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
-        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
     </style>
 </head>
 <body>
 
-<div id="toast">Copied!</div>
-
 <div id="appModal" class="modal-overlay">
     <div class="modal-box">
-        <span id="modalTitle" style="font-weight: 800; font-size: 0.85rem; text-transform: uppercase; color: #fff; display: block;">RENAME QUOTE</span>
-        <input type="text" id="modalInput" style="width: 100%; background: #000; border: 1px solid var(--border); color: white; padding: 14px; border-radius: 10px; margin: 20px 0; font-size: 1rem; outline: none; box-sizing: border-box; text-align: center;" placeholder="...">
+        <span id="modalTitle" style="font-weight: 800; font-size: 0.85rem; text-transform: uppercase; color: #fff; display: block;">Rename</span>
+        <input type="text" id="modalInput" style="width: 100%; background: #000; border: 1px solid var(--border); color: white; padding: 12px; border-radius: 8px; margin: 15px 0; font-size: 1rem; text-align: center;" placeholder="...">
         <div style="display:flex; gap:10px;">
             <button class="btn" style="flex:1; background:#1a1a1a; color:#888;" onclick="closeModal()">CANCEL</button>
             <button class="btn" style="flex:1; background:var(--accent); color:white;" id="modalSubmit">OK</button>
@@ -77,11 +61,11 @@
     <span class="section-label">Dimensions</span>
     <div class="dim-row">
         <div class="input-wrapper">
-            <input type="number" id="L" placeholder="Length" class="input-box" oninput="dimChanged()">
+            <input type="number" id="L" placeholder="Length" class="input-box" oninput="calculate()">
             <span class="clear-x" onclick="clearField('L')">×</span>
         </div>
         <div class="input-wrapper">
-            <input type="number" id="W" placeholder="Width" class="input-box" oninput="dimChanged()">
+            <input type="number" id="W" placeholder="Width" class="input-box" oninput="calculate()">
             <span class="clear-x" onclick="clearField('W')">×</span>
         </div>
         <button id="wToggle" class="toggle-btn" onclick="toggleInch()">INCH</button>
@@ -103,7 +87,6 @@
     <div class="result-panel">
         <span class="size-conversion" id="sizeConv">0 × 0</span>
         <div class="area-line">Area: <b><span id="dispArea">0.00</span> sq. ft</b></div>
-        
         <div class="mrp-box">
             <span class="mrp-label">Total MRP</span>
             <div class="mrp-val">₹ <span id="finalVal">0</span> <span id="gstDisplay" class="gst-small"></span></div>
@@ -113,7 +96,7 @@
     <div class="btn-group">
         <button class="btn btn-reset" onclick="clearAll()">Reset</button>
         <button class="btn btn-save" onclick="saveToHistory()">Save</button>
-        <button class="btn btn-copy-main" onclick="copyCurrent()">⎘ Copy</button>
+        <button class="btn btn-copy-main" onclick="copyCurrent()">Copy</button>
     </div>
 
     <div id="historyLog">
@@ -128,31 +111,27 @@
 <script>
 let wInchMode = false;
 
-// 1. AUTO-LOAD EVERYTHING ON STARTUP
+// 1. FORCE LOAD FROM DISK
 window.onload = function() {
-    // Load inputs
-    document.getElementById('L').value = localStorage.getItem('calcL') || '';
-    document.getElementById('W').value = localStorage.getItem('calcW') || '';
-    document.getElementById('rate').value = localStorage.getItem('calcRate') || '';
-    document.getElementById('mrp').value = localStorage.getItem('calcMRP') || '';
+    const savedHtml = localStorage.getItem('sizeCalcHistory');
+    if (savedHtml) {
+        document.getElementById('histItems').innerHTML = savedHtml;
+    }
     
-    // Load history
-    const savedHist = localStorage.getItem('sizeCalcHistory');
-    if (savedHist) document.getElementById('histItems').innerHTML = savedHist;
-    
-    calculate('rate'); 
+    // Load last inputs
+    document.getElementById('L').value = localStorage.getItem('lastL') || '';
+    document.getElementById('W').value = localStorage.getItem('lastW') || '';
+    document.getElementById('rate').value = localStorage.getItem('lastRate') || '';
+    document.getElementById('mrp').value = localStorage.getItem('lastMRP') || '';
+    calculate();
 };
 
-// 2. AUTO-SAVE ALL INPUTS WHENEVER THEY CHANGE
-function updateInputStorage() {
-    localStorage.setItem('calcL', document.getElementById('L').value);
-    localStorage.setItem('calcW', document.getElementById('W').value);
-    localStorage.setItem('calcRate', document.getElementById('rate').value);
-    localStorage.setItem('calcMRP', document.getElementById('mrp').value);
-}
-
-function updateHistoryStorage() {
+function updateMemory() {
     localStorage.setItem('sizeCalcHistory', document.getElementById('histItems').innerHTML);
+    localStorage.setItem('lastL', document.getElementById('L').value);
+    localStorage.setItem('lastW', document.getElementById('W').value);
+    localStorage.setItem('lastRate', document.getElementById('rate').value);
+    localStorage.setItem('lastMRP', document.getElementById('mrp').value);
 }
 
 function calculate(trigger) {
@@ -161,145 +140,74 @@ function calculate(trigger) {
     let rate = parseFloat(document.getElementById('rate').value) || 0;
     let mrp = parseFloat(document.getElementById('mrp').value) || 0;
 
-    let lIn, wIn;
-    if (L > 200) { lIn = L / 25.4; } else { lIn = L * 12; }
-    if (wInchMode) { wIn = W; } else if (W > 200) { wIn = W / 25.4; } else { wIn = W * 12; }
+    let lIn = (L > 200) ? L/25.4 : L*12;
+    let wIn = wInchMode ? W : (W > 200 ? W/25.4 : W*12);
 
     let ftL = L > 200 ? (L/304.8).toFixed(1) : L;
     let ftW = wInchMode ? (W/12).toFixed(2) : (W > 200 ? (W/304.8).toFixed(2) : W);
     document.getElementById('sizeConv').innerText = (L && W) ? `${ftL}ft × ${ftW}ft` : "0 × 0";
 
-    let areaSqFt = (lIn * wIn) / 144;
-    document.getElementById('dispArea').innerText = areaSqFt.toFixed(2);
+    let area = (lIn * wIn) / 144;
+    document.getElementById('dispArea').innerText = area.toFixed(2);
 
     if (trigger === 'rate') {
-        let finalNum = areaSqFt * rate;
-        document.getElementById('mrp').value = finalNum > 0 ? finalNum.toFixed(0) : "";
-        document.getElementById('finalVal').innerText = Math.round(finalNum).toLocaleString('en-IN');
-        let gstAmt = Math.round(finalNum * (18/118));
-        document.getElementById('gstDisplay').innerText = finalNum > 0 ? `(₹${gstAmt} GST)` : "";
-    } else {
-        document.getElementById('rate').value = (areaSqFt > 0 ? mrp / areaSqFt : 0).toFixed(2);
-        document.getElementById('finalVal').innerText = Math.round(mrp).toLocaleString('en-IN');
-        let gstAmt = Math.round(mrp * (18/118));
-        document.getElementById('gstDisplay').innerText = mrp > 0 ? `(₹${gstAmt} GST)` : "";
+        let f = area * rate;
+        document.getElementById('mrp').value = f > 0 ? f.toFixed(0) : "";
+    } else if (trigger === 'mrp') {
+        document.getElementById('rate').value = (area > 0 ? mrp / area : 0).toFixed(2);
     }
-    
-    updateInputStorage(); // Save current work
-}
 
-// REST OF THE FUNCTIONS (Slightly modified to auto-save)
-function dimChanged() {
-    document.getElementById('rate').value = '';
-    document.getElementById('mrp').value = '';
-    calculate('rate');
+    let final = parseFloat(document.getElementById('mrp').value) || 0;
+    document.getElementById('finalVal').innerText = Math.round(final).toLocaleString('en-IN');
+    document.getElementById('gstDisplay').innerText = final > 0 ? `(₹${Math.round(final * 18/118)} GST)` : "";
+    updateMemory();
 }
 
 function saveToHistory() {
-    const sizeFt = document.getElementById('sizeConv').innerText;
-    const mrpVal = document.getElementById('finalVal').innerText;
-    const area = document.getElementById('dispArea').innerText;
+    const size = document.getElementById('sizeConv').innerText;
+    const mrp = document.getElementById('finalVal').innerText;
     const rate = document.getElementById('rate').value;
-    if(mrpVal === "0") return;
+    const area = document.getElementById('dispArea').innerText;
+
+    if (mrp === "0") return;
 
     const item = `
         <div class="hist-item">
-            <span class="delete-item" onclick="this.parentElement.remove(); updateHistoryStorage();">DELETE</span>
+            <span class="delete-item" onclick="this.parentElement.remove(); updateMemory();">DELETE</span>
             <span class="hist-name" onclick="renameQuote(this)">UNNAMED</span>
             <div class="hist-main">
-                <b style="color:white;">${sizeFt}</b>
-                <b style="color:var(--accent);">₹${mrpVal}</b>
+                <b style="color:white;">${size}</b>
+                <b style="color:var(--accent);">₹${mrp}</b>
             </div>
             <div class="hist-data">RATE: ₹${rate}/ft² | AREA: ${area}ft²</div>
         </div>`;
     document.getElementById('histItems').insertAdjacentHTML('afterbegin', item);
-    updateHistoryStorage();
+    updateMemory(); // Force Save
 }
 
 function clearAll() {
     ['L', 'W', 'rate', 'mrp'].forEach(id => document.getElementById(id).value = '');
-    calculate('rate');
-    localStorage.clear(); // Wipe everything on reset
+    calculate();
+    localStorage.clear();
 }
 
-function clearField(id) { document.getElementById(id).value = ''; calculate('rate'); }
-function toggleInch() { wInchMode = !wInchMode; document.getElementById('wToggle').classList.toggle('active', wInchMode); calculate('rate'); }
-function closeModal() { document.getElementById('appModal').style.display = 'none'; }
-function renameQuote(el) { 
-    openModal("RENAME", el.innerText, (val) => { if(val) { el.innerText = val.toUpperCase(); updateHistoryStorage(); } }); 
+function triggerClearHistory() {
+    openModal("CLEAR ALL?", "", () => {
+        document.getElementById('histItems').innerHTML = '';
+        updateMemory();
+    }, false);
 }
-function triggerClearHistory() { openModal("DELETE ALL?", "", () => { document.getElementById('histItems').innerHTML = ''; localStorage.removeItem('sizeCalcHistory'); }, false); }
-function openModal(title, placeholder, onConfirm, showInput=true) {
-    document.getElementById('modalTitle').innerText = title;
-    const input = document.getElementById('modalInput');
-    input.style.display = showInput ? 'block' : 'none';
-    input.value = placeholder;
-    document.getElementById('appModal').style.display = 'flex';
-    document.getElementById('modalSubmit').onclick = () => { onConfirm(input.value); closeModal(); };
-}
-function copyCurrent() {
-    const text = `Quote: ${document.getElementById('sizeConv').innerText}\nArea: ${document.getElementById('dispArea').innerText} ft²\nTotal: ₹${document.getElementById('finalVal').innerText}`;
-    navigator.clipboard.writeText(text).then(() => {
-        const t = document.getElementById("toast"); t.className = "show";
-        setTimeout(() => { t.className = t.className.replace("show", ""); }, 2500);
+
+function renameQuote(el) {
+    openModal("RENAME", el.innerText, (val) => {
+        if(val) { el.innerText = val.toUpperCase(); updateMemory(); }
     });
 }
-</script>
-</body>
-</html>
-        <button class="btn btn-reset" onclick="clearAll()">Reset</button>
-        <button class="btn btn-save" onclick="saveToHistory()">Save</button>
-        <button id="mainCopy" class="btn btn-copy-main" onclick="copyCurrent()">
-            <span style="font-size:16px;">⎘</span> Copy
-        </button>
-    </div>
 
-    <div id="historyLog">
-        <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-            <span class="section-label" style="margin:0">History</span>
-            <span onclick="triggerClearHistory()" style="font-size: 0.6rem; color: var(--danger); cursor: pointer; font-weight: 800;">CLEAR ALL</span>
-        </div>
-        <div id="histItems"></div>
-    </div>
-</div>
-
-<script>
-let wInchMode = false;
-
-function showToast() {
-    const x = document.getElementById("toast");
-    x.className = "show";
-    setTimeout(() => { x.className = x.className.replace("show", ""); }, 2500);
-}
-
-function copyToClipboard(text) {
-    const el = document.createElement('textarea');
-    el.value = text;
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand('copy');
-    document.body.removeChild(el);
-    showToast();
-}
-
-function copyCurrent() {
-    const size = document.getElementById('sizeConv').innerText;
-    const area = document.getElementById('dispArea').innerText;
-    const mrp = document.getElementById('finalVal').innerText;
-    const gst = document.getElementById('gstDisplay').innerText;
-    const btn = document.getElementById('mainCopy');
-    btn.classList.add('copied');
-    setTimeout(() => btn.classList.remove('copied'), 1000);
-    copyToClipboard(`Quote: ${size}\nArea: ${area} ft²\nMRP: ₹${mrp} ${gst}`);
-}
-
-function toggleInch() { wInchMode = !wInchMode; document.getElementById('wToggle').classList.toggle('active', wInchMode); calculate('rate'); }
-function clearField(id) { document.getElementById(id).value = ''; calculate('rate'); }
-function clearDisc() { document.getElementById('discIn').value = ''; applyDiscount(); }
-function toggleDisc() { const area = document.getElementById('discInputArea'); area.style.display = area.style.display === 'block' ? 'none' : 'block'; }
-function clearAll() { ['L', 'W', 'rate', 'mrp', 'discIn'].forEach(id => document.getElementById(id).value = ''); calculate('rate'); }
-function dimChanged() { document.getElementById('rate').value = ''; document.getElementById('mrp').value = ''; document.getElementById('discIn').value = ''; calculate('rate'); }
-
+// Helpers
+function toggleInch() { wInchMode = !wInchMode; document.getElementById('wToggle').classList.toggle('active', wInchMode); calculate(); }
+function clearField(id) { document.getElementById(id).value = ''; calculate(); }
+function closeModal() { document.getElementById('appModal').style.display = 'none'; }
 function openModal(title, placeholder, onConfirm, showInput=true) {
     document.getElementById('modalTitle').innerText = title;
     const input = document.getElementById('modalInput');
@@ -308,79 +216,9 @@ function openModal(title, placeholder, onConfirm, showInput=true) {
     document.getElementById('appModal').style.display = 'flex';
     document.getElementById('modalSubmit').onclick = () => { onConfirm(input.value); closeModal(); };
 }
-function closeModal() { document.getElementById('appModal').style.display = 'none'; }
-function renameQuote(el) { openModal("RENAME", el.innerText, (val) => { if(val) el.innerText = val.toUpperCase(); }); }
-function triggerClearHistory() { openModal("DELETE ALL?", "", () => { document.getElementById('histItems').innerHTML = ''; }, false); }
-
-function applyDiscount() {
-    const val = parseFloat(document.getElementById('discIn').value) || 0;
-    const currentMRP = parseFloat(document.getElementById('finalVal').innerText.replace(/,/g, '')) || 0;
-    const area = parseFloat(document.getElementById('dispArea').innerText) || 1;
-    let discMRP = 0, moneyOff = 0, percUsed = 0;
-    if (val > 0 && val < 100) { moneyOff = currentMRP * (val / 100); discMRP = currentMRP - moneyOff; percUsed = val; }
-    else if (val >= 100) { discMRP = val; moneyOff = currentMRP - val; percUsed = currentMRP > 0 ? ((moneyOff / currentMRP) * 100) : 0; }
-    const discRate = area > 0 ? discMRP / area : 0;
-    document.getElementById('dMoneyOff').innerText = Math.round(moneyOff).toLocaleString('en-IN');
-    document.getElementById('dTotal').innerText = Math.round(discMRP).toLocaleString('en-IN');
-    document.getElementById('dRate').innerText = discRate.toFixed(2);
-    return { moneyOff, discMRP, discRate, percUsed };
-}
-
-function saveToHistory() {
-    const sizeFt = document.getElementById('sizeConv').innerText;
-    const mrp = document.getElementById('finalVal').innerText;
-    const gstAmt = document.getElementById('gstDisplay').innerText;
-    const area = document.getElementById('dispArea').innerText;
-    const rate = document.getElementById('rate').value;
-    const dRes = applyDiscount();
-    let L = parseFloat(document.getElementById('L').value) || 0;
-    let W = parseFloat(document.getElementById('W').value) || 0;
-    let lMm = L > 200 ? L : Math.round(L * 304.8);
-    let wMm = W > 200 ? W : Math.round(W * 304.8);
-    if(wInchMode) wMm = Math.round(W * 25.4);
-    if(mrp === "0" || mrp === "0.00") return;
-    let discTag = dRes.moneyOff > 0 ? `<span class="hist-disc-tag">FINAL: ₹${Math.round(dRes.discMRP).toLocaleString('en-IN')} (₹${dRes.discRate.toFixed(2)}/ft²) [${Math.round(dRes.percUsed)}%]</span>` : '';
-
-    const item = `
-        <div class="hist-item">
-            <span class="delete-item" onclick="this.parentElement.remove()">DELETE</span>
-            <div class="hist-header-row">
-                <span class="hist-name" onclick="renameQuote(this)">UNNAMED</span>
-                <span class="copy-icon-btn" onclick="copyToClipboard(this.parentElement.nextElementSibling.innerText)">📄</span>
-            </div>
-            <div class="hist-main">
-                <b style="color:white;">${sizeFt}</b>
-                <div style="text-align:right;">
-                    <b style="color:var(--accent);">₹${mrp}</b><br>
-                    <span style="font-size:0.5rem; color:#444;">${gstAmt}</span>
-                </div>
-            </div>
-            ${discTag}
-            <div class="hist-data">SIZE: ${lMm}×${wMm}mm | RATE: ₹${rate}/ft² | AREA: ${area}ft²</div>
-        </div>`;
-    document.getElementById('histItems').insertAdjacentHTML('afterbegin', item);
-}
-
-function calculate(trigger) {
-    let L = parseFloat(document.getElementById('L').value) || 0;
-    let W = parseFloat(document.getElementById('W').value) || 0;
-    let rate = parseFloat(document.getElementById('rate').value) || 0;
-    let mrp = parseFloat(document.getElementById('mrp').value) || 0;
-    let lIn, wIn;
-    if (L > 200) { lIn = L / 25.4; } else { lIn = L * 12; }
-    if (wInchMode) { wIn = W; } else if (W > 200) { wIn = W / 25.4; } else { wIn = W * 12; }
-    let ftL = L > 200 ? (L/304.8).toFixed(1) : L;
-    let ftW = wInchMode ? (W/12).toFixed(2) : (W > 200 ? (W/304.8).toFixed(2) : W);
-    document.getElementById('sizeConv').innerText = (L && W) ? `${ftL}ft × ${ftW}ft` : "0 × 0";
-    let areaSqFt = (lIn * wIn) / 144;
-    document.getElementById('dispArea').innerText = areaSqFt.toFixed(2);
-    let finalNum = 0;
-    if (trigger === 'rate') { finalNum = areaSqFt * rate; document.getElementById('mrp').value = finalNum > 0 ? finalNum.toFixed(0) : ""; }
-    else { finalNum = mrp; let cRate = areaSqFt > 0 ? mrp / areaSqFt : 0; document.getElementById('rate').value = cRate > 0 ? cRate.toFixed(2) : ""; }
-    document.getElementById('finalVal').innerText = Math.round(finalNum).toLocaleString('en-IN');
-    let gstAmt = Math.round(finalNum * (18/118));
-    document.getElementById('gstDisplay').innerText = finalNum > 0 ? `(₹${gstAmt.toLocaleString('en-IN')} GST)` : "";
-    applyDiscount();
+function copyCurrent() {
+    const t = `Size: ${document.getElementById('sizeConv').innerText}\nMRP: ₹${document.getElementById('finalVal').innerText}`;
+    navigator.clipboard.writeText(t);
 }
 </script>
 </body>
