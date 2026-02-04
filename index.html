@@ -3,6 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#000000">
+    
     <title>Size Calc Pro</title>
     <style>
         :root { --accent: #3b82f6; --danger: #ef4444; --card-bg: #000; --input-bg: #0a0a0a; --border: #1a1a1a; --text-dim: #666; }
@@ -44,12 +50,16 @@
         .delete-btn { position: absolute; top: 10px; right: 10px; color: var(--danger); font-size: 9px; font-weight: 900; cursor: pointer; }
         #toast { visibility: hidden; min-width: 100px; background: var(--accent); color: #fff; text-align: center; border-radius: 20px; padding: 8px; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; z-index: 1000; }
         #toast.show { visibility: visible; }
+        .modal-overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:2000; align-items:center; justify-content:center; backdrop-filter:blur(5px); }
+        .modal-box { background:#0a0a0a; padding:25px; border-radius:15px; border:1px solid #222; width:80%; max-width:300px; text-align:center; }
     </style>
 </head>
 <body>
+
 <div id="toast">COPIED</div>
-<div id="appModal" class="modal-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:2000; align-items:center; justify-content:center; backdrop-filter:blur(5px);">
-    <div class="modal-box" style="background:#0a0a0a; padding:25px; border-radius:15px; border:1px solid #222; width:80%; max-width:300px; text-align:center;">
+
+<div id="appModal" class="modal-overlay">
+    <div class="modal-box">
         <span id="modalTitle" style="font-size:0.8rem; font-weight:800; color:#fff;">RENAME</span>
         <input type="text" id="modalInput" style="width:100%; margin:15px 0; padding:10px; background:#000; border:1px solid #333; color:#fff; text-align:center; border-radius:8px;">
         <div style="display:flex; gap:10px;">
@@ -58,6 +68,7 @@
         </div>
     </div>
 </div>
+
 <div class="card">
     <h2>Size Calc</h2>
     <span class="section-label">L / W / Qty</span>
@@ -73,6 +84,7 @@
         </div>
         <button id="wToggle" class="toggle-btn" onclick="toggleInch()">INCH</button>
     </div>
+
     <div class="preset-row">
         <div class="chip" data-id="p1" onclick="applyPreset('p1', 8, 4.5, true)">8' × 4.5"</div>
         <div class="chip" data-id="p2" onclick="applyPreset('p2', 8, 6, true)">8' × 6"</div>
@@ -80,11 +92,13 @@
         <div class="chip" data-id="p4" onclick="applyPreset('p4', 9.5, 6, true)">9.5' × 6"</div>
         <div class="chip" data-id="p5" onclick="applyPreset('p5', 8, 4, false)">8' × 4' (STD)</div>
     </div>
+
     <span class="section-label">Rate & Price</span>
     <div class="dim-row">
         <div class="input-wrapper"><input type="number" id="rate" placeholder="Rate/ft²" class="input-box nav-target" oninput="calculate('rate')"><span class="clear-x" onclick="clearField('rate')">×</span></div>
         <div class="input-wrapper"><input type="number" id="mrp" placeholder="Total MRP" class="input-box nav-target" oninput="calculate('mrp')"><span class="clear-x" onclick="clearField('mrp')">×</span></div>
     </div>
+
     <div class="result-panel">
         <span class="size-conversion" id="sizeConv">0 × 0</span>
         <div class="area-line">Total Area: <b><span id="dispArea">0.00</span> ft²</b> <span id="pcsInfo" style="color:var(--accent); font-weight:bold;"></span></div>
@@ -101,11 +115,13 @@
             </div>
         </div>
     </div>
+
     <div class="btn-group">
         <button class="btn btn-reset" onclick="clearAll()">Reset</button>
         <button class="btn btn-save" onclick="saveToHistory()">Save</button>
         <button class="btn btn-copy" onclick="copyCurrent()">Copy</button>
     </div>
+
     <div id="historyLog" style="margin-top:20px;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
             <span class="section-label" style="margin:0">Recent Quotes</span>
@@ -114,7 +130,13 @@
         <div id="histItems"></div>
     </div>
 </div>
+
 <script>
+// --- SERVICE WORKER REGISTER ---
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js');
+}
+
 let wInchMode = false;
 const navTargets = document.querySelectorAll('.nav-target');
 navTargets.forEach((el, i) => { el.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); if (navTargets[i + 1]) navTargets[i + 1].focus(); } }); });
