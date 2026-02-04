@@ -5,278 +5,182 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>Size Calc Pro</title>
     <style>
-        :root { --accent: #3b82f6; --danger: #ef4444; --card-bg: #000000; --input-bg: #0a0a0a; --border: #1a1a1a; --text-dim: #888; }
-        body { font-family: -apple-system, system-ui, sans-serif; background: #000000; color: #ffffff; padding: 10px; display: flex; justify-content: center; margin: 0; overflow-x: hidden; }
-        .card { width: 100%; max-width: 400px; padding: 15px; box-sizing: border-box; }
-        
+        :root { --accent: #3b82f6; --danger: #ef4444; --card-bg: #000; --input-bg: #0a0a0a; --border: #1a1a1a; --text-dim: #666; }
+        body { font-family: -apple-system, system-ui, sans-serif; background: #000; color: #fff; padding: 10px; display: flex; justify-content: center; margin: 0; overflow-x: hidden; }
+        .card { width: 100%; max-width: 400px; padding: 10px; box-sizing: border-box; }
         input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
         input[type=number], input[type=text] { -moz-appearance: textfield; }
-
-        h2 { text-align: left; margin: 0 0 15px 0; color: var(--accent); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; font-size: 1.1rem; }
-        .section-label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: var(--text-dim); margin: 12px 0 8px 0; display: block; }
-        
-        .dim-row { display: flex; gap: 8px; margin-bottom: 10px; align-items: center; }
+        h2 { color: var(--accent); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; font-size: 1rem; margin: 0 0 15px 0; }
+        .section-label { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; color: var(--text-dim); margin: 10px 0 5px 0; display: block; }
+        .dim-row { display: flex; gap: 6px; margin-bottom: 8px; align-items: center; }
         .input-wrapper { position: relative; flex: 1; display: flex; align-items: center; }
-        .input-box { width: 100%; padding: 12px 30px 12px 10px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 1rem; background: var(--input-bg); color: white; outline: none; height: 48px; box-sizing: border-box; }
+        .input-box { width: 100%; padding: 10px 28px 10px 10px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.95rem; background: var(--input-bg); color: #fff; outline: none; height: 44px; box-sizing: border-box; }
         .input-box:focus { border-color: var(--accent); }
-        
-        .clear-x { position: absolute; right: 8px; color: #444; cursor: pointer; font-size: 18px; padding: 5px; }
-        .toggle-btn { padding: 0 10px; border-radius: 8px; border: 1.5px solid var(--border); background: var(--input-bg); color: var(--text-dim); font-size: 0.65rem; font-weight: 800; cursor: pointer; height: 48px; white-space: nowrap; }
-        .toggle-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
-
-        .result-panel { background: var(--card-bg); border-radius: 12px; padding: 15px; margin-top: 15px; border: 1.5px solid var(--border); position: relative; }
-        .size-conversion { font-weight: 800; color: #fff; font-size: 1.1rem; margin-bottom: 5px; display: block; }
-        .area-line { font-size: 0.85rem; color: #666; margin-bottom: 12px; }
-        .mrp-box { border-top: 1px solid var(--border); padding-top: 12px; position: relative; }
-        .mrp-label { font-size: 0.7rem; font-weight: bold; color: var(--text-dim); text-transform: uppercase; }
-        .mrp-val { font-size: 1.8rem; font-weight: 900; color: var(--accent); margin-top: 4px; display: flex; align-items: baseline; gap: 6px; }
-        .gst-small { font-size: 0.6rem; color: #444; font-weight: 600; text-transform: uppercase; }
-
-        /* Discount Section */
-        .disc-arrow { position: absolute; right: 10px; bottom: 15px; color: #444; cursor: pointer; font-size: 10px; font-weight: bold; }
-        #discInputArea { display: none; margin-top: 10px; border-top: 1px dashed var(--border); padding-top: 10px; }
-        .disc-res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; }
-        .disc-res-box { background: #080808; padding: 8px; border-radius: 5px; font-size: 0.7rem; color: #666; border: 1px solid #111; text-transform: uppercase; font-weight: bold; }
-        .disc-res-box b { color: #fff; display: block; font-size: 0.85rem; margin-top: 2px; }
-
-        /* Buttons */
-        .btn-group { display: flex; gap: 8px; margin-top: 15px; }
-        .btn { padding: 12px; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 0.75rem; height: 48px; box-sizing: border-box; text-transform: uppercase; }
-        .btn-reset { flex: 0.8; background: #111; color: #555; }
-        .btn-save { flex: 1.2; background: var(--accent); color: white; }
-        .btn-copy-main { flex: 0.8; background: #1a1a1a; color: #888; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; gap: 5px; }
-
-        #historyLog { margin-top: 25px; }
-        .hist-item { background: var(--card-bg); padding: 12px; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 10px; position: relative; }
-        .hist-name { color: var(--accent); font-size: 0.75rem; text-transform: uppercase; font-weight: 800; margin-bottom: 5px; display: block; cursor: pointer; }
-        .delete-item { position: absolute; top: 12px; right: 12px; color: var(--danger); font-size: 10px; font-weight: bold; cursor: pointer; opacity: 0.6; }
-        .hist-main { display: flex; justify-content: space-between; align-items: baseline; }
-        .hist-data { display: flex; flex-wrap: wrap; gap: 10px; font-size: 0.7rem; color: #444; margin-top: 8px; border-top: 1px solid #0a0a0a; padding-top: 8px; }
-        .hist-disc-tag { font-size: 0.7rem; color: #00ff00; margin-top: 5px; display: block; font-weight: bold; }
-
-        .modal-overlay { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 1000; align-items: center; justify-content: center; }
-        .modal-box { background: #0a0a0a; border: 1.5px solid var(--border); border-radius: 20px; padding: 25px; width: 80%; max-width: 300px; text-align: center; }
+        .smart-input-container { position: relative; flex: 1.5; display: flex; align-items: center; background: var(--input-bg); border: 1.5px solid var(--border); border-radius: 8px; height: 44px; overflow: hidden; }
+        .smart-select { background: #111; color: var(--accent); border: none; font-size: 0.55rem; font-weight: 900; height: 100%; padding: 0 5px; outline: none; text-transform: uppercase; cursor: pointer; border-right: 1px solid var(--border); }
+        .smart-val-input { flex: 1; background: transparent; border: none; color: #fff; font-size: 0.95rem; padding: 0 28px 0 10px; outline: none; height: 100%; width: 100%; }
+        .clear-x { position: absolute; right: 8px; color: #444; cursor: pointer; font-size: 16px; padding: 4px; z-index: 5; }
+        .toggle-btn { padding: 0 8px; border-radius: 8px; border: 1.5px solid var(--border); background: var(--input-bg); color: var(--text-dim); font-size: 0.6rem; font-weight: 800; cursor: pointer; height: 44px; white-space: nowrap; }
+        .toggle-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+        .preset-row { display: flex; gap: 5px; margin: 5px 0 10px 0; overflow-x: auto; padding-bottom: 5px; }
+        .chip { background: #111; color: #555; padding: 5px 10px; border-radius: 6px; font-size: 0.55rem; font-weight: 800; border: 1px solid #1a1a1a; white-space: nowrap; flex-shrink: 0; }
+        .chip.active-preset { background: #0a192f; border-color: var(--accent); color: var(--accent); }
+        .result-panel { background: #050505; border-radius: 12px; padding: 12px; margin-top: 10px; border: 1.5px solid var(--border); position: relative; }
+        .size-conversion { font-weight: 800; color: #fff; font-size: 1rem; margin-bottom: 4px; display: block; }
+        .area-line { font-size: 0.8rem; color: #888; margin-bottom: 10px; }
+        .mrp-box { border-top: 1px solid var(--border); padding-top: 10px; position: relative; }
+        .mrp-val { font-size: 1.6rem; font-weight: 900; color: var(--accent); margin-top: 2px; display: flex; align-items: baseline; gap: 6px; }
+        .gst-small { font-size: 0.55rem; color: #444; font-weight: bold; }
+        #discInputArea { display: none; margin-top: 8px; border-top: 1px dashed var(--border); padding-top: 8px; }
+        .disc-res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 6px; }
+        .disc-res-box { background: #080808; padding: 6px; border-radius: 5px; font-size: 0.65rem; color: #555; border: 1px solid #111; font-weight: bold; text-transform: uppercase; }
+        .disc-res-box b { color: #fff; display: block; font-size: 0.8rem; }
+        .btn-group { display: flex; gap: 6px; margin-top: 12px; }
+        .btn { flex: 1; padding: 10px; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 0.7rem; height: 42px; text-transform: uppercase; }
+        .btn-reset { background: #111; color: #444; }
+        .btn-save { background: var(--accent); color: #fff; }
+        .btn-copy { background: #1a1a1a; color: #888; border: 1px solid var(--border); }
+        .hist-item { background: #050505; padding: 12px; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 8px; position: relative; }
+        .delete-btn { position: absolute; top: 10px; right: 10px; color: var(--danger); font-size: 9px; font-weight: 900; cursor: pointer; }
+        #toast { visibility: hidden; min-width: 100px; background: var(--accent); color: #fff; text-align: center; border-radius: 20px; padding: 8px; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; z-index: 1000; }
+        #toast.show { visibility: visible; }
     </style>
 </head>
 <body>
-
-<div id="appModal" class="modal-overlay">
-    <div class="modal-box">
-        <span id="modalTitle" style="font-weight: 800; font-size: 0.85rem; text-transform: uppercase; color: #fff; display: block;">Rename</span>
-        <input type="text" id="modalInput" style="width: 100%; background: #000; border: 1px solid var(--border); color: white; padding: 14px; border-radius: 10px; margin: 20px 0; font-size: 1rem; text-align: center;" placeholder="...">
+<div id="toast">COPIED</div>
+<div id="appModal" class="modal-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:2000; align-items:center; justify-content:center; backdrop-filter:blur(5px);">
+    <div class="modal-box" style="background:#0a0a0a; padding:25px; border-radius:15px; border:1px solid #222; width:80%; max-width:300px; text-align:center;">
+        <span id="modalTitle" style="font-size:0.8rem; font-weight:800; color:#fff;">RENAME</span>
+        <input type="text" id="modalInput" style="width:100%; margin:15px 0; padding:10px; background:#000; border:1px solid #333; color:#fff; text-align:center; border-radius:8px;">
         <div style="display:flex; gap:10px;">
-            <button class="btn" style="flex:1; background:#1a1a1a; color:#888;" onclick="closeModal()">CANCEL</button>
-            <button class="btn" style="flex:1; background:var(--accent); color:white;" id="modalSubmit">OK</button>
+            <button class="btn btn-reset" onclick="closeModal()">CANCEL</button>
+            <button class="btn btn-save" id="modalSubmit">OK</button>
         </div>
     </div>
 </div>
-
 <div class="card">
     <h2>Size Calc</h2>
-
-    <span class="section-label">Dimensions</span>
+    <span class="section-label">L / W / Qty</span>
     <div class="dim-row">
-        <div class="input-wrapper">
-            <input type="number" id="L" placeholder="Length" class="input-box" oninput="dimChanged()">
-            <span class="clear-x" onclick="clearField('L')">×</span>
-        </div>
-        <div class="input-wrapper">
-            <input type="number" id="W" placeholder="Width" class="input-box" oninput="dimChanged()">
-            <span class="clear-x" onclick="clearField('W')">×</span>
+        <div class="input-wrapper"><input type="number" id="L" placeholder="L" class="input-box nav-target" oninput="manualDimChange()"><span class="clear-x" onclick="clearField('L')">×</span></div>
+        <div class="input-wrapper"><input type="number" id="W" placeholder="W" class="input-box nav-target" oninput="manualDimChange()"><span class="clear-x" onclick="clearField('W')">×</span></div>
+        <div class="smart-input-container">
+            <select id="calcMode" class="smart-select" onchange="calculate()">
+                <option value="pcs">QTY</option>
+                <option value="wall">AREA</option>
+            </select>
+            <div class="input-wrapper"><input type="number" id="QTY_VAL" value="1" class="smart-val-input nav-target" oninput="calculate()"><span class="clear-x" onclick="clearField('QTY_VAL')">×</span></div>
         </div>
         <button id="wToggle" class="toggle-btn" onclick="toggleInch()">INCH</button>
     </div>
-
-    <span class="section-label">Pricing</span>
-    <div class="dim-row">
-        <div class="input-wrapper">
-            <input type="number" id="rate" placeholder="Rate /ft²" class="input-box" oninput="calculate('rate')">
-            <span class="clear-x" onclick="clearField('rate')">×</span>
-        </div>
-        <div style="color: #222; font-weight: bold;">:</div>
-        <div class="input-wrapper">
-            <input type="number" id="mrp" placeholder="Total MRP" class="input-box" oninput="calculate('mrp')">
-            <span class="clear-x" onclick="clearField('mrp')">×</span>
-        </div>
+    <div class="preset-row">
+        <div class="chip" data-id="p1" onclick="applyPreset('p1', 8, 4.5, true)">8' × 4.5"</div>
+        <div class="chip" data-id="p2" onclick="applyPreset('p2', 8, 6, true)">8' × 6"</div>
+        <div class="chip" data-id="p3" onclick="applyPreset('p3', 9.5, 4.5, true)">9.5' × 4.5"</div>
+        <div class="chip" data-id="p4" onclick="applyPreset('p4', 9.5, 6, true)">9.5' × 6"</div>
+        <div class="chip" data-id="p5" onclick="applyPreset('p5', 8, 4, false)">8' × 4' (STD)</div>
     </div>
-
+    <span class="section-label">Rate & Price</span>
+    <div class="dim-row">
+        <div class="input-wrapper"><input type="number" id="rate" placeholder="Rate/ft²" class="input-box nav-target" oninput="calculate('rate')"><span class="clear-x" onclick="clearField('rate')">×</span></div>
+        <div class="input-wrapper"><input type="number" id="mrp" placeholder="Total MRP" class="input-box nav-target" oninput="calculate('mrp')"><span class="clear-x" onclick="clearField('mrp')">×</span></div>
+    </div>
     <div class="result-panel">
         <span class="size-conversion" id="sizeConv">0 × 0</span>
-        <div class="area-line">Area: <b><span id="dispArea">0.00</span> sq. ft</b></div>
-        
+        <div class="area-line">Total Area: <b><span id="dispArea">0.00</span> ft²</b> <span id="pcsInfo" style="color:var(--accent); font-weight:bold;"></span></div>
         <div class="mrp-box">
-            <span class="mrp-label">Total MRP</span>
+            <span class="gst-small" style="text-transform:uppercase; color:#555;">Total MRP</span>
             <div class="mrp-val">₹ <span id="finalVal">0</span> <span id="gstDisplay" class="gst-small"></span></div>
-            <div class="disc-arrow" onclick="toggleDisc()">DISCOUNT ▼</div>
+            <div onclick="toggleDisc()" style="position: absolute; right: 0; bottom: 10px; color: #444; cursor: pointer; font-size: 9px; font-weight: 800;">DISCOUNT ▼</div>
         </div>
-
         <div id="discInputArea">
-            <div class="input-wrapper">
-                <input type="number" id="discIn" placeholder="% or Price" class="input-box" style="height: 40px;" oninput="applyDiscount()">
-                <span class="clear-x" onclick="clearDisc()">×</span>
-            </div>
+            <div class="input-wrapper"><input type="number" id="discIn" placeholder="% or Price" class="input-box nav-target" style="height: 38px; margin-top: 10px;" oninput="applyDiscount()"><span class="clear-x" onclick="clearDisc()">×</span></div>
             <div class="disc-res-grid">
-                <div class="disc-res-box">Less ₹<b><span id="dMoneyOff">0</span></b></div>
-                <div class="disc-res-box">Disc. Result<b>₹<span id="dTotal">0</span> <span style="color:#444; font-size:0.6rem;">(<span id="dRate">0</span>/ft²)</span></b></div>
+                <div class="disc-res-box">Less/Off<b>₹<span id="dMoneyOff">0</span> <span style="font-size:0.55rem; color:#444;">(<span id="dPerc">0</span>%)</span></b></div>
+                <div class="disc-res-box">Disc. Result<b>₹<span id="dTotal">0</span> <span style="font-size:0.55rem; color:#444;">(<span id="dRate">0</span>/ft²)</span></b></div>
             </div>
         </div>
     </div>
-
     <div class="btn-group">
         <button class="btn btn-reset" onclick="clearAll()">Reset</button>
         <button class="btn btn-save" onclick="saveToHistory()">Save</button>
-        <button class="btn btn-copy-main" onclick="copyCurrent()">Copy</button>
+        <button class="btn btn-copy" onclick="copyCurrent()">Copy</button>
     </div>
-
-    <div id="historyLog">
-        <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-            <span class="section-label" style="margin:0">History Log</span>
-            <span onclick="triggerClearHistory()" style="font-size: 0.6rem; color: var(--danger); cursor: pointer; font-weight: 800;">CLEAR ALL</span>
+    <div id="historyLog" style="margin-top:20px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <span class="section-label" style="margin:0">Recent Quotes</span>
+            <span onclick="triggerClearHistory()" style="font-size: 0.55rem; color: var(--danger); cursor: pointer; font-weight: 900;">CLEAR ALL</span>
         </div>
         <div id="histItems"></div>
     </div>
 </div>
-
 <script>
 let wInchMode = false;
-
+const navTargets = document.querySelectorAll('.nav-target');
+navTargets.forEach((el, i) => { el.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); if (navTargets[i + 1]) navTargets[i + 1].focus(); } }); });
 window.onload = function() {
-    const savedHtml = localStorage.getItem('sizeCalcHistory');
-    if (savedHtml) document.getElementById('histItems').innerHTML = savedHtml;
-    
-    document.getElementById('L').value = localStorage.getItem('lastL') || '';
-    document.getElementById('W').value = localStorage.getItem('lastW') || '';
-    document.getElementById('rate').value = localStorage.getItem('lastRate') || '';
-    document.getElementById('mrp').value = localStorage.getItem('lastMRP') || '';
+    const h = localStorage.getItem('sizeCalcHistory');
+    if (h) document.getElementById('histItems').innerHTML = h;
+    ['L', 'W', 'QTY_VAL', 'rate', 'mrp', 'discIn'].forEach(id => { document.getElementById(id).value = localStorage.getItem('last' + id) || (id === 'QTY_VAL' ? '1' : ''); });
+    document.getElementById('calcMode').value = localStorage.getItem('lastMode') || 'pcs';
     calculate();
 };
-
-function updateMemory() {
-    localStorage.setItem('sizeCalcHistory', document.getElementById('histItems').innerHTML);
-    localStorage.setItem('lastL', document.getElementById('L').value);
-    localStorage.setItem('lastW', document.getElementById('W').value);
-    localStorage.setItem('lastRate', document.getElementById('rate').value);
-    localStorage.setItem('lastMRP', document.getElementById('mrp').value);
+function applyPreset(id, l, w, setInches) {
+    document.getElementById('L').value = l; document.getElementById('W').value = w;
+    wInchMode = setInches; document.getElementById('wToggle').classList.toggle('active', wInchMode);
+    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active-preset'));
+    document.querySelector(`[data-id="${id}"]`).classList.add('active-preset');
+    calculate();
 }
-
+function manualDimChange() { document.querySelectorAll('.chip').forEach(c => c.classList.remove('active-preset')); calculate(); }
+function updateStorage() { localStorage.setItem('sizeCalcHistory', document.getElementById('histItems').innerHTML); }
+function updateInputs() { ['L', 'W', 'QTY_VAL', 'rate', 'mrp', 'discIn'].forEach(id => localStorage.setItem('last' + id, document.getElementById(id).value)); localStorage.setItem('lastMode', document.getElementById('calcMode').value); }
+function toggleInch() { wInchMode = !wInchMode; document.getElementById('wToggle').classList.toggle('active', wInchMode); calculate(document.getElementById('mrp').value > 0 ? 'mrp' : 'rate'); }
 function calculate(trigger) {
-    let L = parseFloat(document.getElementById('L').value) || 0;
-    let W = parseFloat(document.getElementById('W').value) || 0;
-    let rate = parseFloat(document.getElementById('rate').value) || 0;
-    let mrp = parseFloat(document.getElementById('mrp').value) || 0;
-
-    let lIn = (L > 200) ? L/25.4 : L*12;
+    let L = parseFloat(document.getElementById('L').value) || 0; let W = parseFloat(document.getElementById('W').value) || 0;
+    let QTY = parseFloat(document.getElementById('QTY_VAL').value) || 0; let mode = document.getElementById('calcMode').value;
+    let rate = parseFloat(document.getElementById('rate').value) || 0; let mrp = parseFloat(document.getElementById('mrp').value) || 0;
+    let lIn, lLabel;
+    if (L >= 1 && L <= 15) { lIn = L * 12; lLabel = L + "ft"; } else if (L >= 16 && L <= 250) { lIn = L; lLabel = L + "in"; } else if (L > 250) { lIn = L / 25.4; lLabel = Math.round(L) + "mm"; } else { lIn = 0; lLabel = "0"; }
     let wIn = wInchMode ? W : (W > 200 ? W/25.4 : W*12);
-
-    let ftL = L > 200 ? (L/304.8).toFixed(1) : L;
-    let ftW = wInchMode ? (W/12).toFixed(2) : (W > 200 ? (W/304.8).toFixed(2) : W);
-    document.getElementById('sizeConv').innerText = (L && W) ? `${ftL}ft × ${ftW}ft` : "0 × 0";
-
-    let area = (lIn * wIn) / 144;
-    document.getElementById('dispArea').innerText = area.toFixed(2);
-
-    if (trigger === 'rate') {
-        let f = area * rate;
-        document.getElementById('mrp').value = f > 0 ? f.toFixed(0) : "";
-    } else if (trigger === 'mrp') {
-        document.getElementById('rate').value = (area > 0 ? mrp / area : 0).toFixed(2);
-    }
-
+    document.getElementById('sizeConv').innerText = (L && W) ? `${lLabel} × ${W}${wInchMode ? 'in' : (W > 200 ? 'mm' : 'ft')}` : "0 × 0";
+    let singleArea = (lIn * wIn) / 144; let finalPCS = 1; let totalArea = 0;
+    if (mode === 'pcs') { finalPCS = QTY || 1; totalArea = singleArea * finalPCS; document.getElementById('pcsInfo').innerText = ""; } else { finalPCS = singleArea > 0 ? Math.ceil(QTY / singleArea) : 1; totalArea = singleArea * finalPCS; document.getElementById('pcsInfo').innerText = `(${finalPCS} Pcs)`; }
+    document.getElementById('dispArea').innerText = totalArea.toFixed(2);
+    if (trigger === 'rate') { let f = totalArea * rate; document.getElementById('mrp').value = f > 0 ? f.toFixed(0) : ""; } else if (trigger === 'mrp') { document.getElementById('rate').value = (totalArea > 0 ? mrp / totalArea : 0).toFixed(2); } else { let f = totalArea * rate; if (f > 0) document.getElementById('mrp').value = f.toFixed(0); }
     let final = parseFloat(document.getElementById('mrp').value) || 0;
     document.getElementById('finalVal').innerText = Math.round(final).toLocaleString('en-IN');
-    document.getElementById('gstDisplay').innerText = final > 0 ? `(₹${Math.round(final * 18/118)} GST)` : "";
-    
-    applyDiscount();
-    updateMemory();
+    let gstAmt = Math.round(final * 18/118); document.getElementById('gstDisplay').innerText = final > 0 ? `(₹${gstAmt.toLocaleString('en-IN')} GST)` : "";
+    applyDiscount(); updateInputs();
 }
-
 function applyDiscount() {
-    const val = parseFloat(document.getElementById('discIn').value) || 0;
-    const currentMRP = parseFloat(document.getElementById('finalVal').innerText.replace(/,/g, '')) || 0;
-    const area = parseFloat(document.getElementById('dispArea').innerText) || 1;
-    let discMRP = 0, moneyOff = 0, percUsed = 0;
-
-    if (val > 0 && val < 100) {
-        moneyOff = currentMRP * (val / 100);
-        discMRP = currentMRP - moneyOff;
-        percUsed = val;
-    } else if (val >= 100) {
-        discMRP = val;
-        moneyOff = currentMRP - val;
-        percUsed = currentMRP > 0 ? ((moneyOff / currentMRP) * 100) : 0;
-    }
-
-    const discRate = area > 0 ? discMRP / area : 0;
-    document.getElementById('dMoneyOff').innerText = Math.round(moneyOff).toLocaleString('en-IN');
-    document.getElementById('dTotal').innerText = Math.round(discMRP).toLocaleString('en-IN');
-    document.getElementById('dRate').innerText = discRate.toFixed(2);
-    return { moneyOff, discMRP, discRate, percUsed };
+    const val = parseFloat(document.getElementById('discIn').value) || 0; const currentMRP = parseFloat(document.getElementById('mrp').value) || 0;
+    const area = parseFloat(document.getElementById('dispArea').innerText) || 1; let dm = 0, mt = 0, pu = 0;
+    if (val > 0 && val < 100) { mt = currentMRP * (val / 100); dm = currentMRP - mt; pu = val; } else if (val >= 100) { dm = val; mt = currentMRP - val; pu = currentMRP > 0 ? ((mt / currentMRP) * 100) : 0; }
+    const dRate = area > 0 ? dm / area : 0;
+    document.getElementById('dMoneyOff').innerText = Math.round(mt).toLocaleString('en-IN'); document.getElementById('dTotal').innerText = Math.round(dm).toLocaleString('en-IN');
+    document.getElementById('dPerc').innerText = Math.round(pu); document.getElementById('dRate').innerText = dRate.toFixed(2);
+    updateInputs();
 }
-
+function copyCurrent() { const text = `Quote: ${document.getElementById('sizeConv').innerText} [${document.getElementById('dispArea').innerText} ft²]\nTotal: ₹${document.getElementById('finalVal').innerText}`; navigator.clipboard.writeText(text).then(() => { const t = document.getElementById("toast"); t.className = "show"; setTimeout(() => t.className = "", 2000); }); }
 function saveToHistory() {
-    const size = document.getElementById('sizeConv').innerText;
-    const mrp = document.getElementById('finalVal').innerText;
-    const rate = document.getElementById('rate').value;
-    const area = document.getElementById('dispArea').innerText;
-    const dRes = applyDiscount();
-
-    if (mrp === "0") return;
-
-    let discTag = dRes.moneyOff > 0 ? `<span class="hist-disc-tag">FINAL: ₹${Math.round(dRes.discMRP).toLocaleString('en-IN')} (₹${dRes.discRate.toFixed(2)}/ft²) [${Math.round(dRes.percUsed)}%]</span>` : '';
-
-    const item = `
-        <div class="hist-item">
-            <span class="delete-item" onclick="this.parentElement.remove(); updateMemory();">DELETE</span>
-            <span class="hist-name" onclick="renameQuote(this)">UNNAMED</span>
-            <div class="hist-main">
-                <b style="color:white;">${size}</b>
-                <b style="color:var(--accent);">₹${mrp}</b>
-            </div>
-            ${discTag}
-            <div class="hist-data">RATE: ₹${rate}/ft² | AREA: ${area}ft²</div>
-        </div>`;
-    document.getElementById('histItems').insertAdjacentHTML('afterbegin', item);
-    updateMemory();
+    const s = document.getElementById('sizeConv').innerText, m = document.getElementById('finalVal').innerText, g = document.getElementById('gstDisplay').innerText, a = document.getElementById('dispArea').innerText, q = document.getElementById('QTY_VAL').value, i = document.getElementById('pcsInfo').innerText, rt = document.getElementById('rate').value;
+    let L = parseFloat(document.getElementById('L').value) || 0, W = parseFloat(document.getElementById('W').value) || 0;
+    let lMm = L >= 1 && L <= 15 ? Math.round(L * 304.8) : (L >= 16 && L <= 250 ? Math.round(L * 25.4) : Math.round(L));
+    let wMm = wInchMode ? Math.round(W * 25.4) : (W > 200 ? Math.round(W) : Math.round(W * 304.8));
+    if (m === "0") return;
+    const discHtml = parseFloat(document.getElementById('dMoneyOff').innerText.replace(/,/g,'')) > 0 ? `<div style="color:#00ff00; font-size:0.65rem; font-weight:bold; margin-top:3px;">FINAL: ₹${document.getElementById('dTotal').innerText} [${document.getElementById('dPerc').innerText}% OFF] (₹${document.getElementById('dRate').innerText}/ft²)</div>` : '';
+    const item = `<div class="hist-item"><span class="delete-btn" onclick="this.parentElement.remove(); updateStorage();">DELETE</span><span onclick="renameQuote(this)" style="color:var(--accent); font-size:0.7rem; font-weight:900; cursor:pointer;">UNNAMED</span><div style="display:flex; justify-content:space-between; align-items:baseline; margin-top:3px;"><b style="color:#fff; font-size:0.9rem;">${s} ${i || '['+q+' Pcs]'}</b><div style="text-align:right;"><b style="color:var(--accent); font-size:1rem;">₹${m}</b><br><span style="font-size:0.5rem; color:#444; font-weight:bold;">${g}</span></div></div>${discHtml}<div style="font-size:0.6rem; color:#444; margin-top:5px; border-top:1px solid #111; padding-top:5px;">SIZE: ${lMm}×${wMm}mm | RATE: ₹${rt}/ft² | AREA: ${a}ft²</div></div>`;
+    document.getElementById('histItems').insertAdjacentHTML('afterbegin', item); updateStorage();
 }
-
-function dimChanged() {
-    document.getElementById('rate').value = '';
-    document.getElementById('mrp').value = '';
-    document.getElementById('discIn').value = '';
-    calculate();
-}
-
-function clearAll() {
-    ['L', 'W', 'rate', 'mrp', 'discIn'].forEach(id => document.getElementById(id).value = '');
-    calculate();
-    localStorage.clear();
-}
-
-function toggleDisc() {
-    const area = document.getElementById('discInputArea');
-    area.style.display = area.style.display === 'block' ? 'none' : 'block';
-}
-
+function clearAll() { ['L', 'W', 'QTY_VAL', 'rate', 'mrp', 'discIn'].forEach(id => document.getElementById(id).value = (id === 'QTY_VAL' ? '1' : '')); document.getElementById('calcMode').value = 'pcs'; document.querySelectorAll('.chip').forEach(c => c.classList.remove('active-preset')); calculate(); localStorage.clear(); }
+function clearField(id) { document.getElementById(id).value = (id === 'QTY_VAL' ? '1' : ''); manualDimChange(); }
 function clearDisc() { document.getElementById('discIn').value = ''; applyDiscount(); }
-function toggleInch() { wInchMode = !wInchMode; document.getElementById('wToggle').classList.toggle('active', wInchMode); calculate(); }
-function clearField(id) { document.getElementById(id).value = ''; calculate(); }
+function toggleDisc() { const a = document.getElementById('discInputArea'); a.style.display = (a.style.display === 'block' ? 'none' : 'block'); }
 function closeModal() { document.getElementById('appModal').style.display = 'none'; }
-function triggerClearHistory() { openModal("DELETE ALL?", "", () => { document.getElementById('histItems').innerHTML = ''; updateMemory(); }, false); }
-function renameQuote(el) { openModal("RENAME", el.innerText, (val) => { if(val) { el.innerText = val.toUpperCase(); updateMemory(); } }); }
-
-function openModal(title, placeholder, onConfirm, showInput=true) {
-    document.getElementById('modalTitle').innerText = title;
-    const input = document.getElementById('modalInput');
-    input.style.display = showInput ? 'block' : 'none';
-    input.value = placeholder;
-    document.getElementById('appModal').style.display = 'flex';
-    document.getElementById('modalSubmit').onclick = () => { onConfirm(input.value); closeModal(); };
-}
-
-function copyCurrent() {
-    const t = `Size: ${document.getElementById('sizeConv').innerText}\nMRP: ₹${document.getElementById('finalVal').innerText}`;
-    navigator.clipboard.writeText(t);
-}
+function triggerClearHistory() { openModal("CLEAR ALL?", "", () => { document.getElementById('histItems').innerHTML = ''; updateStorage(); }, false); }
+function renameQuote(el) { openModal("RENAME", el.innerText, (v) => { if(v) { el.innerText = v.toUpperCase(); updateStorage(); } }); }
+function openModal(t, p, c, s=true) { document.getElementById('modalTitle').innerText = t; const inp = document.getElementById('modalInput'); inp.style.display = s ? 'block' : 'none'; inp.value = p; document.getElementById('appModal').style.display = 'flex'; document.getElementById('modalSubmit').onclick = () => { c(inp.value); closeModal(); }; }
 </script>
 </body>
 </html>
