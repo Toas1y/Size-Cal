@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "brand": "Soulwood (Crystal)",
+    "category": "Louvers",
+    "name": "Charcoal Louvers",
+    "specs": "Regular Series",
+    "size": "5 inch x 9 ft",
+    "dp": 800,
+    "sp": 850
+  },
+  {
+    "id": 2,
+    "brand": "Soulwood (Crystal)",
+    "category": "Louvers",
+    "name": "Velvet Series",
+    "specs": "Soulwood Velvet",
+    "size": "5 inch x 9 ft",
+    "dp": 800,
+    "sp": 850
+  },
+  {
+    "id": 3,
+    "brand": "Soulwood (Crystal)",
+    "category": "WPC",
+    "name": "Exterior Panel",
+    "specs": "Standard",
+    "size": "8x4 ft",
+    "dp": 2200,
+    "sp": 2400
+  },
+  {
+    "id": 4,
+    "brand": "Soulwood (Crystal)",
+    "category": "Acrylic 1.3mm",
+    "name": "High Gloss Sheet",
+    "specs": "CI-101 to CI-140",
+    "size": "8x4 ft",
+    "dp": 4300,
+    "sp": 4500
+  }
+]
