@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Price List</title>
+    <style>
+        :root {
+            --bg-color: #000000;
+            --card-bg: #111111;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --highlight: #2563eb;
+            --accent: #00e5ff;
+            --border: #333333;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        header {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+        h1 { margin: 0; font-size: 1.5rem; font-weight: 700; letter-spacing: 1px; }
+        .nav-icon {
+            width: 40px; height: 40px; border-radius: 8px; background: #222;
+            display: flex; align-items: center; justify-content: center;
+            text-decoration: none; border: 1px solid var(--highlight);
+        }
+        .controls { width: 100%; max-width: 600px; display: flex; flex-direction: column; gap: 15px; }
+        label { font-size: 0.85rem; color: var(--text-muted); margin-bottom: -10px; margin-left: 5px; }
+        input, select {
+            background-color: var(--card-bg); color: white; border: 1px solid var(--border);
+            padding: 14px; font-size: 16px; border-radius: 10px; width: 100%;
+            box-sizing: border-box; outline: none; transition: border-color 0.3s;
+        }
+        input:focus, select:focus { border-color: var(--highlight); }
+        select:disabled { opacity: 0.5; background-color: #000; }
+        .result-card {
+            background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+            width: 100%; max-width: 600px; margin-top: 30px; border-radius: 16px;
+            padding: 20px; box-sizing: border-box; border: 1px solid var(--border);
+            display: none; animation: slideUp 0.3s ease-out;
+        }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .brand-tag {
+            background: var(--highlight); color: white; padding: 4px 10px;
+            border-radius: 4px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase;
+        }
+        .product-title { font-size: 1.3rem; margin: 10px 0 5px 0; font-weight: 600; }
+        .product-specs { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; }
+        .price-section {
+            display: flex; justify-content: space-between; align-items: flex-end;
+            padding-top: 15px; border-top: 1px solid var(--border);
+        }
+        .sp-value { font-size: 1.8rem; font-weight: bold; color: #4ade80; }
+        .dp-value { font-size: 1.2rem; color: var(--text-muted); font-weight: 500; }
+        .profit-pill {
+            background: rgba(37, 99, 235, 0.2); color: var(--accent); padding: 8px 12px;
+            border-radius: 8px; font-size: 0.9rem; font-weight: bold; text-align: center; margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>PRICE LIST</h1>
+        <a href="index.html" class="nav-icon"><span style="color:white; font-size: 20px;">📏</span></a>
+    </header>
+
+    <div class="controls">
+        <label>Step 1: Select Brand</label>
+        <input list="brandList" id="brandInput" placeholder="Type or Search Brand...">
+        <datalist id="brandList"></datalist>
+
+        <label>Step 2: Select Category</label>
+        <select id="categoryInput" disabled><option value="">-- Choose Brand First --</option></select>
+
+        <label>Step 3: Select Model / Size</label>
+        <select id="modelInput" disabled><option value="">-- Choose Category First --</option></select>
+    </div>
+
+    <div id="resultCard" class="result-card">
+        <div><span class="brand-tag" id="resBrand">BRAND</span></div>
+        <h2 class="product-title" id="resName">Name</h2>
+        <div class="product-specs" id="resSpecs">Specs</div>
+        <div class="profit-pill" id="resProfit">Profit</div>
+        <div class="price-section">
+            <div><small>Dealer Price (DP)</small><br><span class="dp-value" id="resDP">0</span></div>
+            <div style="text-align: right;"><small>Selling Price (SP)</small><br><span class="sp-value" id="resSP">0</span></div>
+        </div>
+    </div>
+
+    <script>
+        const DATA_URL = 'data/prices.json'; 
+        let fullData = [];
+
+        window.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const response = await fetch(DATA_URL);
+                fullData = await response.json();
+                populateBrands();
+            } catch (error) { alert("Error loading data file."); }
+        });
+
+        function populateBrands() {
+            const brands = [...new Set(fullData.map(item => item.brand))].sort();
+            document.getElementById('brandList').innerHTML = '';
+            brands.forEach(b => {
+                const option = document.createElement('option');
+                option.value = b;
+                document.getElementById('brandList').appendChild(option);
+            });
+        }
+
+        const brandInput = document.getElementById('brandInput');
+        const catSelect = document.getElementById('categoryInput');
+        const modelSelect = document.getElementById('modelInput');
+        const resultCard = document.getElementById('resultCard');
+
+        brandInput.addEventListener('input', () => {
+            const brand = brandInput.value;
+            if (fullData.some(item => item.brand === brand)) {
+                const cats = [...new Set(fullData.filter(i => i.brand === brand).map(i => i.category))].sort();
+                catSelect.innerHTML = '<option value="">-- Select Category --</option>';
+                cats.forEach(c => {
+                    const opt = document.createElement('option');
+                    opt.value = c; opt.textContent = c; catSelect.appendChild(opt);
+                });
+                catSelect.disabled = false; modelSelect.disabled = true; resultCard.style.display = 'none';
+            }
+        });
+
+        catSelect.addEventListener('change', () => {
+            const brand = brandInput.value;
+            const cat = catSelect.value;
+            const items = fullData.filter(i => i.brand === brand && i.category === cat);
+            modelSelect.innerHTML = '<option value="">-- Select Model --</option>';
+            items.forEach(i => {
+                const opt = document.createElement('option');
+                opt.value = i.id; opt.textContent = `${i.name} (${i.size})`; modelSelect.appendChild(opt);
+            });
+            modelSelect.disabled = false; resultCard.style.display = 'none';
+        });
+
+        modelSelect.addEventListener('change', () => {
+            const product = fullData.find(p => p.id == modelSelect.value);
+            if (product) {
+                const profit = product.sp - product.dp;
+                const percent = Math.round((profit / product.dp) * 100);
+                document.getElementById('resBrand').textContent = product.brand;
+                document.getElementById('resName').textContent = product.name;
+                document.getElementById('resSpecs').textContent = `${product.specs} | ${product.size}`;
+                document.getElementById('resDP').textContent = `₹${product.dp}`;
+                document.getElementById('resSP').textContent = `₹${product.sp}`;
+                document.getElementById('resProfit').textContent = `Profit: ₹${profit} (${percent}%)`;
+                resultCard.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
