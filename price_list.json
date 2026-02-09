@@ -1,42 +1,27 @@
 [
-  {
-    "id": 1,
-    "brand": "Soulwood (Crystal)",
-    "category": "Louvers",
-    "name": "Charcoal Louvers",
-    "specs": "Regular Series",
-    "size": "5 inch x 9 ft",
-    "dp": 800,
-    "sp": 850
-  },
-  {
-    "id": 2,
-    "brand": "Soulwood (Crystal)",
-    "category": "Louvers",
-    "name": "Velvet Series",
-    "specs": "Soulwood Velvet",
-    "size": "5 inch x 9 ft",
-    "dp": 800,
-    "sp": 850
-  },
-  {
-    "id": 3,
-    "brand": "Soulwood (Crystal)",
-    "category": "WPC",
-    "name": "Exterior Panel",
-    "specs": "Standard",
-    "size": "8x4 ft",
-    "dp": 2200,
-    "sp": 2400
-  },
-  {
-    "id": 4,
-    "brand": "Soulwood (Crystal)",
-    "category": "Acrylic 1.3mm",
-    "name": "High Gloss Sheet",
-    "specs": "CI-101 to CI-140",
-    "size": "8x4 ft",
-    "dp": 4300,
-    "sp": 4500
-  }
+  { "id": 1, "brand": "Soulwood (Crystal)", "category": "Louvers", "name": "Charcoal Louvers", "specs": "Regular", "size": "5 inch x 9 ft", "dp": 800, "sp": 850 },
+  { "id": 2, "brand": "Soulwood (Crystal)", "category": "Louvers", "name": "Velvet Series", "specs": "Soulwood", "size": "NA", "dp": 800, "sp": 850 },
+  { "id": 3, "brand": "Soulwood (Crystal)", "category": "WPC", "name": "WPC Exterior Panel", "specs": "Standard", "size": "8x4 ft", "dp": 2200, "sp": 2400 },
+  { "id": 4, "brand": "Lamiq", "category": "Laminate", "name": "Elinor", "specs": "No Star", "size": "8x4 ft", "dp": 3700, "sp": 3800 },
+  { "id": 5, "brand": "Lamiq", "category": "Laminate", "name": "Mattino", "specs": "One Star", "size": "8x4 ft", "dp": 5000, "sp": 5200 },
+  { "id": 6, "brand": "Glorio", "category": "Charcoal Panel", "name": "Plastic Wall Panel GL", "specs": "Basic", "size": "8x4 ft (5mm)", "dp": 5000, "sp": 6800 },
+  { "id": 7, "brand": "Glorio", "category": "Charcoal Panel", "name": "Plastic Wall Panel GL", "specs": "Premium", "size": "8x4 ft (5mm)", "dp": 6200, "sp": 7000 },
+  { "id": 8, "brand": "Glorio", "category": "Acrylic", "name": "7000 Series", "specs": "2mm", "size": "8x4 ft", "dp": 5400, "sp": 6000 },
+  { "id": 9, "brand": "Glorio", "category": "Acrylic", "name": "7303 Series", "specs": "1mm", "size": "8x4 ft", "dp": 3150, "sp": 3500 },
+  { "id": 10, "brand": "Glorio", "category": "Charcoal Panel", "name": "Mirraco Panels", "specs": "3800 Series", "size": "8x4 ft", "dp": 5350, "sp": 5850 },
+  { "id": 11, "brand": "Glorio", "category": "Charcoal Panel", "name": "Fusion Panel", "specs": "12100", "size": "NA", "dp": 1650, "sp": 1800 },
+  { "id": 12, "brand": "Glorio", "category": "Charcoal Panel", "name": "Crysta", "specs": "7700", "size": "NA", "dp": 3400, "sp": 3750 },
+  { "id": 13, "brand": "Glorio", "category": "Louvers", "name": "Fluted Story", "specs": "16200", "size": "NA", "dp": 4800, "sp": 5250 },
+  { "id": 14, "brand": "Glorio", "category": "Louvers", "name": "Jade", "specs": "16300", "size": "NA", "dp": 5100, "sp": 5550 },
+  { "id": 15, "brand": "Glorio", "category": "Louvers", "name": "Sirraco", "specs": "15200", "size": "NA", "dp": 1350, "sp": 1463 },
+  { "id": 16, "brand": "Glorio", "category": "Louvers", "name": "Artique", "specs": "10400", "size": "NA", "dp": 6300, "sp": 6900 },
+  { "id": 17, "brand": "Glorio", "category": "Louvers", "name": "Emporio", "specs": "21000", "size": "NA", "dp": 7000, "sp": 7650 },
+  { "id": 18, "brand": "Iris", "category": "Louvers", "name": "Iris Club", "specs": "15300", "size": "NA", "dp": 2000, "sp": 2200 },
+  { "id": 19, "brand": "Iris", "category": "Louvers", "name": "Iris Club", "specs": "915300", "size": "NA", "dp": 2500, "sp": 2700 },
+  { "id": 20, "brand": "Picasso", "category": "Louvers", "name": "7500 Series", "specs": "Regular", "size": "NA", "dp": 2000, "sp": 2200 },
+  { "id": 21, "brand": "Vivre", "category": "Louvers", "name": "Regular Louvers", "specs": "Standard", "size": "8 ft", "dp": 800, "sp": 850 },
+  { "id": 22, "brand": "Vivre", "category": "Louvers", "name": "Apex Louvers", "specs": "Premium", "size": "9.5 ft", "dp": 1000, "sp": 1050 },
+  { "id": 23, "brand": "Vivre", "category": "Acrylic", "name": "Solid Colours", "specs": "7000 Series", "size": "8x4 ft", "dp": 4100, "sp": 4200 },
+  { "id": 24, "brand": "Vivre", "category": "Acrylic", "name": "Mirror Acrylic", "specs": "Gold & Rose Gold", "size": "8x4 ft", "dp": 4700, "sp": 5000 },
+  { "id": 25, "brand": "Vivre", "category": "Charcoal Panel", "name": "Adonis", "specs": "Regular", "size": "8x2 ft", "dp": 3300, "sp": 3500 }
 ]
