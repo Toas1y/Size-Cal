@@ -14,114 +14,115 @@
         :root {
             --accent: #3b82f6;
             --danger: #ef4444;
+            --success: #10b981;
             --bg: #000000;
             --card: #0a0a0a;
             --input: #111111;
             --border: #1a1a1a;
             --text: #ffffff;
             --text-dim: #666;
-            --glass: rgba(255, 255, 255, 0.03);
-            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         [data-theme="light"] {
             --bg: #e3e3e3;
             --card: #ffffff;
-            --input: #f0f0f0;
+            --input: #f2f2f2;
             --border: #d1d1d1;
             --text: #1a1a1a;
             --text-dim: #777;
-            --glass: rgba(0, 0, 0, 0.03);
         }
 
-        body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg); color: var(--text); padding: 10px; display: flex; justify-content: center; margin: 0; overflow-x: hidden; transition: var(--transition); }
-        .card { width: 100%; max-width: 400px; padding: 10px; box-sizing: border-box; position: relative; }
+        body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg); color: var(--text); padding: 10px; display: flex; justify-content: center; margin: 0; overflow-x: hidden; }
+        .card { width: 100%; max-width: 400px; padding: 5px; box-sizing: border-box; position: relative; }
         
-        /* Soul & Micro-Animations */
-        @keyframes slideUp { from { transform: translateY(15px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        .hist-item { animation: slideUp 0.4s ease-out forwards; }
-        button, .chip { transition: transform 0.1s ease, background 0.3s ease; }
-        button:active { transform: scale(0.96); }
-
-        /* Header & Modern Gear Menu */
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        h2 { color: var(--accent); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; font-size: 1rem; margin:0; }
+        /* Header & Settings */
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding: 0 5px; }
+        h2 { color: var(--accent); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; font-size: 0.95rem; margin:0; }
         
         .gear-container { position: relative; }
-        .gear-icon { font-size: 1.2rem; cursor: pointer; transition: transform 0.5s ease; display: block; }
-        .gear-container:hover .gear-icon { transform: rotate(90deg); }
+        .gear-icon { font-size: 1.1rem; cursor: pointer; display: block; }
         
         .settings-menu { 
-            display: none; position: absolute; right: 0; top: 35px; 
+            display: none; position: absolute; right: 0; top: 30px; 
             background: var(--card); border: 1.5px solid var(--border); 
-            border-radius: 16px; width: 180px; z-index: 1000; 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4); overflow: hidden;
-            animation: slideUp 0.2s ease-out;
+            border-radius: 12px; width: 170px; z-index: 1000; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4); overflow: hidden;
         }
-        .menu-row { padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
-        .menu-action { padding: 12px 15px; font-size: 0.7rem; font-weight: 800; cursor: pointer; text-transform: uppercase; transition: 0.2s; }
-        .menu-action:hover { background: var(--accent); color: white; }
+        .menu-row { padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
+        .menu-action { padding: 12px; font-size: 0.65rem; font-weight: 800; cursor: pointer; text-transform: uppercase; border-bottom: 1px solid var(--border); }
+        .menu-action:last-child { border-bottom: none; }
 
-        /* The Sliding Toggle Switch */
-        .switch { position: relative; display: inline-block; width: 38px; height: 20px; }
+        /* Switch UI */
+        .switch { position: relative; display: inline-block; width: 34px; height: 18px; }
         .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 34px; }
-        .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .3s; border-radius: 20px; }
+        .slider:before { position: absolute; content: ""; height: 12px; width: 12px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; }
         input:checked + .slider { background-color: var(--accent); }
-        input:checked + .slider:before { transform: translateX(18px); }
+        input:checked + .slider:before { transform: translateX(16px); }
 
-        /* UI Elements */
-        .section-label { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; color: var(--text-dim); margin: 10px 0 5px 0; display: block; }
-        .dim-row { display: flex; gap: 6px; margin-bottom: 8px; align-items: center; }
+        .section-label { font-size: 0.55rem; font-weight: 700; text-transform: uppercase; color: var(--text-dim); margin: 8px 0 4px 5px; display: block; }
+        .dim-row { display: flex; gap: 5px; margin-bottom: 6px; align-items: center; }
         .input-wrapper { position: relative; flex: 1; display: flex; align-items: center; }
-        .input-box { width: 100%; padding: 10px 28px 10px 10px; border: 1.5px solid var(--border); border-radius: 12px; font-size: 0.95rem; background: var(--input); color: var(--text); outline: none; height: 44px; box-sizing: border-box; transition: var(--transition); }
-        .input-box:focus { border-color: var(--accent); }
+        .input-box { width: 100%; padding: 8px 25px 8px 10px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.9rem; background: var(--input); color: var(--text); outline: none; height: 40px; box-sizing: border-box; }
         
-        .smart-input-container { position: relative; flex: 1.5; display: flex; align-items: center; background: var(--input); border: 1.5px solid var(--border); border-radius: 12px; height: 44px; overflow: hidden; transition: var(--transition); }
-        .smart-select { background: var(--border); color: var(--accent); border: none; font-size: 0.55rem; font-weight: 900; height: 100%; padding: 0 5px; outline: none; text-transform: uppercase; }
-        .smart-val-input { flex: 1; background: transparent; border: none; color: var(--text); font-size: 0.95rem; padding: 0 28px 0 10px; outline: none; height: 100%; width: 100%; }
+        .smart-input-container { position: relative; flex: 1.4; display: flex; align-items: center; background: var(--input); border: 1.5px solid var(--border); border-radius: 8px; height: 40px; overflow: hidden; }
+        .smart-select { background: var(--border); color: var(--accent); border: none; font-size: 0.5rem; font-weight: 900; height: 100%; padding: 0 4px; outline: none; text-transform: uppercase; }
+        .smart-val-input { flex: 1; background: transparent; border: none; color: var(--text); font-size: 0.9rem; padding: 0 25px 0 8px; outline: none; height: 100%; width: 100%; }
 
-        .clear-x { position: absolute; right: 8px; color: var(--text-dim); cursor: pointer; font-size: 16px; padding: 4px; z-index: 5; }
-        .toggle-btn { padding: 0 12px; border-radius: 12px; border: 1.5px solid var(--border); background: var(--input); color: var(--text-dim); font-size: 0.6rem; font-weight: 800; cursor: pointer; height: 44px; transition: var(--transition); }
+        .clear-x { position: absolute; right: 6px; color: var(--text-dim); cursor: pointer; font-size: 14px; padding: 4px; z-index: 5; }
+        .toggle-btn { padding: 0 10px; border-radius: 8px; border: 1.5px solid var(--border); background: var(--input); color: var(--text-dim); font-size: 0.55rem; font-weight: 800; cursor: pointer; height: 40px; }
         .toggle-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
 
-        .preset-row { display: flex; gap: 5px; margin: 5px 0 10px 0; overflow-x: auto; padding-bottom: 5px; scrollbar-width: none; }
-        .chip { background: var(--input); color: var(--text-dim); padding: 7px 13px; border-radius: 10px; font-size: 0.55rem; font-weight: 800; border: 1px solid var(--border); white-space: nowrap; transition: var(--transition); }
-        .chip.active-preset { background: var(--accent); color: #fff; border-color: var(--accent); }
+        .preset-row { display: flex; gap: 3px; margin: 2px 0 8px 0; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; }
+        .chip { background: var(--input); color: var(--text-dim); padding: 4px 8px; border-radius: 5px; font-size: 0.48rem; font-weight: 800; border: 1px solid var(--border); white-space: nowrap; }
+        .chip.active-preset { border-color: var(--accent); color: var(--accent); }
 
-        .result-panel { background: var(--card); border-radius: 20px; padding: 15px; margin-top: 10px; border: 1.5px solid var(--border); position: relative; box-shadow: 0 8px 30px rgba(0,0,0,0.15); transition: var(--transition); }
-        .size-conversion { font-weight: 800; color: var(--text); font-size: 1.2rem; margin-bottom: 4px; display: block; }
+        .result-panel { background: var(--card); border-radius: 12px; padding: 12px; margin-top: 5px; border: 1.5px solid var(--border); position: relative; }
+        .size-conversion { font-weight: 800; color: var(--text); font-size: 1rem; margin-bottom: 2px; display: block; }
+        .area-line { font-size: 0.75rem; color: var(--text-dim); margin-bottom: 8px; }
         
-        .mrp-box { border-top: 1px solid var(--border); padding-top: 12px; position: relative; }
-        .mrp-val { font-size: 1.8rem; font-weight: 900; color: var(--accent); margin-top: 2px; display: flex; align-items: baseline; gap: 8px; }
-        .round-btn { font-size: 0.55rem; color: var(--text-dim); border: 1px solid var(--border); padding: 3px 8px; border-radius: 6px; cursor: pointer; text-transform: uppercase; font-weight: 700; }
+        .mrp-box { border-top: 1px solid var(--border); padding-top: 10px; position: relative; }
+        .mrp-val { font-size: 1.5rem; font-weight: 900; color: var(--accent); margin-top: 2px; display: flex; align-items: baseline; gap: 6px; }
+        .gst-small { font-size: 0.48rem; color: var(--text-dim); font-weight: bold; text-transform: uppercase; margin-left: 5px; }
 
-        #discInputArea { display: none; margin-top: 10px; border-top: 1px dashed var(--border); padding-top: 10px; }
-        .disc-res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
-        .disc-res-box { background: var(--glass); padding: 10px; border-radius: 12px; font-size: 0.65rem; color: var(--text-dim); border: 1px solid var(--border); }
-        .disc-res-box b { color: var(--text); display: block; font-size: 0.9rem; margin-top: 3px; }
-
-        .btn-group { display: flex; gap: 8px; margin-top: 15px; }
-        .btn { flex: 1; padding: 12px; border: none; border-radius: 14px; font-weight: 800; cursor: pointer; font-size: 0.75rem; height: 50px; text-transform: uppercase; }
-        .btn-reset { background: var(--input); color: var(--text-dim); }
-        .btn-save { background: var(--accent); color: #fff; box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3); }
-
-        .hist-item { background: var(--card); padding: 15px; border: 1px solid var(--border); border-radius: 18px; margin-bottom: 12px; position: relative; transition: var(--transition); }
-        .delete-btn { position: absolute; top: 12px; right: 15px; color: var(--danger); font-size: 10px; font-weight: 900; cursor: pointer; opacity: 0.6; }
+        #discInputArea { display: none; margin-top: 8px; border-top: 1px dashed var(--border); padding-top: 8px; }
+        .disc-res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 6px; }
+        .disc-res-box { background: rgba(255,255,255,0.02); padding: 6px; border-radius: 8px; font-size: 0.6rem; color: var(--text-dim); border: 1px solid var(--border); font-weight: bold; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .disc-res-box b { color: var(--text); display: block; font-size: 0.8rem; transition: color 0.3s ease; }
         
-        #toast { visibility: hidden; min-width: 140px; background: var(--accent); color: #fff; text-align: center; border-radius: 50px; padding: 12px; position: fixed; bottom: 50px; left: 50%; transform: translateX(-50%); font-size: 0.8rem; z-index: 2000; font-weight: 800; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        #toast.show { visibility: visible; opacity: 1; }
+        /* Emerald Glow Highlight */
+        .cash-highlight { border-color: var(--success) !important; color: var(--success) !important; box-shadow: 0 0 10px rgba(16, 185, 129, 0.2); }
+        .cash-highlight b { color: var(--success) !important; }
+
+        .btn-group { display: flex; gap: 5px; margin-top: 10px; }
+        .btn { flex: 1; padding: 8px; border: none; border-radius: 10px; font-weight: 800; cursor: pointer; font-size: 0.65rem; height: 40px; text-transform: uppercase; }
+        .btn-reset { flex: 0.7; background: var(--input); color: var(--text-dim); }
+        .btn-save { flex: 1.2; background: var(--accent); color: #fff; }
+        .btn-copy { flex: 0.7; background: var(--input); color: var(--text-dim); border: 1px solid var(--border); }
+
+        .hist-item { background: var(--card); padding: 12px; border: 1px solid var(--border); border-radius: 12px; margin-bottom: 8px; position: relative; }
+        .delete-btn { position: absolute; top: 10px; right: 10px; color: var(--danger); font-size: 9px; font-weight: 900; cursor: pointer; }
+        .hist-name { color: var(--accent); font-size: 0.65rem; font-weight: 900; cursor: pointer; text-transform: uppercase; margin-bottom: 3px; display: block; }
+        .hist-main { display: flex; justify-content: space-between; align-items: baseline; }
+        .hist-size { color: var(--text); font-size: 0.85rem; font-weight: 800; cursor: pointer; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+        .hist-mrp { color: var(--accent); font-size: 0.95rem; font-weight: 900; }
+        .hist-data-line { font-size: 0.55rem; color: var(--text-dim); margin-top: 6px; border-top: 1px solid var(--border); padding-top: 6px; text-transform: uppercase; }
+        
+        #toast { visibility: hidden; min-width: 100px; background: var(--accent); color: #fff; text-align: center; border-radius: 50px; padding: 8px; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; z-index: 2000; font-weight: 800; }
+        #toast.show { visibility: visible; }
+        .modal-overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:3000; align-items:center; justify-content:center; backdrop-filter:blur(5px); }
+        .modal-box { background:var(--card); padding:20px; border-radius:15px; border:1px solid var(--border); width:80%; max-width:300px; text-align:center; }
     </style>
 </head>
 <body>
 
 <div id="toast">COPIED</div>
 
-<div id="appModal" class="modal-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:3000; align-items:center; justify-content:center; backdrop-filter:blur(8px);">
-    <div class="modal-box" style="background:var(--card); padding:25px; border-radius:20px; border:1px solid var(--border); width:85%; max-width:320px; text-align:center;">
-        <span id="modalTitle" style="font-size:0.9rem; font-weight:800; color:var(--text); text-transform:uppercase;">RENAME</span>
-        <div id="modalBody" style="font-size: 0.8rem; color: var(--text-dim); margin: 10px 0;"></div>
-        <input type="text" id="modalInput" class="input-box" style="width:100%; margin:15px 0; text-align:center; display:none; border-radius:12px;">
+<div id="appModal" class="modal-overlay">
+    <div class="modal-box">
+        <span id="modalTitle" style="font-size:0.8rem; font-weight:800; color:var(--text); text-transform:uppercase;">RENAME</span>
+        <div id="modalBody" style="font-size: 0.7rem; color: var(--text-dim); margin: 10px 0;"></div>
+        <input type="text" id="modalInput" class="input-box" style="width:100%; margin:15px 0; text-align:center; display:none;">
         <div style="display:flex; gap:10px;">
             <button class="btn btn-reset" onclick="closeModal()">CANCEL</button>
             <button class="btn btn-save" id="modalSubmit">OK</button>
@@ -136,7 +137,7 @@
             <span class="gear-icon" onclick="toggleSettings()">⚙️</span>
             <div id="settingsMenu" class="settings-menu">
                 <div class="menu-row">
-                    <span style="font-size: 0.65rem; font-weight: 800; color: var(--text-dim);">LIGHT MODE</span>
+                    <span style="font-size: 0.6rem; font-weight: 800; color: var(--text-dim);">LIGHT MODE</span>
                     <label class="switch">
                         <input type="checkbox" id="themeToggle" onchange="handleThemeSwitch(this)">
                         <span class="slider"></span>
@@ -148,7 +149,7 @@
         </div>
     </div>
 
-    <span class="section-label">Dimensions / Qty</span>
+    <span class="section-label">L / W / Qty</span>
     <div class="dim-row">
         <div class="input-wrapper"><input type="number" id="L" placeholder="L" class="input-box nav-target" oninput="manualDimChange()"><span class="clear-x" onclick="clearField('L')">×</span></div>
         <div class="input-wrapper"><input type="number" id="W" placeholder="W" class="input-box nav-target" oninput="manualDimChange()"><span class="clear-x" onclick="clearField('W')">×</span></div>
@@ -170,7 +171,7 @@
         <div class="chip" data-id="p5" onclick="applyPreset('p5', 8, 4, false)">8' × 4'</div>
     </div>
 
-    <span class="section-label">Pricing</span>
+    <span class="section-label">Rate & Price</span>
     <div class="dim-row">
         <div class="input-wrapper"><input type="number" id="rate" placeholder="Rate/ft²" class="input-box nav-target" oninput="calculate('rate')"><span class="clear-x" onclick="clearField('rate')">×</span></div>
         <div class="input-wrapper"><input type="number" id="mrp" placeholder="Total MRP" class="input-box nav-target" oninput="calculate('mrp')"><span class="clear-x" onclick="clearField('mrp')">×</span></div>
@@ -178,33 +179,31 @@
 
     <div class="result-panel">
         <span class="size-conversion" id="sizeConv">0' × 0"</span>
-        <div class="area-line" style="font-size:0.8rem; color:var(--text-dim);">Total Area: <b><span id="dispArea" style="color:var(--text)">0.00</span> ft²</b> <span id="pcsInfo" style="color:var(--accent); font-weight:bold;"></span></div>
+        <div class="area-line">Area: <span id="dispArea" style="font-weight:bold; color:inherit;">0.00</span> ft² <span id="pcsInfo" style="color:var(--accent); font-weight:bold;"></span></div>
         <div class="mrp-box">
-            <div style="display:flex; align-items:center; justify-content:space-between;">
-                <span class="gst-small" style="text-transform:uppercase; color:var(--text-dim);">Final Bill</span>
-                <span id="roundLabel" class="round-btn" onclick="cycleRounding()">EXACT</span>
-            </div>
+            <span class="gst-small" style="margin-left:0; color:var(--text-dim);">Total MRP</span>
             <div class="mrp-val">₹ <span id="finalVal">0</span> <span id="gstDisplay" class="gst-small"></span></div>
-            <div onclick="toggleDisc()" style="position: absolute; right: 0; bottom: 12px; color: var(--text-dim); cursor: pointer; font-size: 9px; font-weight: 800; border: 1.5px solid var(--border); padding: 3px 8px; border-radius: 6px;">DISCOUNT ▼</div>
+            <div onclick="toggleDisc()" style="position: absolute; right: 0; bottom: 8px; color: var(--text-dim); cursor: pointer; font-size: 8px; font-weight: 800; border: 1px solid var(--border); padding: 2px 5px; border-radius: 4px;">DISCOUNT ▼</div>
         </div>
         <div id="discInputArea">
-            <div class="input-wrapper"><input type="number" id="discIn" placeholder="% or Price" class="input-box nav-target" style="height: 38px; margin-top: 10px;" oninput="applyDiscount()"><span class="clear-x" onclick="clearDisc()">×</span></div>
+            <div class="input-wrapper"><input type="number" id="discIn" placeholder="% or Cash Decrease" class="input-box nav-target" style="height: 34px; margin-top: 8px;" oninput="applyDiscount()"><span class="clear-x" onclick="clearDisc()">×</span></div>
             <div class="disc-res-grid">
-                <div class="disc-res-box">Less/Off<b>₹<span id="dMoneyOff">0</span> <span style="font-size:0.55rem; color:var(--text-dim);">(<span id="dPerc">0</span>%)</span></b></div>
-                <div class="disc-res-box">Result<b>₹<span id="dTotal">0</span> <span style="font-size:0.55rem; color:var(--text-dim);">(<span id="dRate">0</span>/ft²)</span></b></div>
+                <div id="discBoxLess" class="disc-res-box">Less/Off<b>₹<span id="dMoneyOff">0</span> <span style="font-size:0.5rem;">(<span id="dPerc">0</span>%)</span></b></div>
+                <div id="discBoxTotal" class="disc-res-box">Result<b>₹<span id="dTotal">0</span> <span style="font-size:0.5rem;">(<span id="dRate">0</span>/ft²)</span></b></div>
             </div>
         </div>
     </div>
 
     <div class="btn-group">
-        <button class="btn btn-reset" onclick="clearAll()">Reset</button>
+        <button class="btn btn-reset" onclick="clearAllFields()">Reset</button>
         <button class="btn btn-save" onclick="saveToHistory()">Save Quote</button>
+        <button class="btn btn-copy" onclick="copyCurrent()">Copy</button>
     </div>
 
-    <div id="historyLog" style="margin-top:30px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-            <span class="section-label" style="margin:0">Recent Quotes</span>
-            <span onclick="triggerClearHistory()" style="font-size: 0.55rem; color: var(--danger); cursor: pointer; font-weight: 900;">CLEAR ALL</span>
+    <div id="historyLog" style="margin-top:25px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; padding:0 5px;">
+            <span class="section-label" style="margin:0">History Log</span>
+            <span onclick="triggerClearHistory()" style="font-size: 0.5rem; color: var(--danger); cursor: pointer; font-weight: 900;">CLEAR ALL</span>
         </div>
         <div id="histItems"></div>
     </div>
@@ -215,27 +214,21 @@ if ('serviceWorker' in navigator) { navigator.serviceWorker.register('./sw.js');
 
 let wInchMode = false;
 let currentTheme = 'dark';
-let roundMode = 0; 
 
 function toggleSettings() {
     const menu = document.getElementById('settingsMenu');
     menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
 }
 
-window.onclick = function(event) {
-    if (!event.target.matches('.gear-icon')) {
-        document.getElementById('settingsMenu').style.display = "none";
-    }
-}
+window.onclick = function(event) { if (!event.target.matches('.gear-icon')) document.getElementById('settingsMenu').style.display = "none"; }
 
 window.onload = function() {
     const h = localStorage.getItem('sizeCalcHistory');
     if (h) document.getElementById('histItems').innerHTML = h;
-    
     currentTheme = localStorage.getItem('calcTheme') || 'dark';
     document.documentElement.setAttribute('data-theme', currentTheme);
     document.getElementById('themeToggle').checked = (currentTheme === 'light');
-    
+    document.getElementById('metaTheme').setAttribute('content', currentTheme === 'dark' ? '#000000' : '#e3e3e3');
     ['L', 'W', 'QTY_VAL', 'rate', 'mrp', 'discIn'].forEach(id => {
         document.getElementById(id).value = localStorage.getItem('last' + id) || (id === 'QTY_VAL' ? '1' : '');
     });
@@ -248,13 +241,6 @@ function handleThemeSwitch(cb) {
     document.documentElement.setAttribute('data-theme', currentTheme);
     localStorage.setItem('calcTheme', currentTheme);
     document.getElementById('metaTheme').setAttribute('content', currentTheme === 'dark' ? '#000000' : '#e3e3e3');
-}
-
-function cycleRounding() {
-    roundMode = (roundMode + 1) % 4;
-    const labels = ["EXACT", "NEAR 10", "NEAR 50", "NEAR 100"];
-    document.getElementById('roundLabel').innerText = labels[roundMode];
-    calculate();
 }
 
 function formatDisplayUnit(valInInches) {
@@ -289,19 +275,13 @@ function calculate(trigger) {
     
     document.getElementById('dispArea').innerText = totalArea.toFixed(2);
 
-    if (trigger === 'rate') {
-        document.getElementById('mrp').value = Math.round(totalArea * rate) || "";
-    } else if (trigger === 'mrp') {
+    if (trigger === 'mrp') {
         document.getElementById('rate').value = (totalArea > 0 ? (mrp / totalArea).toFixed(2) : 0);
     } else {
         document.getElementById('mrp').value = Math.round(totalArea * rate) || "";
     }
     
     let final = Number(document.getElementById('mrp').value) || 0;
-    if (roundMode === 1) final = Math.round(final / 10) * 10;
-    else if (roundMode === 2) final = Math.round(final / 50) * 50;
-    else if (roundMode === 3) final = Math.round(final / 100) * 100;
-
     document.getElementById('finalVal').innerText = Math.round(final).toLocaleString('en-IN');
     let gstAmt = Math.round(final * 18/118);
     document.getElementById('gstDisplay').innerText = final > 0 ? `(₹${gstAmt.toLocaleString('en-IN')} GST)` : "";
@@ -314,16 +294,26 @@ function applyDiscount() {
     const val = Number(document.getElementById('discIn').value) || 0;
     const baseMRP = Number(document.getElementById('mrp').value) || 0;
     const area = Number(document.getElementById('dispArea').innerText) || 1;
-    let dm = 0, mt = 0, pu = 0;
+    let mt = 0, dm = 0, pu = 0;
+
+    const resBox = document.getElementById('discBoxTotal');
+    const lessBox = document.getElementById('discBoxLess');
 
     if (val > 0 && val < 100) {
         mt = baseMRP * (val / 100);
         dm = baseMRP - mt;
         pu = val;
+        resBox.classList.remove('cash-highlight');
+        lessBox.classList.remove('cash-highlight');
     } else if (val >= 100) {
-        dm = val;
-        mt = baseMRP - val;
+        mt = val;
+        dm = baseMRP - val;
         pu = baseMRP > 0 ? ((mt / baseMRP) * 100) : 0;
+        resBox.classList.add('cash-highlight');
+        lessBox.classList.add('cash-highlight');
+    } else {
+        resBox.classList.remove('cash-highlight');
+        lessBox.classList.remove('cash-highlight');
     }
 
     document.getElementById('dMoneyOff').innerText = Math.round(mt).toLocaleString('en-IN');
@@ -334,16 +324,12 @@ function applyDiscount() {
 
 function recallHistory(el) {
     const d = JSON.parse(el.getAttribute('data-raw'));
-    openModal("LOAD DATA?", "Over-write inputs with this saved quote?", () => {
-        document.getElementById('L').value = d.L;
-        document.getElementById('W').value = d.W;
-        document.getElementById('QTY_VAL').value = d.Q;
-        document.getElementById('rate').value = d.R;
-        document.getElementById('calcMode').value = d.M;
-        wInchMode = d.I;
+    openModal("LOAD DATA?", "Restore this quote to inputs?", () => {
+        document.getElementById('L').value = d.L; document.getElementById('W').value = d.W;
+        document.getElementById('QTY_VAL').value = d.Q; document.getElementById('rate').value = d.R;
+        document.getElementById('calcMode').value = d.M; wInchMode = d.I;
         document.getElementById('wToggle').classList.toggle('active', wInchMode);
-        calculate();
-        showToast("LOADED");
+        calculate(); showToast("LOADED");
     }, false);
 }
 
@@ -356,42 +342,33 @@ function applyPreset(id, l, w, setInches) {
 }
 
 function saveToHistory() {
-    const s = document.getElementById('sizeConv').innerText, m = document.getElementById('finalVal').innerText, a = document.getElementById('dispArea').innerText, q = document.getElementById('QTY_VAL').value, rt = document.getElementById('rate').value;
+    const s = document.getElementById('sizeConv').innerText, m = document.getElementById('finalVal').innerText, a = document.getElementById('dispArea').innerText, q = document.getElementById('QTY_VAL').value, rt = document.getElementById('rate').value, gst = document.getElementById('gstDisplay').innerText;
     if (m === "0") return;
     const raw = { L: document.getElementById('L').value, W: document.getElementById('W').value, Q: q, R: rt, M: document.getElementById('calcMode').value, I: wInchMode };
-    const discEl = Number(document.getElementById('dMoneyOff').innerText.replace(/,/g,'')) > 0 ? `<div style="color:#00ff00; font-size:0.65rem; font-weight:bold; margin-top:3px;">FINAL: ₹${document.getElementById('dTotal').innerText} [${document.getElementById('dPerc').innerText}% OFF]</div>` : '';
-    const item = `<div class="hist-item"><span class="delete-btn" onclick="this.parentElement.remove(); updateStorage();">DELETE</span><span onclick="renameQuote(this)" style="color:var(--accent); font-size:0.7rem; font-weight:900; cursor:pointer;">UNNAMED</span><div style="display:flex; justify-content:space-between; align-items:baseline; margin-top:3px;"><b onclick="recallHistory(this)" data-raw='${JSON.stringify(raw)}' style="color:var(--text); font-size:0.95rem; cursor:pointer; text-decoration:underline;">${s} [${q} Pcs]</b><div style="text-align:right;"><b style="color:var(--accent); font-size:1.1rem;">₹${m}</b></div></div>${discEl}</div>`;
+    let L = Number(raw.L), W = Number(raw.W);
+    let lMm = L >= 1 && L <= 15 ? Math.round(L * 304.8) : (L >= 16 && L <= 250 ? Math.round(L * 25.4) : Math.round(L));
+    let wMm = wInchMode ? Math.round(W * 25.4) : (W > 200 ? Math.round(W) : Math.round(W * 304.8));
+    const discEl = Number(document.getElementById('dMoneyOff').innerText.replace(/,/g,'')) > 0 ? `<div style="color:#00ff00; font-size:0.6rem; font-weight:bold; margin-top:2px;">FINAL: ₹${document.getElementById('dTotal').innerText} [${document.getElementById('dPerc').innerText}% OFF]</div>` : '';
+    const item = `<div class="hist-item"><span class="delete-btn" onclick="this.parentElement.remove(); updateStorage();">DELETE</span><span onclick="renameQuote(this)" style="color:var(--accent); font-size:0.7rem; font-weight:900; cursor:pointer;">UNNAMED</span><div class="hist-main"><b class="hist-size" onclick="recallHistory(this.parentElement)" data-raw='${JSON.stringify(raw)}'>${s} [${q} Pcs]</b><div style="text-align:right;"><b class="hist-mrp">₹${m}</b><br><span class="gst-small" style="font-size:0.45rem">${gst}</span></div></div>${discEl}<div class="hist-data-line">Size: ${lMm}×${wMm}mm | Rate: ₹${rt}/ft² | Area: ${a}ft²</div></div>`;
     document.getElementById('histItems').insertAdjacentHTML('afterbegin', item); updateStorage(); showToast("SAVED");
 }
 
-function exportData() {
-    const h = localStorage.getItem('sizeCalcHistory') || "";
-    const b64 = btoa(unescape(encodeURIComponent(h)));
-    navigator.clipboard.writeText(b64).then(() => showToast("BACKUP COPIED"));
-}
-
-function importData() {
-    openModal("IMPORT BACKUP", "Paste code:", (val) => {
-        try {
-            const decoded = decodeURIComponent(escape(atob(val)));
-            document.getElementById('histItems').innerHTML = decoded;
-            updateStorage(); showToast("RESTORED");
-        } catch(e) { showToast("ERROR"); }
-    }, true);
-}
-
+function exportData() { navigator.clipboard.writeText(btoa(unescape(encodeURIComponent(localStorage.getItem('sizeCalcHistory') || "")))).then(() => showToast("BACKUP COPIED")); }
+function importData() { openModal("IMPORT BACKUP", "Paste code:", (val) => { try { document.getElementById('histItems').innerHTML = decodeURIComponent(escape(atob(val))); updateStorage(); showToast("RESTORED"); } catch(e) { showToast("ERROR"); } }, true); }
 function manualDimChange() { document.querySelectorAll('.chip').forEach(c => c.classList.remove('active-preset')); calculate(); }
 function updateStorage() { localStorage.setItem('sizeCalcHistory', document.getElementById('histItems').innerHTML); }
 function updateInputs() { ['L', 'W', 'QTY_VAL', 'rate', 'mrp', 'discIn'].forEach(id => localStorage.setItem('last' + id, document.getElementById(id).value)); localStorage.setItem('lastMode', document.getElementById('calcMode').value); }
-function clearAll() { localStorage.clear(); location.reload(); }
+function clearAllFields() { ['L', 'W', 'QTY_VAL', 'rate', 'mrp', 'discIn'].forEach(id => document.getElementById(id).value = (id === 'QTY_VAL' ? '1' : '')); calculate(); }
 function clearField(id) { document.getElementById(id).value = (id === 'QTY_VAL' ? '1' : ''); calculate(); }
 function clearDisc() { document.getElementById('discIn').value = ''; applyDiscount(); }
 function toggleDisc() { const a = document.getElementById('discInputArea'); a.style.display = (a.style.display === 'block' ? 'none' : 'block'); }
 function showToast(m) { const t = document.getElementById("toast"); t.innerText = m; t.className = "show"; setTimeout(() => t.className = "", 2000); }
 function closeModal() { document.getElementById('appModal').style.display = 'none'; }
-function triggerClearHistory() { openModal("CLEAR ALL?", "Delete history?", () => { document.getElementById('histItems').innerHTML = ''; updateStorage(); }, false); }
+function triggerClearHistory() { openModal("CLEAR ALL?", "Delete history permanently?", () => { document.getElementById('histItems').innerHTML = ''; updateStorage(); }, false); }
 function renameQuote(el) { openModal("RENAME", "", (v) => { if(v) { el.innerText = v.toUpperCase(); updateStorage(); } }, true); }
 function openModal(t, b, c, s=true) { document.getElementById('modalTitle').innerText = t; document.getElementById('modalBody').innerText = b; const inp = document.getElementById('modalInput'); inp.style.display = s ? 'block' : 'none'; inp.value = ""; document.getElementById('appModal').style.display = 'flex'; document.getElementById('modalSubmit').onclick = () => { c(inp.value); closeModal(); }; }
+function toggleInch() { wInchMode = !wInchMode; document.getElementById('wToggle').classList.toggle('active', wInchMode); calculate(document.getElementById('mrp').value > 0 ? 'mrp' : 'rate'); }
+function copyCurrent() { const text = `Quote: ${document.getElementById('sizeConv').innerText} [${document.getElementById('dispArea').innerText} ft²]\nTotal: ₹${document.getElementById('finalVal').innerText}`; navigator.clipboard.writeText(text).then(() => { showToast("COPIED"); }); }
 </script>
 </body>
 </html>
