@@ -3,115 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    
     <link rel="manifest" href="manifest.json">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="theme-color" id="metaTheme" content="#000000">
-    
     <title>Size Calc Pro</title>
     <style>
-        :root {
-            --accent: #3b82f6;
-            --danger: #ef4444;
-            --success: #22ff33; /* NEON GREEN */
-            --bg: #000000;
-            --card: #0a0a0a;
-            --input: #111111;
-            --border: #1a1a1a;
-            --text: #ffffff;
-            --text-dim: #666;
+        /* --- VARIABLES --- */
+        :root { 
+            --accent: #3b82f6; --danger: #ef4444; 
+            --gold: #f2e052; 
+            --emerald: #50c878;
+            --bg: #000; --card: #0a0a0a; --border: #333; --text: #fff; --text-dim: #888; 
+        }
+        [data-theme="light"] { 
+            --bg: #e3e3e3; --card: #fff; --border: #d1d1d1; --text: #1a1a1a; --text-dim: #777; 
         }
 
-        [data-theme="light"] {
-            --bg: #e3e3e3;
-            --card: #ffffff;
-            --input: #f2f2f2;
-            --border: #d1d1d1;
-            --text: #1a1a1a;
-            --text-dim: #777;
-        }
+        /* --- RESET --- */
+        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        input[type=number] { -moz-appearance: textfield; }
+        body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg); color: var(--text); padding: 10px; display: flex; justify-content: center; margin: 0; overflow-x: hidden; transition: background 0.3s; }
+        .card { width: 100%; max-width: 400px; padding: 10px; box-sizing: border-box; }
 
-        body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg); color: var(--text); padding: 10px; display: flex; justify-content: center; margin: 0; overflow-x: hidden; }
-        .card { width: 100%; max-width: 400px; padding: 5px; box-sizing: border-box; position: relative; }
-        
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding: 0 5px; }
-        h2 { color: var(--accent); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; font-size: 0.95rem; margin:0; }
-        
+        /* --- HEADER & GEAR --- */
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        h2 { color: var(--accent); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; font-size: 1rem; margin:0; }
         .gear-container { position: relative; }
-        .gear-icon { font-size: 1.1rem; cursor: pointer; display: block; }
-        
-        .settings-menu { 
-            display: none; position: absolute; right: 0; top: 30px; 
-            background: var(--card); border: 1.5px solid var(--border); 
-            border-radius: 12px; width: 170px; z-index: 1000; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4); overflow: hidden;
-        }
-        .menu-row { padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
-        .menu-action { padding: 12px; font-size: 0.65rem; font-weight: 800; cursor: pointer; text-transform: uppercase; border-bottom: 1px solid var(--border); color: var(--text); }
-        .menu-action:last-child { border-bottom: none; }
+        .settings-menu { display: none; position: absolute; right: 0; top: 30px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; width: 180px; z-index: 100; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .menu-row { padding: 12px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); align-items: center; }
 
-        .theme-switch-wrapper { display: flex; align-items: center; gap: 8px; }
-        .switch { position: relative; display: inline-block; width: 36px; height: 20px; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .3s; border-radius: 20px; }
-        .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; z-index: 2; }
-        input:checked + .slider { background-color: var(--accent); }
-        input:checked + .slider:before { transform: translateX(16px); }
-        .icon-sm { font-size: 0.7rem; }
-
-        .section-label { font-size: 0.55rem; font-weight: 700; text-transform: uppercase; color: var(--text-dim); margin: 8px 0 4px 5px; display: block; }
-        .dim-row { display: flex; gap: 5px; margin-bottom: 6px; align-items: center; }
+        /* --- INPUTS --- */
+        .section-label { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; color: var(--text-dim); margin: 10px 0 5px 0; display: block; }
+        .dim-row { display: flex; gap: 6px; margin-bottom: 8px; align-items: center; }
         .input-wrapper { position: relative; flex: 1; display: flex; align-items: center; }
-        .input-box { width: 100%; padding: 8px 25px 8px 10px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.9rem; background: var(--input); color: var(--text); outline: none; height: 40px; box-sizing: border-box; }
         
-        .smart-input-container { position: relative; flex: 1.4; display: flex; align-items: center; background: var(--input); border: 1.5px solid var(--border); border-radius: 8px; height: 40px; overflow: hidden; }
-        .smart-select { background: var(--border); color: var(--accent); border: none; font-size: 0.5rem; font-weight: 900; height: 100%; padding: 0 4px; outline: none; text-transform: uppercase; }
-        .smart-val-input { flex: 1; background: transparent; border: none; color: var(--text); font-size: 0.9rem; padding: 0 25px 0 8px; outline: none; height: 100%; width: 100%; }
+        .input-box { width: 100%; padding: 10px 28px 10px 10px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.95rem; background: #000; color: var(--text); outline: none; height: 44px; box-sizing: border-box; transition: border 0.2s; }
+        [data-theme="light"] .input-box { background: #fff; }
+        .input-box:focus { border-color: var(--accent); }
+        
+        .smart-input-container { position: relative; flex: 1.5; display: flex; align-items: center; background: #000; border: 1px solid var(--border); border-radius: 8px; height: 44px; overflow: hidden; }
+        [data-theme="light"] .smart-input-container { background: #fff; }
+        .smart-select { background: transparent; color: var(--accent); border: none; font-size: 0.55rem; font-weight: 900; height: 100%; padding: 0 5px; outline: none; text-transform: uppercase; cursor: pointer; border-right: 1px solid var(--border); }
+        .smart-val-input { flex: 1; background: transparent; border: none; color: var(--text); font-size: 0.95rem; padding: 0 28px 0 10px; outline: none; height: 100%; width: 100%; }
+        .clear-x { position: absolute; right: 8px; color: var(--text-dim); cursor: pointer; font-size: 16px; padding: 4px; z-index: 5; }
+        
+        .toggle-btn { padding: 0 8px; border-radius: 8px; border: 1px solid var(--border); background: #000; color: var(--text-dim); font-size: 0.6rem; font-weight: 800; cursor: pointer; height: 44px; white-space: nowrap; }
+        [data-theme="light"] .toggle-btn { background: #fff; }
+        .toggle-btn.active { background: var(--accent) !important; color: #fff; border-color: var(--accent); }
 
-        .clear-x { position: absolute; right: 6px; color: var(--text-dim); cursor: pointer; font-size: 14px; padding: 4px; z-index: 5; }
-        .toggle-btn { padding: 0 10px; border-radius: 8px; border: 1.5px solid var(--border); background: var(--input); color: var(--text-dim); font-size: 0.55rem; font-weight: 800; cursor: pointer; height: 40px; }
-        .toggle-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
-
-        .preset-row { display: flex; gap: 3px; margin: 2px 0 8px 0; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; }
-        .chip { background: var(--input); color: var(--text-dim); padding: 4px 8px; border-radius: 5px; font-size: 0.48rem; font-weight: 800; border: 1px solid var(--border); white-space: nowrap; }
+        /* --- PRESETS --- */
+        .preset-row { display: flex; gap: 5px; margin: 5px 0 10px 0; overflow-x: auto; padding-bottom: 5px; scrollbar-width: none; }
+        .chip { background: #000; color: var(--text-dim); padding: 5px 10px; border-radius: 6px; font-size: 0.55rem; font-weight: 800; border: 1px solid var(--border); white-space: nowrap; flex-shrink: 0; cursor: pointer; }
+        [data-theme="light"] .chip { background: #fff; }
         .chip.active-preset { border-color: var(--accent); color: var(--accent); }
 
-        .result-panel { background: var(--card); border-radius: 12px; padding: 12px; margin-top: 5px; border: 1.5px solid var(--border); position: relative; }
-        .size-conversion { font-weight: 800; color: var(--text); font-size: 1rem; margin-bottom: 2px; display: block; }
-        .area-line { font-size: 0.75rem; color: var(--text-dim); margin-bottom: 8px; }
-        
+        /* --- RESULT PANEL --- */
+        .result-panel { background: var(--card); border-radius: 12px; padding: 12px; margin-top: 10px; border: 1px solid var(--border); position: relative; }
+        .size-conversion { font-weight: 800; color: var(--text); font-size: 1.1rem; margin-bottom: 4px; display: block; }
+        .area-line { font-size: 0.8rem; color: var(--text-dim); margin-bottom: 10px; }
         .mrp-box { border-top: 1px solid var(--border); padding-top: 10px; position: relative; }
-        .mrp-val { font-size: 1.5rem; font-weight: 900; color: var(--accent); margin-top: 2px; display: flex; align-items: baseline; gap: 6px; }
-        .gst-small { font-size: 0.48rem; color: var(--text-dim); font-weight: bold; text-transform: uppercase; margin-left: 5px; }
+        .mrp-val { font-size: 1.6rem; font-weight: 900; color: var(--accent); margin-top: 2px; display: flex; align-items: baseline; gap: 6px; }
+        .gst-small { font-size: 0.55rem; color: var(--text-dim); font-weight: bold; text-transform: uppercase; }
 
+        /* --- DISCOUNT WITH MODE BUTTON --- */
         #discInputArea { display: none; margin-top: 8px; border-top: 1px dashed var(--border); padding-top: 8px; }
-        .disc-res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 6px; }
-        .disc-res-box { background: rgba(255,255,255,0.02); padding: 6px; border-radius: 8px; font-size: 0.6rem; color: var(--text-dim); border: 1px solid var(--border); font-weight: bold; transition: all 0.3s ease; }
-        .disc-res-box b { color: var(--text); display: block; font-size: 0.8rem; }
+        .disc-wrapper-flex { display: flex; align-items: center; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: #000; height: 40px; margin-top: 8px; }
+        .mode-btn { width: 60px; height: 100%; border: none; background: #1a1a1a; color: var(--text); font-size: 0.6rem; font-weight: 900; cursor: pointer; border-right: 1px solid var(--border); }
+        .disc-input-flex { flex: 1; border: none; background: transparent; color: var(--text); font-size: 0.95rem; padding: 0 10px; outline: none; font-weight: bold; }
         
-        /* NEON Green Highlight */
-        .cash-highlight { border-color: var(--success) !important; color: var(--success) !important; box-shadow: 0 0 10px rgba(34, 255, 51, 0.2); }
-        .cash-highlight b { color: var(--success) !important; }
+        .disc-res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 6px; }
+        .disc-res-box { background: rgba(255,255,255,0.03); padding: 6px; border-radius: 5px; font-size: 0.65rem; color: var(--text-dim); border: 1px solid var(--border); font-weight: bold; transition: 0.3s; }
+        .disc-res-box b { color: var(--text); display: block; font-size: 0.8rem; margin-top:2px; }
+        
+        .mode-gold { border-color: var(--gold) !important; color: var(--gold) !important; box-shadow: 0 0 10px rgba(242, 224, 82, 0.15); }
+        .mode-gold b { color: var(--gold) !important; }
+        .mode-emerald { border-color: var(--emerald) !important; color: var(--emerald) !important; box-shadow: 0 0 10px rgba(80, 200, 120, 0.15); }
+        .mode-emerald b { color: var(--emerald) !important; }
 
-        .btn-group { display: flex; gap: 5px; margin-top: 10px; }
-        .btn { flex: 1; padding: 8px; border: none; border-radius: 10px; font-weight: 800; cursor: pointer; font-size: 0.65rem; height: 40px; text-transform: uppercase; }
-        .btn-reset { flex: 0.7; background: var(--input); color: var(--text-dim); }
-        .btn-save { flex: 1.2; background: var(--accent); color: #fff; }
-        .btn-copy { flex: 0.7; background: var(--input); color: var(--text-dim); border: 1px solid var(--border); }
+        /* --- BUTTONS --- */
+        .btn-group { display: flex; gap: 6px; margin-top: 12px; }
+        .btn { flex: 1; padding: 10px; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 0.7rem; height: 42px; text-transform: uppercase; }
+        .btn-reset { background: #000; color: var(--text-dim); border: 1px solid var(--border); }
+        [data-theme="light"] .btn-reset { background: #fff; }
+        .btn-save { flex: 1.5; background: var(--accent); color: #fff; }
+        .btn-copy { background: #000; color: var(--text-dim); border: 1px solid var(--border); }
+        [data-theme="light"] .btn-copy { background: #fff; }
 
-        .hist-item { background: var(--card); padding: 12px; border: 1px solid var(--border); border-radius: 12px; margin-bottom: 8px; position: relative; }
+        /* --- HISTORY --- */
+        .hist-item { background: var(--card); padding: 12px; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 8px; position: relative; }
         .delete-btn { position: absolute; top: 10px; right: 10px; color: var(--danger); font-size: 9px; font-weight: 900; cursor: pointer; }
-        .hist-name { color: var(--accent); font-size: 0.65rem; font-weight: 900; cursor: pointer; text-transform: uppercase; margin-bottom: 3px; display: block; }
-        .hist-main { display: flex; justify-content: space-between; align-items: baseline; }
-        .hist-size { color: var(--text); font-size: 0.85rem; font-weight: 800; cursor: pointer; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
-        .hist-mrp { color: var(--accent); font-size: 0.95rem; font-weight: 900; }
-        .hist-data-line { font-size: 0.55rem; color: var(--text-dim); margin-top: 6px; border-top: 1px solid var(--border); padding-top: 6px; text-transform: uppercase; }
-        
-        #toast { visibility: hidden; min-width: 100px; background: var(--accent); color: #fff; text-align: center; border-radius: 50px; padding: 8px; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; z-index: 2000; font-weight: 800; }
+        .hist-size { color: var(--text); font-size: 0.9rem; font-weight: 800; cursor: pointer; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+
+        /* --- SLIDER --- */
+        .switch { position: relative; width: 36px; height: 20px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: #333; transition: .3s; border-radius: 20px; }
+        .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background: #fff; transition: .3s; border-radius: 50%; }
+        input:checked + .slider { background: var(--accent); }
+        input:checked + .slider:before { transform: translateX(16px); }
+
+        #toast { visibility: hidden; min-width: 100px; background: var(--accent); color: #fff; text-align: center; border-radius: 20px; padding: 8px; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; z-index: 2000; }
         #toast.show { visibility: visible; }
-        .modal-overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:3000; align-items:center; justify-content:center; backdrop-filter:blur(5px); }
-        .modal-box { background:var(--card); padding:20px; border-radius:15px; border:1px solid var(--border); width:80%; max-width:300px; text-align:center; }
+        .modal-overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:2000; align-items:center; justify-content:center; backdrop-filter:blur(5px); }
+        .modal-box { background:var(--card); padding:25px; border-radius:15px; border:1px solid var(--border); width:80%; max-width:300px; text-align:center; }
     </style>
 </head>
 <body>
@@ -120,8 +115,8 @@
 
 <div id="appModal" class="modal-overlay">
     <div class="modal-box">
-        <span id="modalTitle" style="font-size:0.8rem; font-weight:800; color:var(--text); text-transform:uppercase;">RENAME</span>
-        <div id="modalBody" style="font-size: 0.7rem; color: var(--text-dim); margin: 10px 0;"></div>
+        <span id="modalTitle" style="font-size:0.8rem; font-weight:800; color:var(--text);">CONFIRM</span>
+        <div id="modalBody" style="font-size: 0.75rem; color: var(--text-dim); margin: 15px 0;">...</div>
         <input type="text" id="modalInput" class="input-box" style="width:100%; margin:15px 0; text-align:center; display:none;">
         <div style="display:flex; gap:10px;">
             <button class="btn btn-reset" onclick="closeModal()">CANCEL</button>
@@ -134,79 +129,78 @@
     <div class="header">
         <h2>Size Calc Pro</h2>
         <div class="gear-container">
-            <span class="gear-icon" onclick="toggleSettings()">⚙️</span>
+            <span style="cursor:pointer; font-size:1.2rem;" onclick="toggleMenu()">⚙️</span>
             <div id="settingsMenu" class="settings-menu">
                 <div class="menu-row">
-                    <div class="theme-switch-wrapper">
-                        <span class="icon-sm">🌙</span>
-                        <label class="switch">
-                            <input type="checkbox" id="themeToggle" onchange="handleThemeSwitch(this)">
-                            <span class="slider"></span>
-                        </label>
-                        <span class="icon-sm">☀️</span>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span style="font-size:0.7rem;">🌙</span>
+                        <label class="switch"><input type="checkbox" id="themeToggle" onchange="swapTheme(this)"><span class="slider"></span></label>
+                        <span style="font-size:0.7rem;">☀️</span>
                     </div>
                 </div>
-                <div class="menu-action" onclick="exportData()">📤 Export Backup</div>
-                <div class="menu-action" onclick="importData()">📥 Import Backup</div>
             </div>
         </div>
     </div>
 
     <span class="section-label">L / W / Qty</span>
     <div class="dim-row">
-        <div class="input-wrapper"><input type="number" id="L" placeholder="L" class="input-box nav-target" oninput="manualDimChange()"><span class="clear-x" onclick="clearField('L')">×</span></div>
-        <div class="input-wrapper"><input type="number" id="W" placeholder="W" class="input-box nav-target" oninput="manualDimChange()"><span class="clear-x" onclick="clearField('W')">×</span></div>
+        <div class="input-wrapper"><input type="number" id="L" placeholder="L" class="input-box" oninput="runMath('dim')"><span class="clear-x" onclick="clearField('L')">×</span></div>
+        <div class="input-wrapper"><input type="number" id="W" placeholder="W" class="input-box" oninput="runMath('dim')"><span class="clear-x" onclick="clearField('W')">×</span></div>
         <div class="smart-input-container">
-            <select id="calcMode" class="smart-select" onchange="calculate()">
+            <select id="calcMode" class="smart-select" onchange="runMath('mode')">
                 <option value="pcs">QTY</option>
                 <option value="wall">AREA</option>
             </select>
-            <div class="input-wrapper"><input type="number" id="QTY_VAL" value="1" class="smart-val-input nav-target" oninput="calculate()"><span class="clear-x" onclick="clearField('QTY_VAL')">×</span></div>
+            <div class="input-wrapper"><input type="number" id="QTY_VAL" value="1" class="smart-val-input" oninput="runMath('qty')"><span class="clear-x" onclick="clearField('QTY_VAL')">×</span></div>
         </div>
         <button id="wToggle" class="toggle-btn" onclick="toggleInch()">INCH</button>
     </div>
 
     <div class="preset-row">
-        <div class="chip" data-id="p1" onclick="applyPreset('p1', 8, 4.5, true)">8' × 4.5"</div>
-        <div class="chip" data-id="p2" onclick="applyPreset('p2', 8, 6, true)">8' × 6"</div>
-        <div class="chip" data-id="p3" onclick="applyPreset('p3', 9.5, 4.5, true)">9.5' × 4.5"</div>
-        <div class="chip" data-id="p4" onclick="applyPreset('p4', 9.5, 6, true)">9.5' × 6"</div>
-        <div class="chip" data-id="p5" onclick="applyPreset('p5', 8, 4, false)">8' × 4'</div>
+        <div class="chip" data-l="8" data-w="4.5" data-i="true" onclick="applyPreset(this)">8' × 4.5"</div>
+        <div class="chip" data-l="8" data-w="6" data-i="true" onclick="applyPreset(this)">8' × 6"</div>
+        <div class="chip" data-l="9.5" data-w="4.5" data-i="true" onclick="applyPreset(this)">9.5' × 4.5"</div>
+        <div class="chip" data-l="9.5" data-w="6" data-i="true" onclick="applyPreset(this)">9.5' × 6"</div>
+        <div class="chip" data-l="8" data-w="4" data-i="false" onclick="applyPreset(this)">8' × 4'</div>
     </div>
 
-    <span class="section-label">Rate & Price</span>
+    <span class="section-label">Rate & Sheet Price</span>
     <div class="dim-row">
-        <div class="input-wrapper"><input type="number" id="rate" placeholder="Rate/ft²" class="input-box nav-target" oninput="calculate('rate')"><span class="clear-x" onclick="clearField('rate')">×</span></div>
-        <div class="input-wrapper"><input type="number" id="mrp" placeholder="Total MRP" class="input-box nav-target" oninput="calculate('mrp')"><span class="clear-x" onclick="clearField('mrp')">×</span></div>
+        <div class="input-wrapper"><input type="number" id="rate" placeholder="Rate/ft²" class="input-box" oninput="runMath('rate')"><span class="clear-x" onclick="clearField('rate')">×</span></div>
+        <div class="input-wrapper"><input type="number" id="mrp" placeholder="Price/Sheet" class="input-box" oninput="runMath('mrp')"><span class="clear-x" onclick="clearField('mrp')">×</span></div>
     </div>
 
     <div class="result-panel">
         <span class="size-conversion" id="sizeConv">0' × 0"</span>
-        <div class="area-line">Area: <span id="dispArea" style="font-weight:bold; color:inherit;">0.00</span> ft² <span id="pcsInfo" style="color:var(--accent); font-weight:bold;"></span></div>
+        <div class="area-line">Total Area: <b><span id="dispArea">0.00</span> ft²</b> <span id="pcsInfo" style="color:var(--accent); font-weight:bold;"></span></div>
         <div class="mrp-box">
-            <span class="gst-small" style="margin-left:0; color:var(--text-dim);">Total MRP</span>
-            <div class="mrp-val">₹ <span id="finalVal">0</span> <span id="gstDisplay" class="gst-small"></span></div>
-            <div onclick="toggleDisc()" style="position: absolute; right: 0; bottom: 8px; color: var(--text-dim); cursor: pointer; font-size: 8px; font-weight: 800; border: 1px solid var(--border); padding: 2px 5px; border-radius: 4px;">DISCOUNT ▼</div>
+            <span class="gst-small">Final Total</span>
+            <div class="mrp-val">₹ <span id="finalVal">0</span> <span id="gstDisplay" class="gst-small" style="margin-left:5px;"></span></div>
+            <div onclick="toggleDisc()" style="position: absolute; right: 0; bottom: 10px; color: var(--text-dim); cursor: pointer; font-size: 9px; font-weight: 800;">DISCOUNT ▼</div>
         </div>
         <div id="discInputArea">
-            <div class="input-wrapper"><input type="number" id="discIn" placeholder="% or Cash Off" class="input-box nav-target" style="height: 34px; margin-top: 8px;" oninput="applyDiscount()"><span class="clear-x" onclick="clearDisc()">×</span></div>
+            <div class="disc-wrapper-flex">
+                <button id="modeBtn" class="mode-btn" onclick="cycleMode()">⚡ SMART</button>
+                <input type="number" id="discIn" placeholder="Discount" class="disc-input-flex" oninput="runMath('disc')">
+                <span class="clear-x" style="position:relative; right:10px;" onclick="clearDisc()">×</span>
+            </div>
             <div class="disc-res-grid">
-                <div id="discBoxLess" class="disc-res-box">Less/Off<b>₹<span id="dMoneyOff">0</span> <span id="dPercLabel" style="font-size:0.5rem;">(<span id="dPerc">0</span>%)</span></b></div>
-                <div id="discBoxTotal" class="disc-res-box">Result<b>₹<span id="dTotal">0</span> <span style="font-size:0.5rem;">(<span id="dRate">0</span>/ft²)</span></b></div>
+                <div class="disc-res-box" id="boxLess">Less/Off <b id="dMoneyOff">₹0</b></div>
+                <div class="disc-res-box" id="boxNet">Result <b id="dTotal">₹0</b></div>
             </div>
         </div>
     </div>
 
     <div class="btn-group">
-        <button class="btn btn-reset" onclick="clearAllFields()">Reset</button>
-        <button class="btn btn-save" onclick="saveToHistory()">Save Quote</button>
+        <button class="btn btn-reset" onclick="resetAll()">Reset</button>
+        <button class="btn btn-save" onclick="saveToHistory()">Save</button>
         <button class="btn btn-copy" onclick="copyCurrent()">Copy</button>
     </div>
 
-    <div id="historyLog" style="margin-top:25px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; padding:0 5px;">
+    <div id="historyLog" style="margin-top:20px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
             <span class="section-label" style="margin:0">History Log</span>
-            <span onclick="triggerClearHistory()" style="font-size: 0.5rem; color: var(--danger); cursor: pointer; font-weight: 900;">CLEAR ALL</span>
+            <span onclick="triggerClearHistory()" style="font-size: 0.55rem; color: var(--danger); cursor: pointer; font-weight: 900;">CLEAR ALL</span>
         </div>
         <div id="histItems"></div>
     </div>
@@ -217,172 +211,197 @@ if ('serviceWorker' in navigator) { navigator.serviceWorker.register('./sw.js');
 
 let wInchMode = false;
 let currentTheme = 'dark';
+let lastSource = 'rate';
+let discMode = 'smart'; // smart, perc, flat, target
 
-function toggleSettings() {
-    const menu = document.getElementById('settingsMenu');
-    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
-}
-
-window.onclick = function(event) { if (!event.target.matches('.gear-icon')) document.getElementById('settingsMenu').style.display = "none"; }
+function toggleMenu() { const m = document.getElementById('settingsMenu'); m.style.display = m.style.display === 'block' ? 'none' : 'block'; }
+window.onclick = (e) => { if (!e.target.innerText.includes('⚙️')) document.getElementById('settingsMenu').style.display = "none"; }
 
 window.onload = function() {
-    const h = localStorage.getItem('sizeCalcHistory');
-    if (h) document.getElementById('histItems').innerHTML = h;
+    const h = localStorage.getItem('sizeCalcHistory'); if (h) document.getElementById('histItems').innerHTML = h;
     currentTheme = localStorage.getItem('calcTheme') || 'dark';
     document.documentElement.setAttribute('data-theme', currentTheme);
     document.getElementById('themeToggle').checked = (currentTheme === 'light');
     document.getElementById('metaTheme').setAttribute('content', currentTheme === 'dark' ? '#000000' : '#e3e3e3');
-    ['L', 'W', 'QTY_VAL', 'rate', 'mrp', 'discIn'].forEach(id => {
-        document.getElementById(id).value = localStorage.getItem('last' + id) || (id === 'QTY_VAL' ? '1' : '');
-    });
+    ['L', 'W', 'QTY_VAL', 'rate', 'mrp', 'discIn'].forEach(id => { document.getElementById(id).value = localStorage.getItem('last' + id) || (id === 'QTY_VAL' ? '1' : ''); });
     document.getElementById('calcMode').value = localStorage.getItem('lastMode') || 'pcs';
-    calculate();
+    runMath('load');
 };
 
-function handleThemeSwitch(cb) {
+function swapTheme(cb) {
     currentTheme = cb.checked ? 'light' : 'dark';
     document.documentElement.setAttribute('data-theme', currentTheme);
     localStorage.setItem('calcTheme', currentTheme);
     document.getElementById('metaTheme').setAttribute('content', currentTheme === 'dark' ? '#000000' : '#e3e3e3');
 }
 
-function formatDisplayUnit(valInInches) {
-    if (valInInches < 12) return valInInches.toFixed(1).replace(/\.0$/, "") + '"';
-    let ft = valInInches / 12;
-    return ft.toFixed(2).replace(/\.00$/, "").replace(/\.$/, "") + "'";
+function formatUnit(val) {
+    if (val < 12) return val.toFixed(1).replace(/\.0$/, "") + '"';
+    return (val / 12).toFixed(2).replace(/\.00$/, "").replace(/\.$/, "") + "'";
 }
 
-function calculate(trigger) {
-    let L = Number(document.getElementById('L').value) || 0;
-    let W = Number(document.getElementById('W').value) || 0;
-    let QTY = Number(document.getElementById('QTY_VAL').value) || 1;
+function cycleMode() {
+    const btn = document.getElementById('modeBtn');
+    if (discMode === 'smart') { discMode = 'perc'; btn.innerText = "% PERC"; }
+    else if (discMode === 'perc') { discMode = 'flat'; btn.innerText = "₹- FLAT"; }
+    else if (discMode === 'flat') { discMode = 'target'; btn.innerText = "₹= TARGET"; }
+    else { discMode = 'smart'; btn.innerText = "⚡ SMART"; }
+    runMath('disc');
+}
+
+function val(id) { return parseFloat(document.getElementById(id).value) || 0; }
+
+function runMath(trigger) {
+    let L = val('L'), W = val('W'), QTY = val('QTY_VAL'), rate = val('rate'), unitPrice = val('mrp'), disc = val('discIn');
     let mode = document.getElementById('calcMode').value;
-    let rate = Number(document.getElementById('rate').value) || 0;
-    let mrp = Number(document.getElementById('mrp').value) || 0;
-    
+
+    if (trigger === 'rate') lastSource = 'rate';
+    if (trigger === 'mrp') lastSource = 'mrp';
+
     let lIn = (L >= 1 && L <= 15) ? L * 12 : (L >= 16 && L <= 250 ? L : L / 25.4);
     let wIn = wInchMode ? W : (W > 200 ? W/25.4 : W*12);
-    
-    document.getElementById('sizeConv').innerText = (L && W) ? `${formatDisplayUnit(lIn)} × ${formatDisplayUnit(wIn)}` : "0' × 0\"";
+    document.getElementById('sizeConv').innerText = (L && W) ? `${formatUnit(lIn)} × ${formatUnit(wIn)}` : "0' × 0\"";
 
-    let singleArea = (lIn * wIn) / 144;
-    let totalArea = 0;
+    let singleArea = (lIn * wIn) / 144; 
+    let totalArea = 0, pcs = 0;
+
     if (mode === 'pcs') {
-        totalArea = singleArea * QTY;
+        pcs = (QTY || 1);
+        totalArea = singleArea * pcs;
         document.getElementById('pcsInfo').innerText = "";
     } else {
-        let p = singleArea > 0 ? Math.ceil(QTY / singleArea) : 1;
-        totalArea = singleArea * p;
-        document.getElementById('pcsInfo').innerText = `(${p} Pcs)`;
+        let wallArea = QTY || 0;
+        pcs = singleArea > 0 ? Math.ceil(wallArea / singleArea) : 0;
+        totalArea = singleArea * pcs;
+        document.getElementById('pcsInfo').innerText = `(${pcs} Pcs)`;
     }
-    
     document.getElementById('dispArea').innerText = totalArea.toFixed(2);
 
-    // FIXED: Only calculate Final Val for the Result Panel
-    // Does NOT update the input boxes themselves to avoid glitches
-    let resultMRP = 0;
-    if (trigger === 'mrp') {
-        resultMRP = mrp;
-    } else {
-        resultMRP = Math.round(totalArea * rate);
-    }
-    
-    document.getElementById('finalVal').innerText = resultMRP.toLocaleString('en-IN');
-    let gstAmt = Math.round(resultMRP * 18/118);
-    document.getElementById('gstDisplay').innerText = resultMRP > 0 ? `(₹${gstAmt.toLocaleString('en-IN')} GST)` : "";
-    
-    applyDiscount(resultMRP);
-    updateInputs();
-}
-
-function applyDiscount(customMRP) {
-    const val = Number(document.getElementById('discIn').value) || 0;
-    const baseMRP = customMRP || Number(document.getElementById('finalVal').innerText.replace(/,/g, '')) || 0;
-    const area = Number(document.getElementById('dispArea').innerText) || 1;
-    let mt = 0, dm = 0, pu = 0;
-
-    const resBox = document.getElementById('discBoxTotal');
-    const lessBox = document.getElementById('discBoxLess');
-
-    if (val > 0 && val < 100) {
-        // Percentage Mode
-        mt = baseMRP * (val / 100);
-        dm = baseMRP - mt;
-        pu = val;
-        resBox.classList.remove('cash-highlight');
-        lessBox.classList.remove('cash-highlight');
-        document.getElementById('dPercLabel').style.display = "inline";
-    } else if (val >= 100) {
-        // Cash Decrease Mode
-        mt = val;
-        dm = baseMRP - val;
-        pu = baseMRP > 0 ? ((mt / baseMRP) * 100) : 0;
-        resBox.classList.add('cash-highlight');
-        lessBox.classList.add('cash-highlight');
-        document.getElementById('dPercLabel').style.display = "none";
-    } else {
-        dm = baseMRP;
-        resBox.classList.remove('cash-highlight');
-        lessBox.classList.remove('cash-highlight');
+    if (singleArea > 0) {
+        if (lastSource === 'rate') {
+            unitPrice = Math.round(rate * singleArea);
+            if (trigger !== 'mrp') document.getElementById('mrp').value = unitPrice || ""; 
+        } else {
+            rate = unitPrice / singleArea;
+            if (trigger !== 'rate') document.getElementById('rate').value = rate.toFixed(2) || "";
+        }
     }
 
-    document.getElementById('dMoneyOff').innerText = Math.round(mt).toLocaleString('en-IN');
-    document.getElementById('dTotal').innerText = Math.round(dm).toLocaleString('en-IN');
-    document.getElementById('dPerc').innerText = Math.round(pu);
-    document.getElementById('dRate').innerText = (area > 0 ? (dm / area).toFixed(2) : 0);
+    let finalTotal = unitPrice * (pcs || 1);
+    document.getElementById('finalVal').innerText = finalTotal.toLocaleString('en-IN');
+    let gstAmt = Math.round(finalTotal * 18/118);
+    document.getElementById('gstDisplay').innerText = finalTotal > 0 ? `(₹${gstAmt.toLocaleString('en-IN')} GST)` : "";
+
+    // --- MODE-BASED DISCOUNT LOGIC ---
+    let off = 0, net = finalTotal;
+    const bL = document.getElementById('boxLess'), bN = document.getElementById('boxNet');
+    bL.className = "disc-res-box"; bN.className = "disc-res-box"; 
+
+    if (disc > 0) {
+        if (discMode === 'perc') {
+            off = finalTotal * (disc / 100);
+            net = finalTotal - off;
+            bL.classList.add('mode-gold'); bN.classList.add('mode-gold');
+            document.getElementById('dMoneyOff').innerText = `₹${Math.round(off).toLocaleString('en-IN')} (${disc}%)`;
+        } else if (discMode === 'flat') {
+            off = disc;
+            net = finalTotal - disc;
+            let p = finalTotal > 0 ? ((off/finalTotal)*100).toFixed(1) : 0;
+            bL.classList.add('mode-emerald'); bN.classList.add('mode-emerald');
+            document.getElementById('dMoneyOff').innerText = `₹${Math.round(off).toLocaleString('en-IN')} (${p}%)`;
+        } else if (discMode === 'target') {
+            net = disc;
+            off = finalTotal - disc;
+            let p = finalTotal > 0 ? ((off/finalTotal)*100).toFixed(1) : 0;
+            bL.classList.add('mode-emerald'); bN.classList.add('mode-emerald');
+            document.getElementById('dMoneyOff').innerText = `₹${Math.round(off).toLocaleString('en-IN')} (${p}%)`;
+        } else {
+            // SMART MODE
+            if (disc < 100) {
+                off = finalTotal * (disc / 100);
+                net = finalTotal - off;
+                bL.classList.add('mode-gold'); bN.classList.add('mode-gold');
+                document.getElementById('dMoneyOff').innerText = `₹${Math.round(off).toLocaleString('en-IN')} (${disc}%)`;
+            } else {
+                net = disc;
+                off = finalTotal - disc;
+                let p = finalTotal > 0 ? ((off/finalTotal)*100).toFixed(1) : 0;
+                bL.classList.add('mode-emerald'); bN.classList.add('mode-emerald');
+                document.getElementById('dMoneyOff').innerText = `₹${Math.round(off).toLocaleString('en-IN')} (${p}%)`;
+            }
+        }
+    } else {
+        document.getElementById('dMoneyOff').innerText = "₹0";
+    }
+
+    let netRate = (totalArea > 0) ? (net / totalArea).toFixed(2) : 0;
+    document.getElementById('dTotal').innerText = `₹${Math.round(net).toLocaleString('en-IN')} (₹${netRate}/ft²)`;
+
+    if (trigger !== 'load') updateInputs();
 }
 
-function recallHistory(el) {
-    const d = JSON.parse(el.getAttribute('data-raw'));
-    openModal("LOAD DATA?", "Restore this quote to inputs?", () => {
-        document.getElementById('L').value = d.L; document.getElementById('W').value = d.W;
-        document.getElementById('QTY_VAL').value = d.Q; document.getElementById('rate').value = d.R;
-        document.getElementById('mrp').value = d.MRP || "";
-        document.getElementById('calcMode').value = d.M; wInchMode = d.I;
-        document.getElementById('wToggle').classList.toggle('active', wInchMode);
-        calculate(); showToast("LOADED");
-    }, false);
-}
-
-function applyPreset(id, l, w, setInches) {
-    document.getElementById('L').value = l; document.getElementById('W').value = w;
-    wInchMode = setInches; document.getElementById('wToggle').classList.toggle('active', wInchMode);
+function applyPreset(el) {
+    document.getElementById('L').value = el.dataset.l; document.getElementById('W').value = el.dataset.w;
+    wInchMode = (el.dataset.i === 'true'); document.getElementById('wToggle').classList.toggle('active', wInchMode);
     document.querySelectorAll('.chip').forEach(c => c.classList.remove('active-preset'));
-    document.querySelector(`[data-id="${id}"]`).classList.add('active-preset');
-    calculate();
+    el.classList.add('active-preset'); runMath('dim');
 }
+
+function toggleInch() { wInchMode = !wInchMode; document.getElementById('wToggle').classList.toggle('active', wInchMode); runMath('dim'); }
+function updateInputs() { ['L', 'W', 'QTY_VAL', 'rate', 'mrp', 'discIn'].forEach(id => localStorage.setItem('last' + id, document.getElementById(id).value)); localStorage.setItem('lastMode', document.getElementById('calcMode').value); }
+function updateStorage() { localStorage.setItem('sizeCalcHistory', document.getElementById('histItems').innerHTML); }
 
 function saveToHistory() {
-    const s = document.getElementById('sizeConv').innerText, m = document.getElementById('finalVal').innerText, a = document.getElementById('dispArea').innerText, q = document.getElementById('QTY_VAL').value, rt = document.getElementById('rate').value, gst = document.getElementById('gstDisplay').innerText;
-    const mrpVal = document.getElementById('mrp').value;
+    const s = document.getElementById('sizeConv').innerText, m = document.getElementById('finalVal').innerText, g = document.getElementById('gstDisplay').innerText, a = document.getElementById('dispArea').innerText, i = document.getElementById('pcsInfo').innerText, rt = document.getElementById('rate').value;
     if (m === "0") return;
-    const raw = { L: document.getElementById('L').value, W: document.getElementById('W').value, Q: q, R: rt, MRP: mrpVal, M: document.getElementById('calcMode').value, I: wInchMode };
-    let L = Number(raw.L), W = Number(raw.W);
-    let lMm = L >= 1 && L <= 15 ? Math.round(L * 304.8) : (L >= 16 && L <= 250 ? Math.round(L * 25.4) : Math.round(L));
-    let wMm = wInchMode ? Math.round(W * 25.4) : (W > 200 ? Math.round(W) : Math.round(W * 304.8));
-    const discAmt = Number(document.getElementById('dMoneyOff').innerText.replace(/,/g,''));
-    const isCash = Number(document.getElementById('discIn').value) >= 100;
-    const discEl = discAmt > 0 ? `<div style="color:var(--success); font-size:0.6rem; font-weight:bold; margin-top:2px;">FINAL: ₹${document.getElementById('dTotal').innerText} [${isCash ? 'CASH OFF' : document.getElementById('dPerc').innerText + '% OFF'}]</div>` : '';
-    const item = `<div class="hist-item"><span class="delete-btn" onclick="this.parentElement.remove(); updateStorage();">DELETE</span><span onclick="renameQuote(this)" style="color:var(--accent); font-size:0.7rem; font-weight:900; cursor:pointer;">UNNAMED</span><div class="hist-main"><b class="hist-size" onclick="recallHistory(this.parentElement)" data-raw='${JSON.stringify(raw)}'>${s} [${q} Pcs]</b><div style="text-align:right;"><b class="hist-mrp">₹${m}</b><br><span class="gst-small" style="font-size:0.45rem">${gst}</span></div></div>${discEl}<div class="hist-data-line">Size: ${lMm}×${wMm}mm | Rate: ₹${rt}/ft² | Area: ${a}ft²</div></div>`;
+    const raw = { L: val('L'), W: val('W'), Q: val('QTY_VAL'), R: rt, MRP: val('mrp'), M: document.getElementById('calcMode'), I: wInchMode, D: val('discIn'), DM: discMode };
+    
+    const netTxt = document.getElementById('dTotal').innerText;
+    const discActive = val('discIn') > 0;
+    const discHtml = discActive ? `<div style="color:var(--gold); font-size:0.65rem; font-weight:bold; margin-top:3px;">FINAL: ${netTxt}</div>` : '';
+    
+    const item = `<div class="hist-item"><span class="delete-btn" onclick="this.parentElement.remove(); updateStorage();">DELETE</span><span onclick="renameQuote(this)" style="color:var(--accent); font-size:0.7rem; font-weight:900; cursor:pointer;">UNNAMED</span><div style="display:flex; justify-content:space-between; align-items:baseline; margin-top:3px;"><b onclick="recallHistory(this)" data-raw='${JSON.stringify(raw)}' class="hist-size">${s} ${i}</b><div style="text-align:right;"><b style="color:var(--accent); font-size:1rem;">₹${m}</b><br><span style="font-size:0.55rem; color:var(--text-dim); font-weight:bold;">${g}</span></div></div>${discHtml}<div style="font-size:0.6rem; color:var(--text-dim); margin-top:5px; border-top:1px solid var(--border); padding-top:5px;">SIZE: ${s} | RATE: ₹${rt}/ft² | AREA: ${a}ft²</div></div>`;
     document.getElementById('histItems').insertAdjacentHTML('afterbegin', item); updateStorage(); showToast("SAVED");
 }
 
-function exportData() { navigator.clipboard.writeText(btoa(unescape(encodeURIComponent(localStorage.getItem('sizeCalcHistory') || "")))).then(() => showToast("BACKUP COPIED")); }
-function importData() { openModal("IMPORT BACKUP", "Paste code:", (val) => { try { document.getElementById('histItems').innerHTML = decodeURIComponent(escape(atob(val))); updateStorage(); showToast("RESTORED"); } catch(e) { showToast("ERROR"); } }, true); }
-function manualDimChange() { document.querySelectorAll('.chip').forEach(c => c.classList.remove('active-preset')); calculate(); }
-function updateStorage() { localStorage.setItem('sizeCalcHistory', document.getElementById('histItems').innerHTML); }
-function updateInputs() { ['L', 'W', 'QTY_VAL', 'rate', 'mrp', 'discIn'].forEach(id => localStorage.setItem('last' + id, document.getElementById(id).value)); localStorage.setItem('lastMode', document.getElementById('calcMode').value); }
-function clearAllFields() { ['L', 'W', 'QTY_VAL', 'rate', 'mrp', 'discIn'].forEach(id => document.getElementById(id).value = (id === 'QTY_VAL' ? '1' : '')); calculate(); }
-function clearField(id) { document.getElementById(id).value = (id === 'QTY_VAL' ? '1' : ''); calculate(); }
-function clearDisc() { document.getElementById('discIn').value = ''; applyDiscount(); }
+function recallHistory(el) {
+    const d = JSON.parse(el.dataset.raw);
+    openModal("LOAD DATA?", `Load ${el.innerText} into calculator?`, () => {
+        document.getElementById('L').value = d.L; document.getElementById('W').value = d.W; document.getElementById('QTY_VAL').value = d.Q;
+        document.getElementById('rate').value = d.R; document.getElementById('mrp').value = d.MRP; document.getElementById('calcMode').value = d.M;
+        document.getElementById('discIn').value = d.D || ''; discMode = d.DM || 'smart';
+        
+        let btnTxt = "⚡ SMART";
+        if(discMode === 'perc') btnTxt = "% PERC";
+        if(discMode === 'flat') btnTxt = "₹- FLAT";
+        if(discMode === 'target') btnTxt = "₹= TARGET";
+        document.getElementById('modeBtn').innerText = btnTxt;
+
+        wInchMode = d.I; document.getElementById('wToggle').classList.toggle('active', wInchMode);
+        runMath('load'); showToast("LOADED");
+    }, false);
+}
+
+function resetAll() {
+    ['L', 'W', 'rate', 'mrp', 'discIn'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('QTY_VAL').value = '1';
+    document.getElementById('calcMode').value = 'pcs';
+    discMode = 'smart'; document.getElementById('modeBtn').innerText = "⚡ SMART";
+    lastSource = 'rate';
+    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active-preset'));
+    runMath('dim');
+    localStorage.clear();
+}
+
+function clearDisc() { document.getElementById('discIn').value = ''; runMath('disc'); }
+function clearField(id) { document.getElementById(id).value = (id === 'QTY_VAL' ? '1' : ''); runMath(id === 'QTY_VAL' ? 'qty' : 'dim'); }
 function toggleDisc() { const a = document.getElementById('discInputArea'); a.style.display = (a.style.display === 'block' ? 'none' : 'block'); }
 function showToast(m) { const t = document.getElementById("toast"); t.innerText = m; t.className = "show"; setTimeout(() => t.className = "", 2000); }
 function closeModal() { document.getElementById('appModal').style.display = 'none'; }
-function triggerClearHistory() { openModal("CLEAR ALL?", "Delete history permanently?", () => { document.getElementById('histItems').innerHTML = ''; updateStorage(); }, false); }
-function renameQuote(el) { openModal("RENAME", "", (v) => { if(v) { el.innerText = v.toUpperCase(); updateStorage(); } }, true); }
+function triggerClearHistory() { openModal("CLEAR ALL?", "Delete all history?", () => { document.getElementById('histItems').innerHTML = ''; updateStorage(); }, false); }
+function renameQuote(el) { openModal("RENAME", "Enter Name:", (v) => { if(v) { el.innerText = v.toUpperCase(); updateStorage(); } }, true); }
+function copyCurrent() { const t = `Size: ${document.getElementById('sizeConv').innerText}\nTotal: ₹${document.getElementById('finalVal').innerText}`; navigator.clipboard.writeText(t).then(() => showToast("COPIED")); }
 function openModal(t, b, c, s=true) { document.getElementById('modalTitle').innerText = t; document.getElementById('modalBody').innerText = b; const inp = document.getElementById('modalInput'); inp.style.display = s ? 'block' : 'none'; inp.value = ""; document.getElementById('appModal').style.display = 'flex'; document.getElementById('modalSubmit').onclick = () => { c(inp.value); closeModal(); }; }
-function toggleInch() { wInchMode = !wInchMode; document.getElementById('wToggle').classList.toggle('active', wInchMode); calculate(); }
-function copyCurrent() { const text = `Quote: ${document.getElementById('sizeConv').innerText} [${document.getElementById('dispArea').innerText} ft²]\nTotal: ₹${document.getElementById('finalVal').innerText}`; navigator.clipboard.writeText(text).then(() => { showToast("COPIED"); }); }
 </script>
 </body>
 </html>
