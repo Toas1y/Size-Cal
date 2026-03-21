@@ -14,10 +14,11 @@
             --accent: #3b82f6; --danger: #ef4444; 
             --gold: #f2e052; 
             --emerald: #50c878;
-            --bg: #000; --card: #0a0a0a; --border: #333; --text: #fff; --text-dim: #888; 
+            --flat-green: #85BB65;
+            --bg: #000; --card: #0a0a0a; --input: #111; --border: #333; --text: #fff; --text-dim: #888; 
         }
         [data-theme="light"] { 
-            --bg: #e3e3e3; --card: #fff; --border: #d1d1d1; --text: #1a1a1a; --text-dim: #777; 
+            --bg: #e3e3e3; --card: #fff; --input: #f2f2f2; --border: #d1d1d1; --text: #1a1a1a; --text-dim: #777; 
         }
 
         /* --- RESET --- */
@@ -29,8 +30,9 @@
         /* --- HEADER & GEAR --- */
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
         h2 { color: var(--accent); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; font-size: 1rem; margin:0; }
+        .header-actions { display: flex; align-items: center; gap: 15px; }
         .gear-container { position: relative; }
-        .settings-menu { display: none; position: absolute; right: 0; top: 30px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; width: 180px; z-index: 100; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .settings-menu { display: none; position: absolute; right: 0; top: 30px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; width: 150px; z-index: 100; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .menu-row { padding: 12px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); align-items: center; }
 
         /* --- INPUTS --- */
@@ -52,11 +54,14 @@
         [data-theme="light"] .toggle-btn { background: #fff; }
         .toggle-btn.active { background: var(--accent) !important; color: #fff; border-color: var(--accent); }
 
-        /* --- PRESETS --- */
-        .preset-row { display: flex; gap: 5px; margin: 5px 0 10px 0; overflow-x: auto; padding-bottom: 5px; scrollbar-width: none; }
-        .chip { background: #000; color: var(--text-dim); padding: 5px 10px; border-radius: 6px; font-size: 0.55rem; font-weight: 800; border: 1px solid var(--border); white-space: nowrap; flex-shrink: 0; cursor: pointer; }
-        [data-theme="light"] .chip { background: #fff; }
-        .chip.active-preset { border-color: var(--accent); color: var(--accent); }
+        /* --- PRESET DROPDOWN --- */
+        .preset-container { position: relative; margin: 5px 0 10px 0; }
+        .preset-btn { width: 100%; background: #000; color: var(--accent); border: 1px solid var(--border); padding: 10px; border-radius: 8px; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; }
+        [data-theme="light"] .preset-btn { background: #fff; }
+        .preset-menu { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: var(--card); border: 1px solid var(--border); border-radius: 8px; margin-top: 5px; z-index: 50; max-height: 220px; overflow-y: auto; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+        .preset-item { padding: 12px; color: var(--text); font-size: 0.85rem; font-weight: bold; border-bottom: 1px solid var(--border); cursor: pointer; text-align: center; }
+        .preset-item:last-child { border-bottom: none; }
+        .preset-item:hover { background: rgba(255,255,255,0.05); color: var(--accent); }
 
         /* --- RESULT PANEL --- */
         .result-panel { background: var(--card); border-radius: 12px; padding: 12px; margin-top: 10px; border: 1px solid var(--border); position: relative; }
@@ -69,7 +74,9 @@
         /* --- DISCOUNT WITH MODE BUTTON --- */
         #discInputArea { display: none; margin-top: 8px; border-top: 1px dashed var(--border); padding-top: 8px; }
         .disc-wrapper-flex { display: flex; align-items: center; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: #000; height: 40px; margin-top: 8px; }
-        .mode-btn { width: 60px; height: 100%; border: none; background: #1a1a1a; color: var(--text); font-size: 0.6rem; font-weight: 900; cursor: pointer; border-right: 1px solid var(--border); }
+        [data-theme="light"] .disc-wrapper-flex { background: #fff; }
+        .mode-btn { width: 60px; height: 100%; border: none; background: rgba(255,255,255,0.05); color: var(--text); font-size: 0.6rem; font-weight: 900; cursor: pointer; border-right: 1px solid var(--border); }
+        [data-theme="light"] .mode-btn { background: #f2f2f2; color: #000; }
         .disc-input-flex { flex: 1; border: none; background: transparent; color: var(--text); font-size: 0.95rem; padding: 0 10px; outline: none; font-weight: bold; }
         
         .disc-res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 6px; }
@@ -80,6 +87,8 @@
         .mode-gold b { color: var(--gold) !important; }
         .mode-emerald { border-color: var(--emerald) !important; color: var(--emerald) !important; box-shadow: 0 0 10px rgba(80, 200, 120, 0.15); }
         .mode-emerald b { color: var(--emerald) !important; }
+        .mode-flat { border-color: var(--flat-green) !important; color: var(--flat-green) !important; box-shadow: 0 0 10px rgba(133, 187, 101, 0.15); }
+        .mode-flat b { color: var(--flat-green) !important; }
 
         /* --- BUTTONS --- */
         .btn-group { display: flex; gap: 6px; margin-top: 12px; }
@@ -87,13 +96,24 @@
         .btn-reset { background: #000; color: var(--text-dim); border: 1px solid var(--border); }
         [data-theme="light"] .btn-reset { background: #fff; }
         .btn-save { flex: 1.5; background: var(--accent); color: #fff; }
-        .btn-copy { background: #000; color: var(--text-dim); border: 1px solid var(--border); }
-        [data-theme="light"] .btn-copy { background: #fff; }
 
         /* --- HISTORY --- */
         .hist-item { background: var(--card); padding: 12px; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 8px; position: relative; }
         .delete-btn { position: absolute; top: 10px; right: 10px; color: var(--danger); font-size: 9px; font-weight: 900; cursor: pointer; }
         .hist-size { color: var(--text); font-size: 0.9rem; font-weight: 800; cursor: pointer; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+
+        /* --- MODALS --- */
+        .modal-overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:2000; align-items:center; justify-content:center; backdrop-filter:blur(5px); }
+        .modal-box { background:var(--card); padding:25px; border-radius:15px; border:1px solid var(--border); width:80%; max-width:320px; text-align:center; position:relative; }
+        
+        /* --- STRICTLY VERTICAL CONVERTER --- */
+        .conv-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px; text-align: left; }
+        .conv-label { font-size: 0.65rem; font-weight: 800; color: var(--text-dim); text-transform: uppercase; }
+        .conv-select { background: var(--input); color: var(--accent); border: 1px solid var(--border); padding: 12px; border-radius: 8px; font-size: 0.9rem; font-weight: bold; outline: none; width: 100%; box-sizing: border-box; }
+        .conv-input { background: #000; color: var(--text); border: 1px solid var(--border); padding: 12px; border-radius: 8px; font-size: 1.2rem; font-weight: 900; outline: none; width: 100%; box-sizing: border-box; }
+        [data-theme="light"] .conv-select { background: #f2f2f2; }
+        [data-theme="light"] .conv-input { background: #fff; }
+        .conv-arrow { text-align: center; color: var(--accent); font-size: 1.5rem; margin-bottom: 15px; font-weight: 900; }
 
         /* --- SLIDER --- */
         .switch { position: relative; width: 36px; height: 20px; }
@@ -105,8 +125,6 @@
 
         #toast { visibility: hidden; min-width: 100px; background: var(--accent); color: #fff; text-align: center; border-radius: 20px; padding: 8px; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; z-index: 2000; }
         #toast.show { visibility: visible; }
-        .modal-overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:2000; align-items:center; justify-content:center; backdrop-filter:blur(5px); }
-        .modal-box { background:var(--card); padding:25px; border-radius:15px; border:1px solid var(--border); width:80%; max-width:300px; text-align:center; }
     </style>
 </head>
 <body>
@@ -125,17 +143,55 @@
     </div>
 </div>
 
+<div id="converterModal" class="modal-overlay">
+    <div class="modal-box" style="padding:25px 20px;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:20px; align-items:center;">
+            <span style="font-weight:900; color:var(--text); font-size:1.1rem; text-transform:uppercase;">Unit Converter</span>
+            <span onclick="closeConverter()" style="cursor:pointer; color:var(--text-dim); font-size:1.2rem; font-weight:900;">✕</span>
+        </div>
+        
+        <div class="conv-group">
+            <span class="conv-label">Convert From</span>
+            <select id="convFrom" class="conv-select" onchange="runConvert()">
+                <option value="mm">Millimeter (mm)</option>
+                <option value="cm">Centimeter (cm)</option>
+                <option value="in">Inch (in)</option>
+                <option value="ft">Foot (ft)</option>
+                <option value="m">Meter (m)</option>
+            </select>
+            <input type="number" id="convVal" class="conv-input" value="1" oninput="runConvert()">
+        </div>
+        
+        <div class="conv-arrow">▼</div>
+        
+        <div class="conv-group">
+            <span class="conv-label">Convert To</span>
+            <select id="convTo" class="conv-select" onchange="runConvert()">
+                <option value="in">Inch (in)</option>
+                <option value="mm">Millimeter (mm)</option>
+                <option value="cm">Centimeter (cm)</option>
+                <option value="ft">Foot (ft)</option>
+                <option value="m">Meter (m)</option>
+            </select>
+            <div id="convOutput" class="conv-input" style="background:var(--card); color:var(--accent); display:flex; align-items:center; min-height:48px;">0.0394</div>
+        </div>
+    </div>
+</div>
+
 <div class="card">
     <div class="header">
         <h2>Size Calc Pro</h2>
-        <div class="gear-container">
-            <span style="cursor:pointer; font-size:1.2rem;" onclick="toggleMenu()">⚙️</span>
-            <div id="settingsMenu" class="settings-menu">
-                <div class="menu-row">
-                    <div style="display:flex; align-items:center; gap:8px;">
-                        <span style="font-size:0.7rem;">🌙</span>
-                        <label class="switch"><input type="checkbox" id="themeToggle" onchange="swapTheme(this)"><span class="slider"></span></label>
-                        <span style="font-size:0.7rem;">☀️</span>
+        <div class="header-actions">
+            <span style="cursor:pointer; font-size:1.3rem;" onclick="openConverter()">📏</span>
+            <div class="gear-container">
+                <span style="cursor:pointer; font-size:1.2rem;" onclick="toggleMenu()">⚙️</span>
+                <div id="settingsMenu" class="settings-menu">
+                    <div class="menu-row">
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <span style="font-size:0.7rem;">🌙</span>
+                            <label class="switch"><input type="checkbox" id="themeToggle" onchange="swapTheme(this)"><span class="slider"></span></label>
+                            <span style="font-size:0.7rem;">☀️</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -156,12 +212,17 @@
         <button id="wToggle" class="toggle-btn" onclick="toggleInch()">INCH</button>
     </div>
 
-    <div class="preset-row">
-        <div class="chip" data-l="8" data-w="4.5" data-i="true" onclick="applyPreset(this)">8' × 4.5"</div>
-        <div class="chip" data-l="8" data-w="6" data-i="true" onclick="applyPreset(this)">8' × 6"</div>
-        <div class="chip" data-l="9.5" data-w="4.5" data-i="true" onclick="applyPreset(this)">9.5' × 4.5"</div>
-        <div class="chip" data-l="9.5" data-w="6" data-i="true" onclick="applyPreset(this)">9.5' × 6"</div>
-        <div class="chip" data-l="8" data-w="4" data-i="false" onclick="applyPreset(this)">8' × 4'</div>
+    <div class="preset-container">
+        <button class="preset-btn" onclick="togglePresets()"><span>Size's</span> <span>▼</span></button>
+        <div id="presetMenu" class="preset-menu">
+            <div class="preset-item" onclick="applyPreset(8, 4.5, true)">8' × 4.5"</div>
+            <div class="preset-item" onclick="applyPreset(8, 6, true)">8' × 6"</div>
+            <div class="preset-item" onclick="applyPreset(8, 1, false)">8' × 1'</div>
+            <div class="preset-item" onclick="applyPreset(9.5, 4.5, true)">9.5' × 4.5"</div>
+            <div class="preset-item" onclick="applyPreset(9, 6, true)">9' × 6"</div>
+            <div class="preset-item" onclick="applyPreset(10, 1, false)">10' × 1'</div>
+            <div class="preset-item" onclick="applyPreset(8, 4, false)">8' × 4'</div>
+        </div>
     </div>
 
     <span class="section-label">Rate & Sheet Price</span>
@@ -193,8 +254,7 @@
 
     <div class="btn-group">
         <button class="btn btn-reset" onclick="resetAll()">Reset</button>
-        <button class="btn btn-save" onclick="saveToHistory()">Save</button>
-        <button class="btn btn-copy" onclick="copyCurrent()">Copy</button>
+        <button class="btn btn-save" onclick="saveToHistory()">Save Quote</button>
     </div>
 
     <div id="historyLog" style="margin-top:20px;">
@@ -212,10 +272,15 @@ if ('serviceWorker' in navigator) { navigator.serviceWorker.register('./sw.js');
 let wInchMode = false;
 let currentTheme = 'dark';
 let lastSource = 'rate';
-let discMode = 'smart'; // smart, perc, flat, target
+let discMode = 'smart';
 
 function toggleMenu() { const m = document.getElementById('settingsMenu'); m.style.display = m.style.display === 'block' ? 'none' : 'block'; }
-window.onclick = (e) => { if (!e.target.innerText.includes('⚙️')) document.getElementById('settingsMenu').style.display = "none"; }
+function togglePresets() { const m = document.getElementById('presetMenu'); m.style.display = m.style.display === 'block' ? 'none' : 'block'; }
+
+window.onclick = (e) => { 
+    if (!e.target.closest('.gear-container')) document.getElementById('settingsMenu').style.display = "none"; 
+    if (!e.target.closest('.preset-container')) document.getElementById('presetMenu').style.display = "none";
+}
 
 window.onload = function() {
     const h = localStorage.getItem('sizeCalcHistory'); if (h) document.getElementById('histItems').innerHTML = h;
@@ -235,7 +300,25 @@ function swapTheme(cb) {
     document.getElementById('metaTheme').setAttribute('content', currentTheme === 'dark' ? '#000000' : '#e3e3e3');
 }
 
+function openConverter() { document.getElementById('converterModal').style.display = 'flex'; runConvert(); }
+function closeConverter() { document.getElementById('converterModal').style.display = 'none'; }
+function runConvert() {
+    const val = parseFloat(document.getElementById('convVal').value) || 0;
+    const from = document.getElementById('convFrom').value;
+    const to = document.getElementById('convTo').value;
+    let mm = 0;
+    if(from === 'mm') mm = val; if(from === 'cm') mm = val * 10;
+    if(from === 'in') mm = val * 25.4; if(from === 'ft') mm = val * 304.8;
+    if(from === 'm') mm = val * 1000;
+    let res = 0;
+    if(to === 'mm') res = mm; if(to === 'cm') res = mm / 10;
+    if(to === 'in') res = mm / 25.4; if(to === 'ft') res = mm / 304.8;
+    if(to === 'm') res = mm / 1000;
+    document.getElementById('convOutput').innerText = res % 1 === 0 ? res : res.toFixed(4).replace(/0+$/, '').replace(/\.$/, '');
+}
+
 function formatUnit(val) {
+    if (val === 0) return "0'";
     if (val < 12) return val.toFixed(1).replace(/\.0$/, "") + '"';
     return (val / 12).toFixed(2).replace(/\.00$/, "").replace(/\.$/, "") + "'";
 }
@@ -258,9 +341,20 @@ function runMath(trigger) {
     if (trigger === 'rate') lastSource = 'rate';
     if (trigger === 'mrp') lastSource = 'mrp';
 
-    let lIn = (L >= 1 && L <= 15) ? L * 12 : (L >= 16 && L <= 250 ? L : L / 25.4);
-    let wIn = wInchMode ? W : (W > 200 ? W/25.4 : W*12);
-    document.getElementById('sizeConv').innerText = (L && W) ? `${formatUnit(lIn)} × ${formatUnit(wIn)}` : "0' × 0\"";
+    let lIn = 0;
+    if (L > 0 && L <= 15) lIn = L * 12;
+    else if (L > 15 && L <= 300) lIn = L;
+    else if (L > 300) lIn = L / 25.4;
+
+    let wIn = 0;
+    if (wInchMode) {
+        wIn = W;
+    } else {
+        if (W > 0 && W <= 15) wIn = W * 12;
+        else if (W > 15) wIn = W / 25.4;
+    }
+
+    document.getElementById('sizeConv').innerText = `${formatUnit(lIn)} × ${formatUnit(wIn)}`;
 
     let singleArea = (lIn * wIn) / 144; 
     let totalArea = 0, pcs = 0;
@@ -292,39 +386,32 @@ function runMath(trigger) {
     let gstAmt = Math.round(finalTotal * 18/118);
     document.getElementById('gstDisplay').innerText = finalTotal > 0 ? `(₹${gstAmt.toLocaleString('en-IN')} GST)` : "";
 
-    // --- MODE-BASED DISCOUNT LOGIC ---
     let off = 0, net = finalTotal;
     const bL = document.getElementById('boxLess'), bN = document.getElementById('boxNet');
     bL.className = "disc-res-box"; bN.className = "disc-res-box"; 
 
     if (disc > 0) {
         if (discMode === 'perc') {
-            off = finalTotal * (disc / 100);
-            net = finalTotal - off;
+            off = finalTotal * (disc / 100); net = finalTotal - off;
             bL.classList.add('mode-gold'); bN.classList.add('mode-gold');
             document.getElementById('dMoneyOff').innerText = `₹${Math.round(off).toLocaleString('en-IN')} (${disc}%)`;
         } else if (discMode === 'flat') {
-            off = disc;
-            net = finalTotal - disc;
+            off = disc; net = finalTotal - disc;
             let p = finalTotal > 0 ? ((off/finalTotal)*100).toFixed(1) : 0;
-            bL.classList.add('mode-emerald'); bN.classList.add('mode-emerald');
+            bL.classList.add('mode-flat'); bN.classList.add('mode-flat');
             document.getElementById('dMoneyOff').innerText = `₹${Math.round(off).toLocaleString('en-IN')} (${p}%)`;
         } else if (discMode === 'target') {
-            net = disc;
-            off = finalTotal - disc;
+            net = disc; off = finalTotal - disc;
             let p = finalTotal > 0 ? ((off/finalTotal)*100).toFixed(1) : 0;
             bL.classList.add('mode-emerald'); bN.classList.add('mode-emerald');
             document.getElementById('dMoneyOff').innerText = `₹${Math.round(off).toLocaleString('en-IN')} (${p}%)`;
         } else {
-            // SMART MODE
             if (disc < 100) {
-                off = finalTotal * (disc / 100);
-                net = finalTotal - off;
+                off = finalTotal * (disc / 100); net = finalTotal - off;
                 bL.classList.add('mode-gold'); bN.classList.add('mode-gold');
                 document.getElementById('dMoneyOff').innerText = `₹${Math.round(off).toLocaleString('en-IN')} (${disc}%)`;
             } else {
-                net = disc;
-                off = finalTotal - disc;
+                net = disc; off = finalTotal - disc;
                 let p = finalTotal > 0 ? ((off/finalTotal)*100).toFixed(1) : 0;
                 bL.classList.add('mode-emerald'); bN.classList.add('mode-emerald');
                 document.getElementById('dMoneyOff').innerText = `₹${Math.round(off).toLocaleString('en-IN')} (${p}%)`;
@@ -340,11 +427,11 @@ function runMath(trigger) {
     if (trigger !== 'load') updateInputs();
 }
 
-function applyPreset(el) {
-    document.getElementById('L').value = el.dataset.l; document.getElementById('W').value = el.dataset.w;
-    wInchMode = (el.dataset.i === 'true'); document.getElementById('wToggle').classList.toggle('active', wInchMode);
-    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active-preset'));
-    el.classList.add('active-preset'); runMath('dim');
+function applyPreset(l, w, isInch) {
+    document.getElementById('L').value = l; document.getElementById('W').value = w;
+    wInchMode = isInch; document.getElementById('wToggle').classList.toggle('active', wInchMode);
+    document.getElementById('presetMenu').style.display = 'none';
+    runMath('dim');
 }
 
 function toggleInch() { wInchMode = !wInchMode; document.getElementById('wToggle').classList.toggle('active', wInchMode); runMath('dim'); }
@@ -354,13 +441,16 @@ function updateStorage() { localStorage.setItem('sizeCalcHistory', document.getE
 function saveToHistory() {
     const s = document.getElementById('sizeConv').innerText, m = document.getElementById('finalVal').innerText, g = document.getElementById('gstDisplay').innerText, a = document.getElementById('dispArea').innerText, i = document.getElementById('pcsInfo').innerText, rt = document.getElementById('rate').value;
     if (m === "0") return;
-    const raw = { L: val('L'), W: val('W'), Q: val('QTY_VAL'), R: rt, MRP: val('mrp'), M: document.getElementById('calcMode'), I: wInchMode, D: val('discIn'), DM: discMode };
+    const raw = { L: val('L'), W: val('W'), Q: val('QTY_VAL'), R: rt, MRP: val('mrp'), M: document.getElementById('calcMode').value, I: wInchMode, D: val('discIn'), DM: discMode };
     
-    const netTxt = document.getElementById('dTotal').innerText;
-    const discActive = val('discIn') > 0;
-    const discHtml = discActive ? `<div style="color:var(--gold); font-size:0.65rem; font-weight:bold; margin-top:3px;">FINAL: ${netTxt}</div>` : '';
+    let dMoneyText = document.getElementById('dMoneyOff').innerText;
+    let discHtmlSave = "";
+    if (val('discIn') > 0 && dMoneyText.includes('(')) {
+        let extractedPerc = dMoneyText.substring(dMoneyText.indexOf('(') + 1, dMoneyText.indexOf(')'));
+        discHtmlSave = ` | DISC: ${extractedPerc}`;
+    }
     
-    const item = `<div class="hist-item"><span class="delete-btn" onclick="this.parentElement.remove(); updateStorage();">DELETE</span><span onclick="renameQuote(this)" style="color:var(--accent); font-size:0.7rem; font-weight:900; cursor:pointer;">UNNAMED</span><div style="display:flex; justify-content:space-between; align-items:baseline; margin-top:3px;"><b onclick="recallHistory(this)" data-raw='${JSON.stringify(raw)}' class="hist-size">${s} ${i}</b><div style="text-align:right;"><b style="color:var(--accent); font-size:1rem;">₹${m}</b><br><span style="font-size:0.55rem; color:var(--text-dim); font-weight:bold;">${g}</span></div></div>${discHtml}<div style="font-size:0.6rem; color:var(--text-dim); margin-top:5px; border-top:1px solid var(--border); padding-top:5px;">SIZE: ${s} | RATE: ₹${rt}/ft² | AREA: ${a}ft²</div></div>`;
+    const item = `<div class="hist-item"><span class="delete-btn" onclick="this.parentElement.remove(); updateStorage();">DELETE</span><span onclick="renameQuote(this)" style="color:var(--accent); font-size:0.7rem; font-weight:900; cursor:pointer;">UNNAMED</span><div style="display:flex; justify-content:space-between; align-items:baseline; margin-top:3px;"><b onclick="recallHistory(this)" data-raw='${JSON.stringify(raw)}' class="hist-size">${s} ${i}</b><div style="text-align:right;"><b style="color:var(--accent); font-size:1rem;">₹${m}</b><br><span style="font-size:0.55rem; color:var(--text-dim); font-weight:bold;">${g}</span></div></div><div style="font-size:0.6rem; color:var(--text-dim); margin-top:5px; border-top:1px solid var(--border); padding-top:5px;">SIZE: ${s} | RATE: ₹${rt}/ft² | AREA: ${a}ft²${discHtmlSave}</div></div>`;
     document.getElementById('histItems').insertAdjacentHTML('afterbegin', item); updateStorage(); showToast("SAVED");
 }
 
@@ -384,13 +474,9 @@ function recallHistory(el) {
 
 function resetAll() {
     ['L', 'W', 'rate', 'mrp', 'discIn'].forEach(id => document.getElementById(id).value = '');
-    document.getElementById('QTY_VAL').value = '1';
-    document.getElementById('calcMode').value = 'pcs';
+    document.getElementById('QTY_VAL').value = '1'; document.getElementById('calcMode').value = 'pcs';
     discMode = 'smart'; document.getElementById('modeBtn').innerText = "⚡ SMART";
-    lastSource = 'rate';
-    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active-preset'));
-    runMath('dim');
-    localStorage.clear();
+    lastSource = 'rate'; runMath('dim'); localStorage.clear();
 }
 
 function clearDisc() { document.getElementById('discIn').value = ''; runMath('disc'); }
@@ -400,7 +486,6 @@ function showToast(m) { const t = document.getElementById("toast"); t.innerText 
 function closeModal() { document.getElementById('appModal').style.display = 'none'; }
 function triggerClearHistory() { openModal("CLEAR ALL?", "Delete all history?", () => { document.getElementById('histItems').innerHTML = ''; updateStorage(); }, false); }
 function renameQuote(el) { openModal("RENAME", "Enter Name:", (v) => { if(v) { el.innerText = v.toUpperCase(); updateStorage(); } }, true); }
-function copyCurrent() { const t = `Size: ${document.getElementById('sizeConv').innerText}\nTotal: ₹${document.getElementById('finalVal').innerText}`; navigator.clipboard.writeText(t).then(() => showToast("COPIED")); }
 function openModal(t, b, c, s=true) { document.getElementById('modalTitle').innerText = t; document.getElementById('modalBody').innerText = b; const inp = document.getElementById('modalInput'); inp.style.display = s ? 'block' : 'none'; inp.value = ""; document.getElementById('appModal').style.display = 'flex'; document.getElementById('modalSubmit').onclick = () => { c(inp.value); closeModal(); }; }
 </script>
 </body>
