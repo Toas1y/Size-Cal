@@ -46,13 +46,17 @@
         
         .smart-input-container { position: relative; flex: 1.5; display: flex; align-items: center; background: #000; border: 1px solid var(--border); border-radius: 8px; height: 44px; overflow: hidden; }
         [data-theme="light"] .smart-input-container { background: #fff; }
-        .smart-select { background: transparent; color: var(--accent); border: none; font-size: 0.55rem; font-weight: 900; height: 100%; padding: 0 8px; outline: none; text-transform: uppercase; cursor: pointer; border-right: 1px solid var(--border); }
         .smart-val-input { flex: 1; background: transparent; border: none; color: var(--text); font-size: 0.95rem; padding: 0 28px 0 10px; outline: none; height: 100%; width: 100%; }
         .clear-x { position: absolute; right: 8px; color: var(--text-dim); cursor: pointer; font-size: 16px; padding: 4px; z-index: 5; }
         
         .toggle-btn { padding: 0 8px; border-radius: 8px; border: 1px solid var(--border); background: #000; color: var(--text-dim); font-size: 0.6rem; font-weight: 800; cursor: pointer; height: 44px; white-space: nowrap; }
         [data-theme="light"] .toggle-btn { background: #fff; }
         .toggle-btn.active { background: var(--accent) !important; color: #fff; border-color: var(--accent); }
+
+        /* --- NEW: COMPACT DROPDOWN TRICK --- */
+        .mode-dropdown-wrapper { position: relative; height: 100%; border-right: 1px solid var(--border); display: flex; align-items: center; justify-content: center; padding: 0 10px; }
+        .mode-dropdown-display { color: var(--accent); font-size: 0.65rem; font-weight: 900; pointer-events: none; white-space: nowrap; }
+        .mode-dropdown-hidden { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
 
         /* --- PRESET DROPDOWN --- */
         .preset-container { position: relative; margin: 5px 0 10px 0; }
@@ -285,11 +289,14 @@
         <div class="input-wrapper"><input type="number" id="W" placeholder="W" class="input-box" oninput="runMath('dim')"><span class="clear-x" onclick="clearField('W')">×</span></div>
         
         <div class="smart-input-container">
-            <select id="calcMode" class="smart-select" onchange="runMath('mode')">
-                <option value="pcs">QTY (Pcs)</option>
-                <option value="wall">AREA (ft²)</option>
-                <option value="wall_m2">AREA (m²)</option>
-            </select>
+            <div class="mode-dropdown-wrapper">
+                <span id="calcModeDisplay" class="mode-dropdown-display">Q</span>
+                <select id="calcMode" class="mode-dropdown-hidden" onchange="runMath('mode')">
+                    <option value="pcs">Quantity</option>
+                    <option value="wall">Area (ft²)</option>
+                    <option value="wall_m2">Area (m²)</option>
+                </select>
+            </div>
             <div class="input-wrapper" style="border:none; height:100%;">
                 <input type="number" id="QTY_VAL" value="1" class="smart-val-input" oninput="runMath('qty')">
                 <span class="clear-x" onclick="clearField('QTY_VAL')" style="right: 5px;">×</span>
@@ -470,7 +477,7 @@ function runAreaCalc() {
 
     let lFeet = lVal * linearToFt[lUnit];
     let wFeet = wVal * linearToFt[wUnit];
-    let finalArea = lFeet * wFeet; // Locked strictly to ft²
+    let finalArea = lFeet * wFeet;
 
     document.getElementById('areaEqLarge').innerText = `${formatNum(lVal)}${unitNames[lUnit]} × ${formatNum(wVal)}${unitNames[wUnit]} = ${formatNum(finalArea)} ft²`;
     document.getElementById('areaOutVal').innerText = formatNum(finalArea);
@@ -480,7 +487,6 @@ function pasteAreaToMain() {
     let finalArea = parseFloat(document.getElementById('areaOutVal').innerText);
     if (isNaN(finalArea) || finalArea === 0) { showToast("NO AREA TO PASTE"); return; }
     
-    // Switch to AREA (ft²) mode directly
     document.getElementById('calcMode').value = 'wall';
     document.getElementById('QTY_VAL').value = finalArea;
     
@@ -507,8 +513,15 @@ function cycleMode() {
 function val(id) { return parseFloat(document.getElementById(id).value) || 0; }
 
 function runMath(trigger) {
-    let L = val('L'), W = val('W'), QTY = val('QTY_VAL'), rate = val('rate'), unitPrice = val('mrp'), disc = val('discIn');
     let mode = document.getElementById('calcMode').value;
+    let modeDisp = document.getElementById('calcModeDisplay');
+    
+    // Update the compact mode display text
+    if (mode === 'pcs') modeDisp.innerText = 'Q';
+    else if (mode === 'wall') modeDisp.innerText = 'A (ft²)';
+    else if (mode === 'wall_m2') modeDisp.innerText = 'A (m²)';
+
+    let L = val('L'), W = val('W'), QTY = val('QTY_VAL'), rate = val('rate'), unitPrice = val('mrp'), disc = val('discIn');
 
     if (trigger === 'rate') lastSource = 'rate';
     if (trigger === 'mrp') lastSource = 'mrp';
@@ -535,7 +548,6 @@ function runMath(trigger) {
         totalArea = singleArea * pcs;
         document.getElementById('pcsInfo').innerText = "";
     } else {
-        // SMART AREA MATH - Converts m² to ft² on the fly
         let wallAreaFt2 = 0;
         if (mode === 'wall') wallAreaFt2 = QTY || 0;
         else if (mode === 'wall_m2') wallAreaFt2 = (QTY || 0) * 10.7639104;
