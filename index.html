@@ -46,7 +46,7 @@
         
         .smart-input-container { position: relative; flex: 1.5; display: flex; align-items: center; background: #000; border: 1px solid var(--border); border-radius: 8px; height: 44px; overflow: hidden; }
         [data-theme="light"] .smart-input-container { background: #fff; }
-        .smart-select { background: transparent; color: var(--accent); border: none; font-size: 0.55rem; font-weight: 900; height: 100%; padding: 0 5px; outline: none; text-transform: uppercase; cursor: pointer; border-right: 1px solid var(--border); }
+        .smart-select { background: transparent; color: var(--accent); border: none; font-size: 0.55rem; font-weight: 900; height: 100%; padding: 0 8px; outline: none; text-transform: uppercase; cursor: pointer; border-right: 1px solid var(--border); }
         .smart-val-input { flex: 1; background: transparent; border: none; color: var(--text); font-size: 0.95rem; padding: 0 28px 0 10px; outline: none; height: 100%; width: 100%; }
         .clear-x { position: absolute; right: 8px; color: var(--text-dim); cursor: pointer; font-size: 16px; padding: 4px; z-index: 5; }
         
@@ -102,18 +102,40 @@
         .delete-btn { position: absolute; top: 10px; right: 10px; color: var(--danger); font-size: 9px; font-weight: 900; cursor: pointer; }
         .hist-size { color: var(--text); font-size: 0.9rem; font-weight: 800; cursor: pointer; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
 
-        /* --- MODALS --- */
+        /* --- MODALS & GOOGLE STYLE UI --- */
         .modal-overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:2000; align-items:center; justify-content:center; backdrop-filter:blur(5px); }
         .modal-box { background:var(--card); padding:25px; border-radius:15px; border:1px solid var(--border); width:80%; max-width:320px; text-align:center; position:relative; }
         
-        /* --- STRICTLY VERTICAL CONVERTER --- */
-        .conv-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px; text-align: left; }
-        .conv-label { font-size: 0.65rem; font-weight: 800; color: var(--text-dim); text-transform: uppercase; }
-        .conv-select { background: var(--input); color: var(--accent); border: 1px solid var(--border); padding: 12px; border-radius: 8px; font-size: 0.9rem; font-weight: bold; outline: none; width: 100%; box-sizing: border-box; }
-        .conv-input { background: #000; color: var(--text); border: 1px solid var(--border); padding: 12px; border-radius: 8px; font-size: 1.2rem; font-weight: 900; outline: none; width: 100%; box-sizing: border-box; }
-        [data-theme="light"] .conv-select { background: #f2f2f2; }
-        [data-theme="light"] .conv-input { background: #fff; }
-        .conv-arrow { text-align: center; color: var(--accent); font-size: 1.5rem; margin-bottom: 15px; font-weight: 900; }
+        .g-modal-box { background: #202124; padding: 22px; border-radius: 12px; border: 1px solid #3c4043; width: 92%; max-width: 380px; text-align: left; }
+        [data-theme="light"] .g-modal-box { background: #fff; border-color: #dadce0; }
+        
+        .g-header-text { font-weight: 400; color: #e8eaed; font-size: 1.1rem; }
+        [data-theme="light"] .g-header-text { color: #202124; }
+        
+        .g-eq-small { color: #9aa0a6; font-size: 0.95rem; margin-bottom: 2px; min-height: 18px; }
+        [data-theme="light"] .g-eq-small { color: #5f6368; }
+        
+        .g-eq-large { color: #e8eaed; font-size: 1.8rem; font-weight: 400; margin-bottom: 25px; line-height: 1.2; min-height: 34px; }
+        [data-theme="light"] .g-eq-large { color: #202124; }
+        
+        .g-row { display: flex; background: #303134; border: 1px solid #5f6368; border-radius: 6px; margin-bottom: 12px; height: 50px; transition: 0.2s; }
+        [data-theme="light"] .g-row { background: #fff; border-color: #dadce0; }
+        .g-row:focus-within { border-color: #8ab4f8; box-shadow: 0 0 0 1px #8ab4f8; }
+        [data-theme="light"] .g-row:focus-within { border-color: #1a73e8; box-shadow: 0 0 0 1px #1a73e8; }
+        
+        .g-input { flex: 1.2; background: transparent; border: none; color: #e8eaed; font-size: 1.25rem; padding: 10px 15px; outline: none; width: 100%; box-sizing: border-box;}
+        [data-theme="light"] .g-input { color: #202124; }
+        
+        .g-select { flex: 1; background: transparent; color: #e8eaed; border: none; border-left: 1px solid #5f6368; padding: 0 10px; font-size: 0.95rem; outline: none; cursor: pointer; box-sizing: border-box;}
+        [data-theme="light"] .g-select { color: #202124; border-color: #dadce0; }
+        
+        .g-formula-area { font-size: 0.85rem; color: #9aa0a6; margin: 15px 0 25px 0; display: flex; align-items: center; gap: 8px; min-height: 16px; }
+        [data-theme="light"] .g-formula-area { color: #5f6368; }
+        
+        .g-badge { background: #fbbc04; color: #000; padding: 3px 8px; border-radius: 4px; font-weight: 700; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.5px; flex-shrink: 0; }
+        
+        .conv-paste-btn { flex: 1; padding: 12px; background: #111; color: var(--accent); border: 1px solid #3c4043; border-radius: 8px; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; cursor: pointer; text-align: center; }
+        [data-theme="light"] .conv-paste-btn { background: #f2f2f2; border-color: #dadce0;}
 
         /* --- SLIDER --- */
         .switch { position: relative; width: 36px; height: 20px; }
@@ -144,36 +166,94 @@
 </div>
 
 <div id="converterModal" class="modal-overlay">
-    <div class="modal-box" style="padding:25px 20px;">
+    <div class="g-modal-box">
         <div style="display:flex; justify-content:space-between; margin-bottom:20px; align-items:center;">
-            <span style="font-weight:900; color:var(--text); font-size:1.1rem; text-transform:uppercase;">Unit Converter</span>
-            <span onclick="closeConverter()" style="cursor:pointer; color:var(--text-dim); font-size:1.2rem; font-weight:900;">✕</span>
+            <span class="g-header-text">Unit Converter</span>
+            <div>
+                <span onclick="resetConverter()" style="cursor:pointer; color:var(--accent); font-size:0.75rem; font-weight:800; margin-right:15px;">CLEAR</span>
+                <span onclick="closeConverter()" style="cursor:pointer; color:#9aa0a6; font-size:1.2rem;">✕</span>
+            </div>
+        </div>
+        <div class="g-eq-small" id="convEqSmall"></div>
+        <div class="g-eq-large" id="convEqLarge"></div>
+        <div class="g-row">
+            <input type="number" id="convVal1" class="g-input" placeholder="0" oninput="runConvert(1)">
+            <select id="convUnit1" class="g-select" onchange="runConvert(3)">
+                <option value="in" selected>Inch</option>
+                <option value="ft">Foot</option>
+                <option value="mm">Millimeter</option>
+                <option value="cm">Centimeter</option>
+                <option value="m">Meter</option>
+            </select>
+        </div>
+        <div class="g-row">
+            <input type="number" id="convVal2" class="g-input" placeholder="0" oninput="runConvert(2)">
+            <select id="convUnit2" class="g-select" onchange="runConvert(3)">
+                <option value="ft" selected>Foot</option>
+                <option value="in">Inch</option>
+                <option value="mm">Millimeter</option>
+                <option value="cm">Centimeter</option>
+                <option value="m">Meter</option>
+            </select>
+        </div>
+        <div class="g-formula-area">
+            <span class="g-badge">Formula</span>
+            <span id="formulaText"></span>
+        </div>
+        <div style="display:flex; gap:10px; margin-top:20px;">
+            <button class="conv-paste-btn" onclick="applyFromConverter('L')">➜ PASTE L</button>
+            <button class="conv-paste-btn" onclick="applyFromConverter('W')">➜ PASTE W</button>
+        </div>
+    </div>
+</div>
+
+<div id="areaModal" class="modal-overlay">
+    <div class="g-modal-box">
+        <div style="display:flex; justify-content:space-between; margin-bottom:20px; align-items:center;">
+            <span class="g-header-text">Area Calculator</span>
+            <div>
+                <span onclick="resetAreaModal()" style="cursor:pointer; color:var(--accent); font-size:0.75rem; font-weight:800; margin-right:15px;">CLEAR</span>
+                <span onclick="closeAreaModal()" style="cursor:pointer; color:#9aa0a6; font-size:1.2rem;">✕</span>
+            </div>
         </div>
         
-        <div class="conv-group">
-            <span class="conv-label">Convert From</span>
-            <select id="convFrom" class="conv-select" onchange="runConvert()">
-                <option value="mm">Millimeter (mm)</option>
-                <option value="cm">Centimeter (cm)</option>
-                <option value="in">Inch (in)</option>
-                <option value="ft">Foot (ft)</option>
-                <option value="m">Meter (m)</option>
+        <div class="g-eq-large" id="areaEqLarge" style="font-size: 1.4rem; min-height: 34px;"></div>
+        
+        <div class="g-row">
+            <input type="number" id="areaLVal" class="g-input" placeholder="Length" oninput="runAreaCalc()">
+            <select id="areaLUnit" class="g-select" onchange="runAreaCalc()">
+                <option value="ft" selected>Foot</option>
+                <option value="in">Inch</option>
+                <option value="m">Meter</option>
+                <option value="cm">Centimeter</option>
+                <option value="mm">Millimeter</option>
             </select>
-            <input type="number" id="convVal" class="conv-input" value="1" oninput="runConvert()">
         </div>
         
-        <div class="conv-arrow">▼</div>
-        
-        <div class="conv-group">
-            <span class="conv-label">Convert To</span>
-            <select id="convTo" class="conv-select" onchange="runConvert()">
-                <option value="in">Inch (in)</option>
-                <option value="mm">Millimeter (mm)</option>
-                <option value="cm">Centimeter (cm)</option>
-                <option value="ft">Foot (ft)</option>
-                <option value="m">Meter (m)</option>
+        <div class="g-row">
+            <input type="number" id="areaWVal" class="g-input" placeholder="Width" oninput="runAreaCalc()">
+            <select id="areaWUnit" class="g-select" onchange="runAreaCalc()">
+                <option value="ft" selected>Foot</option>
+                <option value="in">Inch</option>
+                <option value="m">Meter</option>
+                <option value="cm">Centimeter</option>
+                <option value="mm">Millimeter</option>
             </select>
-            <div id="convOutput" class="conv-input" style="background:var(--card); color:var(--accent); display:flex; align-items:center; min-height:48px;">0.0394</div>
+        </div>
+
+        <div style="color: #9aa0a6; font-size: 0.8rem; margin: 15px 0 5px 0; text-transform: uppercase; font-weight: bold;">Calculate Area:</div>
+        <div class="g-row" style="border-color: var(--accent);">
+            <div id="areaOutVal" class="g-input" style="color:var(--accent); font-weight:bold; display:flex; align-items:center;">0.00</div>
+            <div class="g-select" style="display:flex; align-items:center; color:var(--text); justify-content:center; pointer-events:none; border-left: 1px solid #5f6368;">Sq. Foot (ft²)</div>
+        </div>
+        
+        <div class="g-formula-area">
+            <span class="g-badge">Formula</span>
+            <span>Multiply Length by Width</span>
+        </div>
+
+        <div style="display:flex; margin-top:20px;">
+            <button class="conv-paste-btn" onclick="pasteAreaToMain()" style="width: 100%;">➜ PASTE TO MAIN AREA</button>
         </div>
     </div>
 </div>
@@ -182,6 +262,7 @@
     <div class="header">
         <h2>Size Calc Pro</h2>
         <div class="header-actions">
+            <span style="cursor:pointer; font-size:1.3rem;" onclick="openAreaModal()">🏠</span>
             <span style="cursor:pointer; font-size:1.3rem;" onclick="openConverter()">📏</span>
             <div class="gear-container">
                 <span style="cursor:pointer; font-size:1.2rem;" onclick="toggleMenu()">⚙️</span>
@@ -202,12 +283,17 @@
     <div class="dim-row">
         <div class="input-wrapper"><input type="number" id="L" placeholder="L" class="input-box" oninput="runMath('dim')"><span class="clear-x" onclick="clearField('L')">×</span></div>
         <div class="input-wrapper"><input type="number" id="W" placeholder="W" class="input-box" oninput="runMath('dim')"><span class="clear-x" onclick="clearField('W')">×</span></div>
+        
         <div class="smart-input-container">
             <select id="calcMode" class="smart-select" onchange="runMath('mode')">
-                <option value="pcs">QTY</option>
-                <option value="wall">AREA</option>
+                <option value="pcs">QTY (Pcs)</option>
+                <option value="wall">AREA (ft²)</option>
+                <option value="wall_m2">AREA (m²)</option>
             </select>
-            <div class="input-wrapper"><input type="number" id="QTY_VAL" value="1" class="smart-val-input" oninput="runMath('qty')"><span class="clear-x" onclick="clearField('QTY_VAL')">×</span></div>
+            <div class="input-wrapper" style="border:none; height:100%;">
+                <input type="number" id="QTY_VAL" value="1" class="smart-val-input" oninput="runMath('qty')">
+                <span class="clear-x" onclick="clearField('QTY_VAL')" style="right: 5px;">×</span>
+            </div>
         </div>
         <button id="wToggle" class="toggle-btn" onclick="toggleInch()">INCH</button>
     </div>
@@ -300,21 +386,107 @@ function swapTheme(cb) {
     document.getElementById('metaTheme').setAttribute('content', currentTheme === 'dark' ? '#000000' : '#e3e3e3');
 }
 
-function openConverter() { document.getElementById('converterModal').style.display = 'flex'; runConvert(); }
+// --- GOOGLE STYLE LINEAR CONVERTER LOGIC ---
+const unitRates = { mm: 1, cm: 10, in: 25.4, ft: 304.8, m: 1000 };
+const unitNames = { mm: 'mm', cm: 'cm', in: 'in', ft: 'ft', m: 'm' };
+
+function openConverter() { document.getElementById('converterModal').style.display = 'flex'; }
 function closeConverter() { document.getElementById('converterModal').style.display = 'none'; }
-function runConvert() {
-    const val = parseFloat(document.getElementById('convVal').value) || 0;
-    const from = document.getElementById('convFrom').value;
-    const to = document.getElementById('convTo').value;
-    let mm = 0;
-    if(from === 'mm') mm = val; if(from === 'cm') mm = val * 10;
-    if(from === 'in') mm = val * 25.4; if(from === 'ft') mm = val * 304.8;
-    if(from === 'm') mm = val * 1000;
-    let res = 0;
-    if(to === 'mm') res = mm; if(to === 'cm') res = mm / 10;
-    if(to === 'in') res = mm / 25.4; if(to === 'ft') res = mm / 304.8;
-    if(to === 'm') res = mm / 1000;
-    document.getElementById('convOutput').innerText = res % 1 === 0 ? res : res.toFixed(4).replace(/0+$/, '').replace(/\.$/, '');
+function resetConverter() {
+    document.getElementById('convVal1').value = ''; document.getElementById('convVal2').value = '';
+    document.getElementById('convEqSmall').innerText = ''; document.getElementById('convEqLarge').innerText = '';
+    document.getElementById('formulaText').innerText = '';
+}
+
+function formatNum(n) { return (n % 1 === 0) ? n : n.toFixed(4).replace(/0+$/, '').replace(/\.$/, ''); }
+
+function formatHumanReadable(val, unit) {
+    if (unit === 'ft' && val > 0 && val % 1 !== 0) {
+        let f = Math.floor(val); let inches = (val - f) * 12;
+        if (f === 0) return `${formatNum(inches)} inches`;
+        if (inches > 0.001) return `${f} feet ${formatNum(inches)} inches`;
+        return `${f} feet`;
+    }
+    return `${formatNum(val)} ${unitNames[unit]}`;
+}
+
+function runConvert(source = 1) {
+    let val1 = parseFloat(document.getElementById('convVal1').value);
+    let val2 = parseFloat(document.getElementById('convVal2').value);
+    let u1 = document.getElementById('convUnit1').value;
+    let u2 = document.getElementById('convUnit2').value;
+
+    let r1 = unitRates[u1]; let r2 = unitRates[u2]; let ratio = r1 / r2;
+
+    if (source === 1 || source === 3) {
+        if (isNaN(val1)) { resetConverter(); return; }
+        val2 = val1 * ratio; document.getElementById('convVal2').value = formatNum(val2);
+    } else if (source === 2) {
+        if (isNaN(val2)) { resetConverter(); return; }
+        val1 = val2 / ratio; document.getElementById('convVal1').value = formatNum(val1);
+    }
+
+    document.getElementById('convEqSmall').innerText = `${formatNum(val1)} ${unitNames[u1]} =`;
+    document.getElementById('convEqLarge').innerText = formatHumanReadable(val2, u2);
+    document.getElementById('formulaText').innerText = ratio >= 1 ? `multiply length by ${formatNum(ratio)}` : `divide length by ${formatNum(1/ratio)}`;
+}
+
+function applyFromConverter(target) {
+    let valToPaste = parseFloat(document.getElementById('convVal2').value);
+    if (isNaN(valToPaste)) { showToast("NOTHING TO PASTE"); return; }
+    
+    document.getElementById(target).value = valToPaste;
+    let toUnit = document.getElementById('convUnit2').value;
+    
+    if (target === 'W') {
+        if (toUnit === 'in' && !wInchMode) { wInchMode = true; document.getElementById('wToggle').classList.add('active'); } 
+        else if (toUnit !== 'in' && wInchMode) { wInchMode = false; document.getElementById('wToggle').classList.remove('active'); }
+    }
+    closeConverter(); runMath('dim'); showToast("PASTED TO " + target);
+}
+
+// --- 🏠 AREA FINDER LOGIC ---
+const linearToFt = { ft: 1, in: 1/12, m: 3.28084, cm: 0.0328084, mm: 0.00328084 };
+
+function openAreaModal() { document.getElementById('areaModal').style.display = 'flex'; }
+function closeAreaModal() { document.getElementById('areaModal').style.display = 'none'; }
+function resetAreaModal() {
+    document.getElementById('areaLVal').value = ''; document.getElementById('areaWVal').value = '';
+    document.getElementById('areaOutVal').innerText = '0.00';
+    document.getElementById('areaEqLarge').innerText = '';
+}
+
+function runAreaCalc() {
+    let lVal = parseFloat(document.getElementById('areaLVal').value);
+    let wVal = parseFloat(document.getElementById('areaWVal').value);
+    let lUnit = document.getElementById('areaLUnit').value;
+    let wUnit = document.getElementById('areaWUnit').value;
+
+    if (isNaN(lVal) || isNaN(wVal)) {
+        document.getElementById('areaOutVal').innerText = '0.00';
+        document.getElementById('areaEqLarge').innerText = '';
+        return;
+    }
+
+    let lFeet = lVal * linearToFt[lUnit];
+    let wFeet = wVal * linearToFt[wUnit];
+    let finalArea = lFeet * wFeet; // Locked strictly to ft²
+
+    document.getElementById('areaEqLarge').innerText = `${formatNum(lVal)}${unitNames[lUnit]} × ${formatNum(wVal)}${unitNames[wUnit]} = ${formatNum(finalArea)} ft²`;
+    document.getElementById('areaOutVal').innerText = formatNum(finalArea);
+}
+
+function pasteAreaToMain() {
+    let finalArea = parseFloat(document.getElementById('areaOutVal').innerText);
+    if (isNaN(finalArea) || finalArea === 0) { showToast("NO AREA TO PASTE"); return; }
+    
+    // Switch to AREA (ft²) mode directly
+    document.getElementById('calcMode').value = 'wall';
+    document.getElementById('QTY_VAL').value = finalArea;
+    
+    closeAreaModal();
+    runMath('mode');
+    showToast("AREA PASTED");
 }
 
 function formatUnit(val) {
@@ -347,9 +519,8 @@ function runMath(trigger) {
     else if (L > 300) lIn = L / 25.4;
 
     let wIn = 0;
-    if (wInchMode) {
-        wIn = W;
-    } else {
+    if (wInchMode) { wIn = W; } 
+    else {
         if (W > 0 && W <= 15) wIn = W * 12;
         else if (W > 15) wIn = W / 25.4;
     }
@@ -364,8 +535,12 @@ function runMath(trigger) {
         totalArea = singleArea * pcs;
         document.getElementById('pcsInfo').innerText = "";
     } else {
-        let wallArea = QTY || 0;
-        pcs = singleArea > 0 ? Math.ceil(wallArea / singleArea) : 0;
+        // SMART AREA MATH - Converts m² to ft² on the fly
+        let wallAreaFt2 = 0;
+        if (mode === 'wall') wallAreaFt2 = QTY || 0;
+        else if (mode === 'wall_m2') wallAreaFt2 = (QTY || 0) * 10.7639104;
+
+        pcs = singleArea > 0 ? Math.ceil(wallAreaFt2 / singleArea) : 0;
         totalArea = singleArea * pcs;
         document.getElementById('pcsInfo').innerText = `(${pcs} Pcs)`;
     }
@@ -435,7 +610,10 @@ function applyPreset(l, w, isInch) {
 }
 
 function toggleInch() { wInchMode = !wInchMode; document.getElementById('wToggle').classList.toggle('active', wInchMode); runMath('dim'); }
-function updateInputs() { ['L', 'W', 'QTY_VAL', 'rate', 'mrp', 'discIn'].forEach(id => localStorage.setItem('last' + id, document.getElementById(id).value)); localStorage.setItem('lastMode', document.getElementById('calcMode').value); }
+function updateInputs() { 
+    ['L', 'W', 'QTY_VAL', 'rate', 'mrp', 'discIn'].forEach(id => localStorage.setItem('last' + id, document.getElementById(id).value)); 
+    localStorage.setItem('lastMode', document.getElementById('calcMode').value);
+}
 function updateStorage() { localStorage.setItem('sizeCalcHistory', document.getElementById('histItems').innerHTML); }
 
 function saveToHistory() {
@@ -458,7 +636,7 @@ function recallHistory(el) {
     const d = JSON.parse(el.dataset.raw);
     openModal("LOAD DATA?", `Load ${el.innerText} into calculator?`, () => {
         document.getElementById('L').value = d.L; document.getElementById('W').value = d.W; document.getElementById('QTY_VAL').value = d.Q;
-        document.getElementById('rate').value = d.R; document.getElementById('mrp').value = d.MRP; document.getElementById('calcMode').value = d.M;
+        document.getElementById('rate').value = d.R; document.getElementById('mrp').value = d.MRP; document.getElementById('calcMode').value = d.M || 'pcs';
         document.getElementById('discIn').value = d.D || ''; discMode = d.DM || 'smart';
         
         let btnTxt = "⚡ SMART";
